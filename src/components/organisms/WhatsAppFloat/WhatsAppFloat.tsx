@@ -6,6 +6,7 @@ import { trackWhatsappClick } from '@/lib/analytics';
 import { useQuoteCovered } from '@/lib/quoteVisibility';
 import { messageForPath, whatsappUrl } from '@/lib/whatsapp';
 import { Icon } from '../../atoms/Icon';
+import { useSiteSettings } from '../../SiteSettings';
 import { Label, Root } from './WhatsAppFloat.styles';
 
 export interface WhatsAppFloatProps {
@@ -33,6 +34,7 @@ export function WhatsAppFloat({
   className,
 }: WhatsAppFloatProps) {
   const pathname = usePathname();
+  const settings = useSiteSettings();
   const [shown, setShown] = useState(inline);
   const [scrolling, setScrolling] = useState(false);
   const covered = useQuoteCovered();
@@ -66,7 +68,10 @@ export function WhatsAppFloat({
       data-shown={visible}
       data-scrolling={scrolling}
       tabIndex={visible ? undefined : -1}
-      href={whatsappUrl(message ?? messageForPath(pathname), phone)}
+      href={whatsappUrl(
+        message ?? messageForPath(pathname, settings.messages),
+        phone ?? settings.phone,
+      )}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com a Turma da Aventura no WhatsApp"

@@ -6,6 +6,7 @@ import { NAV_ITEMS, type NavItem } from '@/lib/nav';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { Icon } from '../../atoms/Icon';
 import { Logo } from '../../atoms/Logo';
+import { useSiteSettings } from '../../SiteSettings';
 import { About, Bottom, Brand, Heading, Inner, LinkList, Root } from './Footer.styles';
 
 export interface FooterProps {
@@ -34,6 +35,7 @@ export function Footer({
   year = new Date().getFullYear(),
   className,
 }: FooterProps) {
+  const settings = useSiteSettings();
   return (
     <Root className={className}>
       <Inner>
@@ -56,7 +58,7 @@ export function Footer({
           <LinkList>
             <li>
               <a
-                href={whatsappUrl('Olá! Vim pelo site.', phone)}
+                href={whatsappUrl('Olá! Vim pelo site.', phone ?? settings.phone)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() =>

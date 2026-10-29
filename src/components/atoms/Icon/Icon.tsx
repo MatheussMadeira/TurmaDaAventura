@@ -1,35 +1,10 @@
 'use client';
 
 import type { ReactNode, SVGAttributes } from 'react';
+import { ICON_NAMES, type IconName } from '@/lib/iconNames';
 import { Svg } from './Icon.styles';
 
-export type IconName =
-  | 'whatsapp'
-  | 'instagram'
-  | 'menu'
-  | 'close'
-  | 'arrow-right'
-  | 'chevron-down'
-  | 'check'
-  | 'map-pin'
-  | 'clock'
-  | 'calendar'
-  | 'users'
-  | 'compass'
-  | 'tent'
-  | 'tree'
-  | 'leaf'
-  | 'scissors'
-  | 'palette'
-  | 'utensils'
-  | 'briefcase'
-  | 'star'
-  | 'flag'
-  | 'backpack'
-  | 'phone'
-  | 'mail'
-  | 'heart'
-  | 'shield';
+export type { IconName };
 
 export interface IconProps extends Omit<SVGAttributes<SVGSVGElement>, 'name'> {
   name: IconName;
@@ -198,7 +173,7 @@ const ICONS: Record<IconName, ReactNode> = {
   ),
 };
 
-export const iconNames = Object.keys(ICONS) as IconName[];
+export const iconNames: readonly IconName[] = ICON_NAMES;
 
 export function Icon({ name, size = 24, label, ...rest }: IconProps) {
   return (

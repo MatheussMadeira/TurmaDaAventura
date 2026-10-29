@@ -1,0 +1,31 @@
+/** Nomes do set de ícones. Módulo neutro (sem 'use client') para schemas, seed e servidor. */
+export const ICON_NAMES = [
+  'whatsapp',
+  'instagram',
+  'menu',
+  'close',
+  'arrow-right',
+  'chevron-down',
+  'check',
+  'map-pin',
+  'clock',
+  'calendar',
+  'users',
+  'compass',
+  'tent',
+  'tree',
+  'leaf',
+  'scissors',
+  'palette',
+  'utensils',
+  'briefcase',
+  'star',
+  'flag',
+  'backpack',
+  'phone',
+  'mail',
+  'heart',
+  'shield',
+] as const;
+
+export type IconName = (typeof ICON_NAMES)[number];

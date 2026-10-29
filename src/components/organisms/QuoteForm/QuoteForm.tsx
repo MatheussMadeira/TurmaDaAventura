@@ -10,6 +10,7 @@ import { buildQuoteMessage, whatsappUrl } from '@/lib/whatsapp';
 import { dur } from '@/motion/tokens';
 import { useInView } from '@/motion/useInView';
 import { Button } from '../../atoms/Button';
+import { useSiteSettings } from '../../SiteSettings';
 import { Icon } from '../../atoms/Icon';
 import { Select } from '../../atoms/Select';
 import { TextField } from '../../atoms/TextField';
@@ -77,6 +78,7 @@ export function QuoteForm({
 }: QuoteFormProps) {
   const reduce = useReducedMotion();
   const pathname = usePathname();
+  const settings = useSiteSettings();
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const formRef = useRef<HTMLFormElement>(null);
   const timers = useRef<number[]>([]);
@@ -143,7 +145,7 @@ export function QuoteForm({
 
     const url = whatsappUrl(
       buildQuoteMessage(values, nameLabel === 'Seu nome' ? 'Nome' : nameLabel),
-      phone,
+      phone ?? settings.phone,
     );
     trackWhatsappClick({ page: pathname ?? '/', placement: 'form' });
     /* A aba do WhatsApp é aberta AGORA, dentro do gesto do usuário (senão o navegador bloqueia o

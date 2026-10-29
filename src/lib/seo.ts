@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import type { Contact } from './content';
-import { WHATSAPP } from './whatsapp';
+import type { SiteSettings } from '@/content/types';
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(
   /\/$/,
@@ -45,9 +44,9 @@ export function pageMetadata({ title, description, path, absoluteTitle }: PageMe
 }
 
 /** JSON-LD LocalBusiness. Telefone só entra quando o número real estiver configurado (não o placeholder). */
-export function localBusinessJsonLd(contact: Contact) {
-  const [city, region] = contact.cidade.split('·').map((s) => s.trim());
-  const realPhone = WHATSAPP !== '5500000000000';
+export function localBusinessJsonLd(contact: SiteSettings) {
+  const [city, region] = contact.city.split('·').map((s) => s.trim());
+  const realPhone = contact.whatsapp !== '5500000000000';
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -57,7 +56,7 @@ export function localBusinessJsonLd(contact: Contact) {
     url: SITE_URL,
     image: `${SITE_URL}${OG_IMAGE.url}`,
     logo: `${SITE_URL}${OG_IMAGE.url}`,
-    ...(realPhone ? { telephone: `+${WHATSAPP}` } : {}),
+    ...(realPhone ? { telephone: `+${contact.whatsapp}` } : {}),
     ...(contact.email ? { email: contact.email } : {}),
     sameAs: [`https://instagram.com/${contact.instagram.replace('@', '')}`],
     address: {

@@ -1,17 +1,19 @@
 import type { ReactElement } from 'react';
 import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { expectNoA11yViolations } from '@/test/a11y';
 import { renderWithProviders } from '@/test/render';
+import { contentModuleMock, fixtureGroups } from '@/test/contentFixture';
 import HomePage from './(site)/page';
 import OficinaPage from './(site)/oficina/page';
 import RestaurantesPage from './(site)/restaurantes/page';
-import { getRestaurantGroups } from '@/lib/content';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
 
+vi.mock('@/server/content', () => contentModuleMock());
+
 /* data-section = nomes do canvas (docs/site.md, "Seções por página"). O Hero não é <Section>. */
-const pages: { name: string; page: () => ReactElement; sections: string[] }[] = [
+const pages: { name: string; page: () => Promise<ReactElement>; sections: string[] }[] = [
   {
     name: 'Início',
     page: HomePage,
@@ -71,31 +73,31 @@ const pages: { name: string; page: () => ReactElement; sections: string[] }[] = 
 ];
 
 describe.each(pages)('página $name', ({ page, sections }) => {
-  it('tem um único H1', () => {
-    renderWithProviders(page());
+  it('tem um único H1', async () => {
+    renderWithProviders(await page());
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
   });
 
-  it('tem as seções do canvas, na ordem', () => {
-    const { container } = renderWithProviders(page());
+  it('tem as seções do canvas, na ordem', async () => {
+    const { container } = renderWithProviders(await page());
     const found = [...container.querySelectorAll('[data-section]')].map((el) =>
       el.getAttribute('data-section'),
     );
     expect(found).toEqual(sections);
   });
 
-  it('não mostra preço', () => {
-    const { container } = renderWithProviders(page());
+  it('não mostra preço', async () => {
+    const { container } = renderWithProviders(await page());
     expect(container.textContent).not.toMatch(/R\$|\d\s*reais|a partir de r\$/i);
   });
 
   it('não tem violações de acessibilidade (axe)', async () => {
-    const { container } = renderWithProviders(page());
+    const { container } = renderWithProviders(await page());
     await expectNoA11yViolations(container);
   });
 
-  it('toda imagem tem alt (decorativas com alt vazio)', () => {
-    const { container } = renderWithProviders(page());
+  it('toda imagem tem alt (decorativas com alt vazio)', async () => {
+    const { container } = renderWithProviders(await page());
     for (const img of container.querySelectorAll('img')) expect(img).toHaveAttribute('alt');
   });
 });
@@ -104,7 +106,7 @@ describe('Oficina — filtro', () => {
   it('filtra por categoria e anuncia a contagem', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
-    renderWithProviders(<OficinaPage />);
+    renderWithProviders(await OficinaPage());
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 9 atividades');
     await user.click(screen.getByRole('button', { name: /natureza/i }));
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 2 atividades');
@@ -117,7 +119,7 @@ describe('Oficina — filtro', () => {
 
 describe('restaurantes — endereço e overline', () => {
   it('endereços sem o bairro em todos os registros', () => {
-    const groups = getRestaurantGroups();
+    const groups = fixtureGroups();
     expect(groups.length).toBeGreaterThan(0);
     for (const r of groups.flatMap((g) => g.restaurants)) {
       expect(r.address).not.toContain('·');
@@ -125,8 +127,8 @@ describe('restaurantes — endereço e overline', () => {
     }
   });
 
-  it('Início: overline "{bairro} · {região}" (ex.: Pinheiros · Zona Oeste)', () => {
-    const { container } = renderWithProviders(<HomePage />);
+  it('Início: overline "{bairro} · {região}" (ex.: Pinheiros · Zona Oeste)', async () => {
+    const { container } = renderWithProviders(await HomePage());
     const overlines = [
       ...container.querySelectorAll('[data-section="Inicio/OndeEsta"] article .overline'),
     ].map((el) => el.textContent);
@@ -137,8 +139,8 @@ describe('restaurantes — endereço e overline', () => {
     ]);
   });
 
-  it('Restaurantes: overline é só o bairro (a região já é o título do grupo)', () => {
-    const { container } = renderWithProviders(<RestaurantesPage />);
+  it('Restaurantes: overline é só o bairro (a região já é o título do grupo)', async () => {
+    const { container } = renderWithProviders(await RestaurantesPage());
     const overlines = [
       ...container.querySelectorAll('[data-section="Restaurantes/Lista"] article .overline'),
     ].map((el) => el.textContent);

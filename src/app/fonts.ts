@@ -8,6 +8,7 @@ export const fraunces = localFont({
   weight: '100 900',
   variable: '--font-fraunces',
   display: 'swap',
+  adjustFontFallback: 'Times New Roman',
 });
 
 /* Itálica enxuta (scripts/build-fonts.py): wght 400 / opsz 36 / SOFT 100 / WONK 0, Latin + PT-BR, ~20 KB.
@@ -19,6 +20,7 @@ export const frauncesItalic = localFont({
   variable: '--font-fraunces-italic',
   preload: false,
   display: 'swap',
+  adjustFontFallback: 'Times New Roman',
   declarations: [
     {
       prop: 'unicode-range',
@@ -32,4 +34,5 @@ export const nunito = localFont({
   weight: '200 1000',
   variable: '--font-nunito',
   display: 'swap',
+  adjustFontFallback: 'Arial',
 });

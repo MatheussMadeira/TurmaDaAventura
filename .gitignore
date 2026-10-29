@@ -9,3 +9,6 @@ next-env.d.ts
 coverage
 playwright-report
 test-results
+
+# Prisma Client gerado (npm run postinstall)
+src/generated

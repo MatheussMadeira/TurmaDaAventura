@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { trackWhatsappClick, type WhatsappPlacement } from '@/lib/analytics';
 import { messageForPath, whatsappUrl } from '@/lib/whatsapp';
 import { Button, type ButtonProps } from '../../atoms/Button';
+import { useSiteSettings } from '../../SiteSettings';
 
 export interface WhatsAppButtonProps extends Omit<ButtonProps, 'href' | 'iconLeft'> {
   /** só dígitos com DDI, ex.: "5511999999999"; padrão NEXT_PUBLIC_WHATSAPP */
@@ -23,11 +24,15 @@ export function WhatsAppButton({
   ...rest
 }: WhatsAppButtonProps) {
   const pathname = usePathname();
+  const settings = useSiteSettings();
   return (
     <Button
       variant="primary"
       iconLeft="whatsapp"
-      href={whatsappUrl(message ?? messageForPath(pathname), phone)}
+      href={whatsappUrl(
+        message ?? messageForPath(pathname, settings.messages),
+        phone ?? settings.phone,
+      )}
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => {
