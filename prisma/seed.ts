@@ -8,6 +8,7 @@
  * ADMIN_EMAIL; a senha temporária é gerada aqui, impressa UMA vez e troca é obrigatória no 1º acesso.
  */
 import { randomBytes } from 'node:crypto';
+import { createInterface } from 'node:readline/promises';
 import { config } from 'dotenv';
 import bcrypt from 'bcryptjs';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -18,6 +19,7 @@ import restaurantes from '../src/content/restaurantes.json';
 import atividades from '../src/content/atividades.json';
 import equipe from '../src/content/equipe.json';
 import contato from '../src/content/contato.json';
+import { decideForce } from '../src/server/seedGuard';
 
 config({ path: '.env.local' });
 config();
@@ -189,7 +191,32 @@ async function seedAdmin() {
   console.log('└─ a troca é obrigatória no primeiro acesso ───────────────────────────────\n');
 }
 
+/** `--force` em banco de produção: recusa sem ALLOW_DESTRUCTIVE_SEED=1 e, mesmo com ele, pede o host digitado. */
+async function guardForce() {
+  if (!force) return;
+  const d = decideForce(process.env);
+  if (!d.allowed) {
+    console.error(`\n✖ ${d.reason}\n`);
+    process.exit(1);
+  }
+  if (!d.needsTypedConfirmation) return;
+  if (!process.stdin.isTTY) {
+    console.error('\n✖ Confirmação digitada exige um terminal interativo. Abortado.\n');
+    process.exit(1);
+  }
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  const answer = await rl.question(
+    `ATENÇÃO: --force vai sobrescrever conteúdo no banco de PRODUÇÃO.\nDigite o host do banco (${d.expected}) para confirmar: `,
+  );
+  rl.close();
+  if (answer.trim().toLowerCase() !== d.expected) {
+    console.error('\n✖ Host não confere. Abortado, nada foi alterado.\n');
+    process.exit(1);
+  }
+}
+
 async function main() {
+  await guardForce();
   const sections = await seedPages();
   const rest = await seedRestaurants();
   const acts = await seedActivities();
