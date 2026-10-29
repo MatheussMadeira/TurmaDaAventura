@@ -179,4 +179,41 @@ test.describe('usuários (Administração)', () => {
     await expect(page.locator('code')).toHaveCount(0);
     await expect(page.getByRole('row', { name: new RegExp(email) })).toBeVisible();
   });
+
+  test('Administração cria alguém da Equipe; a pessoa entra, cria a senha e só vê o que pode', async ({
+    page,
+    browser,
+  }) => {
+    const admin = await makeUser('admin-cria', { role: 'ADMIN' });
+    await login(page, admin.email, GOOD);
+    await expect(page).toHaveURL(/\/admin$/);
+    await page.goto('/admin/usuarios');
+
+    const email = `e2e-equipe-${Date.now()}@teste.invalid`;
+    await page.getByLabel('Nome').fill('Pessoa da Equipe');
+    await page.getByLabel('E-mail').fill(email);
+    await page.getByLabel(/^Equipe/).check();
+    await page.getByRole('button', { name: 'Criar usuário' }).click();
+    const temp = (await page.locator('code').innerText()).trim();
+
+    // a pessoa nova, em outro navegador
+    const ctx = await browser.newContext();
+    const other = await ctx.newPage();
+    await login(other, email, temp);
+    await expect(other).toHaveURL(/\/admin\/trocar-senha/);
+    await other.getByLabel('Senha temporária').fill(temp);
+    await other.getByLabel(/^Nova senha/).fill('Equipe-Nova-2026');
+    await other.getByLabel('Repita a nova senha').fill('Equipe-Nova-2026');
+    await other.getByRole('button', { name: 'Salvar e entrar' }).click();
+    await expect(other).toHaveURL(/\/admin$/);
+
+    const nav = other.getByRole('navigation', { name: 'Painel' });
+    await expect(nav.getByRole('link', { name: 'Restaurantes' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Usuários' })).toHaveCount(0);
+    await other.goto('/admin/usuarios');
+    await expect(other.getByText('Esta área é só da Administração')).toBeVisible();
+    await other.goto('/admin/contato');
+    await expect(other.getByText('Esta área é só da Administração')).toBeVisible();
+    await ctx.close();
+  });
 });

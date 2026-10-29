@@ -4,6 +4,8 @@ import {
   GOOD,
   cleanup,
   clearLocks,
+  deleteTestMedia,
+  mediaCount,
   makeUser,
   restoreSections,
   sectionRow,
@@ -22,6 +24,7 @@ test.beforeEach(clearLocks); // a reserva da aba anterior não vale para o teste
 test.afterAll(async () => {
   await clearLocks();
   await restoreSections(snapshot);
+  await deleteTestMedia(); // fotos do teste de envio: Blob e banco
   await cleanup();
 });
 
@@ -189,6 +192,45 @@ test.describe('editor visual', () => {
 
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
+  });
+
+  test('trocar foto: envia com descrição, recorta na proporção do slot e aparece na prévia', async ({
+    page,
+  }) => {
+    const u = await makeUser('editor-foto', { role: 'EQUIPE' });
+    await login(page, u.email);
+    await page.goto('/admin/editor?pagina=inicio');
+    await page.getByRole('button', { name: 'Abertura', exact: true }).click();
+    await page
+      .getByRole('button', { name: /(Trocar|Escolher) foto/ })
+      .first()
+      .click();
+    const dialog = page.getByRole('dialog', { name: /Trocar foto/ });
+
+    const png = await sharp({
+      create: { width: 1800, height: 1200, channels: 3, background: '#5c7a45' },
+    })
+      .png()
+      .toBuffer();
+    await dialog
+      .locator('input[type="file"]')
+      .setInputFiles({ name: 'mata.png', mimeType: 'image/png', buffer: png });
+    await expect(dialog.getByText(/pequena e pode ficar borrada/)).toHaveCount(0); // 1800 px: sem aviso
+    await dialog.getByLabel(/Descrição da foto/).fill('E2E crianças brincando na mata');
+    await dialog.getByLabel(/Tenho autorização/).check();
+    const before = await mediaCount();
+    await dialog.getByRole('button', { name: 'Recortar e usar' }).click();
+    await expect(dialog).toBeHidden({ timeout: 30_000 });
+
+    const img = preview(page).locator('[data-editor-section="hero"] img').first();
+    await expect(img).toBeVisible({ timeout: 15_000 });
+    await expect(img).toHaveAttribute('alt', 'E2E crianças brincando na mata');
+    await saved(page);
+    expect(await mediaCount()).toBe(before + 1);
+    expect((await sectionRow('inicio', 'hero')).draft.imageId).toBeTruthy();
+    // foto recortada em 5:4 (o hero)
+    const box = await img.boundingBox();
+    expect(box!.width / box!.height).toBeCloseTo(1.25, 1);
   });
 
   test('publicar leva o rascunho ao ar e zera o contador', async ({ page, request }) => {

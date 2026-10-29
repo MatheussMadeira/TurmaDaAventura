@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { LOGIN_ERROR, safeNext } from '@/lib/adminAuth';
 import { signIn, signOut } from '@/server/auth';
 import { db } from '@/server/db';
-import { getCurrentUser } from '@/server/auth/session';
 import { changeOwnPassword } from '@/server/users';
 import { DomainError, fail, run, type ActionResult } from '@/server/actions';
 
@@ -43,14 +42,16 @@ export async function logoutAction() {
 
 /** Troca de senha (obrigatória no primeiro acesso). Reemite a sessão com a nova versão do token. */
 export async function changePasswordAction(
-  _prev: ActionResult | null,
+  _prev: ActionResult<{ to: string }> | null,
   formData: FormData,
-): Promise<ActionResult | null> {
+): Promise<ActionResult<{ to: string }> | null> {
   const current = String(formData.get('current') ?? '');
   const next = String(formData.get('next') ?? '');
   const confirm = String(formData.get('confirm') ?? '');
 
+  let email: string | null = null;
   const result = await run({ allowMustChange: true }, async (user) => {
+    email = user.email;
     try {
       await changeOwnPassword(user, current, next, confirm);
     } catch (e) {
@@ -61,8 +62,9 @@ export async function changePasswordAction(
   });
   if (!result.ok) return result;
 
-  // a troca invalidou o token antigo: entra de novo com a senha nova (usuário já em cache na requisição)
-  const me = await getCurrentUser();
-  if (me) await signIn('credentials', { email: me.email, password: next, redirect: false });
-  redirect('/admin');
+  // a troca invalidou o token antigo: entra de novo com a senha nova.
+  // (getCurrentUser() daria null aqui: a versão do token no banco já mudou)
+  if (email) await signIn('credentials', { email, password: next, redirect: false });
+  // a tela faz navegação completa: um redirect encadeado aqui renderiza /admin com o cookie ANTIGO
+  return { ok: true, data: { to: '/admin' } };
 }

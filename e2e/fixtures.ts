@@ -160,3 +160,23 @@ export async function lockRows() {
   const { rows } = await pool.query(`select slug, "userName" from "PageLock"`);
   return rows as { slug: string; userName: string }[];
 }
+
+/** Apaga as fotos criadas pelos testes (descrição começa com "E2E "): arquivos no Blob e linhas no banco. */
+export async function deleteTestMedia() {
+  const { del } = await import('@vercel/blob');
+  const { rows } = await pool.query(
+    `select id, pathname, variants from "Media" where alt like 'E2E %'`,
+  );
+  for (const r of rows as { id: string; pathname: string; variants: { pathname: string }[] }[]) {
+    await del([r.pathname, ...r.variants.map((v) => v.pathname)]);
+    await pool.query(`delete from "Media" where id = $1`, [r.id]);
+  }
+  return rows.length;
+}
+
+export async function mediaCount(prefix = 'E2E %') {
+  const { rows } = await pool.query(`select count(*)::int n from "Media" where alt like $1`, [
+    prefix,
+  ]);
+  return rows[0].n as number;
+}

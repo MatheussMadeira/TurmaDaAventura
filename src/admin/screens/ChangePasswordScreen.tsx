@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useTransition, type FormEvent } from 'react';
+import { useActionState, useEffect, useTransition, type FormEvent } from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/atoms/Button';
 import { Logo } from '@/components/atoms/Logo';
@@ -12,6 +12,9 @@ import { ErrorSummary, fieldError } from '../ui/forms';
 /** Primeiro acesso (ou senha redefinida): a troca vem antes de qualquer outra tela. */
 export function ChangePasswordScreen({ name }: { name: string }) {
   const [state, action, pending] = useActionState(changePasswordAction, null);
+  useEffect(() => {
+    if (state?.ok && state.data?.to) window.location.assign(state.data.to);
+  }, [state]);
   // onSubmit (e não <form action>) para os campos NÃO serem apagados quando há erro de validação
   const [, startTransition] = useTransition();
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
