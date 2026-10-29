@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { CamoPattern } from '../CamoPattern';
-import { Icon, type IconName } from '../Icon';
+import { Icon, type AnyIconName } from '../Icon';
 import { Badge, Caption, Frame, Placeholder } from './Media.styles';
 
 export interface MediaProps {
@@ -11,7 +11,7 @@ export interface MediaProps {
   /** CSS aspect-ratio; padrão '4 / 3' */
   ratio?: string;
   /** Ícone mostrado no placeholder de camuflagem quando não há foto */
-  icon?: IconName;
+  icon?: AnyIconName;
   caption?: string;
   rounded?: boolean;
   /** prefixo do pattern SVG do placeholder (um sufixo único é acrescentado) */

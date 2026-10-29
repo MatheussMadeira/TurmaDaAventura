@@ -29,6 +29,8 @@ model User {
   role               Role      @default(EQUIPE)
   active             Boolean   @default(true)
   mustChangePassword Boolean   @default(true)
+  /// sobe ao trocar/redefinir a senha: invalida as sessões (JWT) antigas
+  tokenVersion       Int       @default(0)
   lastLoginAt        DateTime?
   failedAttempts     Int       @default(0)
   lockedUntil        DateTime?

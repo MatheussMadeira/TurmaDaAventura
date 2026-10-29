@@ -1,7 +1,7 @@
 'use client';
 
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
-import { Icon, type IconName } from '../Icon';
+import { Icon, type AnyIconName } from '../Icon';
 import {
   StyledAnchor,
   StyledButton,
@@ -16,8 +16,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** primary = verde (ação principal); earth = marrom (secundária forte); inverse/ghost-inverse só sobre surface-forest */
   variant?: ButtonVariant;
   size?: ButtonSize;
-  iconLeft?: IconName;
-  iconRight?: IconName;
+  iconLeft?: AnyIconName;
+  iconRight?: AnyIconName;
   fullWidth?: boolean;
   /** Com href renderiza <a> (links internos usam next/link; externos: passe target/rel) */
   href?: string;
