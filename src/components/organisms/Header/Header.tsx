@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useReducedMotion } from 'framer-motion';
 import { NAV_ITEMS, type NavItem } from '@/lib/nav';
@@ -44,11 +44,12 @@ export function Header({
   const { scrolled, hidden } = useScrollDirection(isStatic);
   const listId = useId();
 
-  /* O sublinhado só "se desenha" na primeira montagem; depois apenas desliza (layoutId). */
-  const firstDraw = useRef(true);
-  useEffect(() => {
-    firstDraw.current = false;
-  }, []);
+  /* O sublinhado só "se desenha" enquanto não houve hover/foco; depois apenas desliza (layoutId). */
+  const [interacted, setInteracted] = useState(false);
+  const point = (href: string) => {
+    setInteracted(true);
+    setHovered(href);
+  };
 
   const underlineAt = hovered ?? active;
 
@@ -73,15 +74,15 @@ export function Header({
                   <NavLink
                     href={it.href}
                     aria-current={isActive ? 'page' : undefined}
-                    onMouseEnter={() => setHovered(it.href)}
-                    onFocus={() => setHovered(it.href)}
+                    onMouseEnter={() => point(it.href)}
+                    onFocus={() => point(it.href)}
                     onClick={() => setOpen(false)}
                   >
                     {it.label}
                     {underlineAt === it.href ? (
                       <Underline
                         layoutId="nav-underline"
-                        initial={firstDraw.current ? { scaleX: 0 } : false}
+                        initial={interacted ? false : { scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{
                           duration: dur.slow,

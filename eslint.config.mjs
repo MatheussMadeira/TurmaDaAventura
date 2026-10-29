@@ -1,12 +1,11 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier';
 
-const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
-
-const config = [
-  { ignores: ['_handoff/**', '.next/**', 'node_modules/**', 'next-env.d.ts'] },
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
-];
-
-export default config;
+export default defineConfig([
+  globalIgnores(['_handoff/**', '.next/**', 'node_modules/**', 'next-env.d.ts']),
+  ...nextVitals,
+  ...nextTs,
+  prettier,
+]);
