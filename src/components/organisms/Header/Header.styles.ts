@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { m } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 import { media } from '@/design-system/media';
 
@@ -63,6 +62,7 @@ export const Inner = styled.div`
 `;
 
 export const Nav = styled.nav`
+  position: relative;
   margin-left: auto;
 
   ${media.containerDown('tda-header', 'bp-lg')} {
@@ -136,20 +136,38 @@ export const NavLink = styled(Link)`
   }
 `;
 
-/* Sublinhado tracejado que acompanha hover/foco (layoutId="nav-underline") e se desenha na página ativa. */
-export const Underline = styled(m.span)`
+/* Indicador único (tracejado) que acompanha hover/foco e marca a página ativa.
+   Posição e largura vêm das medidas dos links: translateX(x) scaleX(w / 100). O tracejado é em % para
+   escalar junto (sempre 10 traços por link). Só transform/opacity, com dur-medium + ease-enter. */
+export const Indicator = styled.span`
   position: absolute;
-  left: var(--space-3);
-  right: var(--space-3);
+  left: 0;
   bottom: 6px;
+  width: 100px;
   height: 3px;
   border-radius: 2px;
-  background: repeating-linear-gradient(90deg, var(--brand) 0 6px, transparent 6px 10px);
+  background: repeating-linear-gradient(90deg, var(--brand) 0 6%, transparent 6% 10%);
   transform-origin: left;
   pointer-events: none;
+  opacity: 0;
+
+  &[data-phase='placed'] {
+    opacity: 1;
+  }
+  &[data-phase='draw'] {
+    opacity: 1;
+    transition: transform var(--dur-slow) var(--ease-enter);
+  }
+  &[data-phase='on'] {
+    opacity: 1;
+    transition: transform var(--dur-medium) var(--ease-enter);
+  }
 
   ${media.containerDown('tda-header', 'bp-lg')} {
     display: none;
+  }
+  ${media.reducedMotion} {
+    transition: none !important;
   }
 `;
 

@@ -45,3 +45,10 @@ window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
 /* axe-core tenta usar canvas (ícones/cores); jsdom não implementa — evita o ruído de "Not implemented". */
 HTMLCanvasElement.prototype.getContext = (() =>
   null) as unknown as typeof HTMLCanvasElement.prototype.getContext;
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+vi.stubGlobal('ResizeObserver', ResizeObserverMock);

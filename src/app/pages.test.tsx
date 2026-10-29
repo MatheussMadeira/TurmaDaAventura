@@ -6,6 +6,7 @@ import { renderWithProviders } from '@/test/render';
 import HomePage from './(site)/page';
 import OficinaPage from './(site)/oficina/page';
 import RestaurantesPage from './(site)/restaurantes/page';
+import { getRestaurantGroups } from '@/lib/content';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
 
@@ -111,5 +112,48 @@ describe('Oficina — filtro', () => {
       'aria-pressed',
       'true',
     );
+  });
+});
+
+describe('restaurantes — endereço e overline', () => {
+  it('endereços sem o bairro em todos os registros', () => {
+    const groups = getRestaurantGroups();
+    expect(groups.length).toBeGreaterThan(0);
+    for (const r of groups.flatMap((g) => g.restaurants)) {
+      expect(r.address).not.toContain('·');
+      expect(r.address).not.toContain(r.neighborhood);
+    }
+  });
+
+  it('Início: overline "{bairro} · {região}" (ex.: Pinheiros · Zona Oeste)', () => {
+    const { container } = renderWithProviders(<HomePage />);
+    const overlines = [
+      ...container.querySelectorAll('[data-section="Inicio/OndeEsta"] article .overline'),
+    ].map((el) => el.textContent);
+    expect(overlines).toEqual([
+      'Pinheiros · Zona Oeste',
+      'Granja Viana · Zona Oeste',
+      'Moema · Zona Sul',
+    ]);
+  });
+
+  it('Restaurantes: overline é só o bairro (a região já é o título do grupo)', () => {
+    const { container } = renderWithProviders(<RestaurantesPage />);
+    const overlines = [
+      ...container.querySelectorAll('[data-section="Restaurantes/Lista"] article .overline'),
+    ].map((el) => el.textContent);
+    expect(overlines).toEqual([
+      'Pinheiros',
+      'Vila Madalena',
+      'Granja Viana',
+      'Moema',
+      'Campo Belo',
+      'Brooklin',
+    ]);
+    expect(
+      [...container.querySelectorAll('[data-section="Restaurantes/Lista"] h2')].map(
+        (h) => h.textContent,
+      ),
+    ).toEqual(['Zona Oeste e Granja Viana', 'Zona Sul']);
   });
 });

@@ -20,11 +20,15 @@ export interface Restaurant {
   image: string | null;
   imageAlt: string;
   destaqueHome: boolean;
+  /** região (nome curto) a que o restaurante pertence */
+  regionShortName: string;
 }
 
 export interface RestaurantGroup {
   id: string;
   name: string;
+  /** nome curto da região, usado no overline dos cards da Início ("Pinheiros · Zona Oeste") */
+  shortName: string;
   restaurants: Restaurant[];
 }
 
@@ -66,6 +70,7 @@ export function getRestaurantGroups(): RestaurantGroup[] {
     .map((g) => ({
       id: g.id,
       name: g.nome,
+      shortName: g.nomeCurto ?? g.nome,
       restaurants: g.restaurantes
         .filter((r) => r.publicado)
         .map((r) => ({
@@ -79,6 +84,7 @@ export function getRestaurantGroups(): RestaurantGroup[] {
           image: r.image,
           imageAlt: r.imageAlt,
           destaqueHome: r.destaqueHome,
+          regionShortName: g.nomeCurto ?? g.nome,
         })),
     }))
     .filter((g) => g.restaurants.length > 0);

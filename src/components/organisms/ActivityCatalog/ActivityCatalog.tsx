@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence, LayoutGroup, m } from 'framer-motion';
 import styled from 'styled-components';
 import { media } from '@/design-system/media';
+import { LayoutMotion } from '@/motion/LayoutMotion';
 import { dur, ease } from '@/motion/tokens';
 import { Reveal } from '@/motion/Reveal';
 import type { IconName } from '../../atoms/Icon';
@@ -79,53 +80,57 @@ export function ActivityCatalog({ categories, activities }: ActivityCatalogProps
   const visible = activities.filter((a) => cat === ALL || a.categoria === cat);
 
   return (
-    <Stack>
-      <FilterChips
-        label="Filtrar atividades por categoria"
-        options={options}
-        value={cat}
-        onChange={setCat}
-      />
-      <VisuallyHidden role="status" aria-live="polite">
-        {visible.length === 1 ? 'Mostrando 1 atividade' : `Mostrando ${visible.length} atividades`}
-      </VisuallyHidden>
-      <Reveal effect="fade">
-        <LayoutGroup>
-          <Cards>
-            <AnimatePresence mode="popLayout" initial={false}>
-              {visible.map((a) => (
-                <Item
-                  key={a.slug}
-                  layout
-                  initial={{ opacity: 0, scale: 0.94 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    transition: { duration: dur.medium, ease: ease.enter },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.94,
-                    transition: { duration: dur.medium, ease: ease.exit },
-                  }}
-                  transition={{ layout: { duration: dur.medium, ease: ease.enter } }}
-                >
-                  <ServiceCard
-                    image={a.image}
-                    imageAlt={a.imageAlt}
-                    icon={a.icon}
-                    overline={a.categoria}
-                    title={a.title}
-                    description={a.description}
-                    tags={a.tags}
-                    placeholderId={`act-${a.slug}`}
-                  />
-                </Item>
-              ))}
-            </AnimatePresence>
-          </Cards>
-        </LayoutGroup>
-      </Reveal>
-    </Stack>
+    <LayoutMotion>
+      <Stack>
+        <FilterChips
+          label="Filtrar atividades por categoria"
+          options={options}
+          value={cat}
+          onChange={setCat}
+        />
+        <VisuallyHidden role="status" aria-live="polite">
+          {visible.length === 1
+            ? 'Mostrando 1 atividade'
+            : `Mostrando ${visible.length} atividades`}
+        </VisuallyHidden>
+        <Reveal effect="fade">
+          <LayoutGroup>
+            <Cards>
+              <AnimatePresence mode="popLayout" initial={false}>
+                {visible.map((a) => (
+                  <Item
+                    key={a.slug}
+                    layout
+                    initial={{ opacity: 0, scale: 0.94 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      transition: { duration: dur.medium, ease: ease.enter },
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.94,
+                      transition: { duration: dur.medium, ease: ease.exit },
+                    }}
+                    transition={{ layout: { duration: dur.medium, ease: ease.enter } }}
+                  >
+                    <ServiceCard
+                      image={a.image}
+                      imageAlt={a.imageAlt}
+                      icon={a.icon}
+                      overline={a.categoria}
+                      title={a.title}
+                      description={a.description}
+                      tags={a.tags}
+                      placeholderId={`act-${a.slug}`}
+                    />
+                  </Item>
+                ))}
+              </AnimatePresence>
+            </Cards>
+          </LayoutGroup>
+        </Reveal>
+      </Stack>
+    </LayoutMotion>
   );
 }

@@ -160,7 +160,7 @@ export default function HomePage() {
             <RestaurantCard
               key={r.slug}
               name={r.name}
-              neighborhood={r.neighborhood}
+              neighborhood={`${r.neighborhood} · ${r.regionShortName}`}
               schedule={r.schedule}
               address={r.address}
               ages={r.ages}

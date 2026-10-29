@@ -10,12 +10,21 @@ export const fraunces = localFont({
   display: 'swap',
 });
 
+/* Itálica enxuta (scripts/build-fonts.py): wght 400 / opsz 36 / SOFT 100 / WONK 0, Latin + PT-BR, ~20 KB.
+   O arquivo original Fraunces-Variable-Italic.woff2 continua em public/fonts, sem alteração. */
 export const frauncesItalic = localFont({
-  src: [{ path: '../../public/fonts/Fraunces-Variable-Italic.woff2', style: 'italic' }],
-  weight: '100 900',
+  src: [
+    { path: '../../public/fonts/Fraunces-Italic-subset.woff2', style: 'italic', weight: '400' },
+  ],
   variable: '--font-fraunces-italic',
-  display: 'swap',
   preload: false,
+  display: 'swap',
+  declarations: [
+    {
+      prop: 'unicode-range',
+      value: 'U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+2013-2014, U+2018-201E, U+2026',
+    },
+  ],
 });
 
 export const nunito = localFont({

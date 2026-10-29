@@ -10,7 +10,7 @@
           "name": "Cantina do Bosque",
           "neighborhood": "Pinheiros",
           "schedule": "Sáb e dom, 12h às 17h",
-          "address": "Rua das Acácias, 000 · Pinheiros",
+          "address": "Rua das Acácias, 000",
           "ages": "De 3 a 10 anos",
           "mapsUrl": "",
           "image": null,
@@ -23,7 +23,7 @@
           "name": "Empório Jatobá",
           "neighborhood": "Vila Madalena",
           "schedule": "Sex, 19h às 23h · Sáb, 12h às 16h",
-          "address": "Rua dos Jatobás, 000 · Vila Madalena",
+          "address": "Rua dos Jatobás, 000",
           "ages": "De 4 a 12 anos",
           "mapsUrl": "",
           "image": null,
@@ -36,7 +36,7 @@
           "name": "Rancho Cedro",
           "neighborhood": "Granja Viana",
           "schedule": "Sáb, dom e feriados, 11h às 17h",
-          "address": "Estrada do Cedro, km 0 · Cotia",
+          "address": "Estrada do Cedro, km 0",
           "ages": "De 3 a 12 anos",
           "mapsUrl": "",
           "image": null,
@@ -44,7 +44,8 @@
           "destaqueHome": true,
           "publicado": true
         }
-      ]
+      ],
+      "nomeCurto": "Zona Oeste"
     },
     {
       "id": "zona-sul",
@@ -55,7 +56,7 @@
           "name": "Brasa & Lenha",
           "neighborhood": "Moema",
           "schedule": "Sáb e dom, 12h às 16h",
-          "address": "Alameda dos Ipês, 000 · Moema",
+          "address": "Alameda dos Ipês, 000",
           "ages": "De 3 a 12 anos",
           "mapsUrl": "",
           "image": null,
@@ -68,7 +69,7 @@
           "name": "Quintal Ipê",
           "neighborhood": "Campo Belo",
           "schedule": "Dom, 12h às 17h",
-          "address": "Rua do Quintal, 000 · Campo Belo",
+          "address": "Rua do Quintal, 000",
           "ages": "De 2 a 8 anos",
           "mapsUrl": "",
           "image": null,
@@ -81,7 +82,7 @@
           "name": "Trattoria Serra",
           "neighborhood": "Brooklin",
           "schedule": "Sáb e dom, 12h às 17h",
-          "address": "Rua da Serra, 000 · Brooklin",
+          "address": "Rua da Serra, 000",
           "ages": "De 3 a 12 anos",
           "mapsUrl": "",
           "image": null,
@@ -89,7 +90,8 @@
           "destaqueHome": false,
           "publicado": true
         }
-      ]
+      ],
+      "nomeCurto": "Zona Sul"
     }
   ]
 }
