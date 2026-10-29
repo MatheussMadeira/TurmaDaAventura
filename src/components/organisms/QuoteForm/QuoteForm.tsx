@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useReducedMotion } from 'framer-motion';
 import { trackWhatsappClick } from '@/lib/analytics';
 import { setQuoteVisible } from '@/lib/quoteVisibility';
+import { prepareWhatsappLaunch, type WhatsappLaunch } from '@/lib/openWhatsapp';
 import { buildQuoteMessage, whatsappUrl } from '@/lib/whatsapp';
 import { dur } from '@/motion/tokens';
 import { useInView } from '@/motion/useInView';
@@ -34,7 +35,7 @@ export interface QuoteFormProps {
   defaultType?: string;
   /** rótulo do campo de nome (ex.: "Seu nome e empresa") */
   nameLabel?: string;
-  /** recebe a URL wa.me já montada; sem ele o form abre o WhatsApp numa nova aba */
+  /** recebe a URL wa.me já montada; sem ele o form abre o WhatsApp (nova aba no desktop, mesma aba no mobile) */
   onSubmit?: (whatsappUrl: string, values: QuoteFormValues) => void;
   className?: string;
   /** Só documentação (/_dev/componentes): valores e erros iniciais. */
@@ -79,6 +80,7 @@ export function QuoteForm({
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const formRef = useRef<HTMLFormElement>(null);
   const timers = useRef<number[]>([]);
+  const launch = useRef<WhatsappLaunch | null>(null);
 
   const [values, setValues] = useState<QuoteFormValues>({
     ...EMPTY,
@@ -101,7 +103,10 @@ export function QuoteForm({
 
   useEffect(() => {
     const pending = timers.current;
-    return () => pending.forEach((t) => window.clearTimeout(t));
+    return () => {
+      pending.forEach((t) => window.clearTimeout(t));
+      launch.current?.abort();
+    };
   }, []);
 
   /* Depois de um envio inválido, foca o primeiro campo com erro. */
@@ -141,14 +146,21 @@ export function QuoteForm({
       phone,
     );
     trackWhatsappClick({ page: pathname ?? '/', placement: 'form' });
+    /* A aba do WhatsApp é aberta AGORA, dentro do gesto do usuário (senão o navegador bloqueia o
+       popup depois da animação); no mobile a navegação é na mesma aba. Ver lib/openWhatsapp.ts. */
+    launch.current = onSubmit ? null : prepareWhatsappLaunch();
     setStatus('sending');
-    /* pegadas (700ms) → check carimbado (dur-medium) → abre o wa.me; com reduced-motion vai direto */
+    /* pegadas (700ms) → check carimbado (dur-medium) → wa.me; com reduced-motion vai direto */
     later(() => {
       setStatus('done');
       later(() => {
         setStatus('idle');
         if (onSubmit) onSubmit(url, values);
-        else window.open(url, '_blank', 'noopener');
+        else {
+          const l = launch.current;
+          launch.current = null;
+          l?.open(url);
+        }
       }, dur.medium * 1000);
     }, 700);
   };

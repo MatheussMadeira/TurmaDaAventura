@@ -158,7 +158,7 @@ export const Cta = styled.div`
     order: 2;
     margin-left: auto;
   }
-  @container tda-header (max-width: 420px) {
+  @container tda-header (max-width: 359px) {
     display: none;
   }
 `;
@@ -183,7 +183,7 @@ export const Toggle = styled.button`
     display: grid;
     order: 3;
   }
-  @container tda-header (max-width: 420px) {
+  @container tda-header (max-width: 359px) {
     margin-left: auto;
   }
 `;

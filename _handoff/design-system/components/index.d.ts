@@ -283,7 +283,8 @@ export interface WhatsAppFloatProps {
 }
 export declare function WhatsAppFloat(props: WhatsAppFloatProps): React.ReactElement;
 
-export declare function whatsappUrl(phone?: string, message?: string): string;
+/** Única função de link do WhatsApp (src/lib/whatsapp.ts): mensagem primeiro; sem phone usa NEXT_PUBLIC_WHATSAPP. */
+export declare function whatsappUrl(message?: string, phone?: string): string;
 
 declare global {
   interface Window {

@@ -105,7 +105,7 @@ Hook sugerido: `useScrollDirection()` → `{ scrolled: y > 8, hidden: y > 240 &&
 | --- | --- | --- | --- | --- |
 | Foco | anel `brand-soft` + `focus` | dur-medium | ease-enter | sem transição |
 | Erro | campo chacoalha 3× ±4px; msg desce y −6 → 0; alerta “Revise N campos” no topo | 300ms / dur-medium | ease-standard / ease-enter | sem chacoalho |
-| Envio | pegadas + “Abrindo o WhatsApp…” (700ms) → check stamp → abre wa.me | 700ms + dur-medium | ease-stamp | redireciona na hora |
+| Envio | pegadas + “Abrindo o WhatsApp…” (700ms) → check stamp → wa.me. Desktop: aba aberta de forma síncrona no clique e navegada ao fim; mobile (pointer: coarse): mesma aba (`lib/openWhatsapp.ts`) | 700ms + dur-medium | ease-stamp | abre na hora |
 
 Props novos pedidos pelo design: `defaultType` (tipo pré-selecionado) e `nameLabel` (“Seu nome e empresa”).
 
