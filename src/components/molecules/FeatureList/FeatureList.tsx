@@ -8,6 +8,8 @@ export interface FeatureItem {
   icon: IconName;
   title: string;
   text?: string;
+  /** cor deste selo; padrão = a do FeatureList */
+  tone?: 'brand' | 'olive' | 'earth';
 }
 
 export interface FeatureListProps {
@@ -24,7 +26,7 @@ export function FeatureList({ items, tone = 'brand', columns = 3, className }: F
     <Grid forwardedAs="ul" stagger $columns={columns} className={className}>
       {items.map((it) => (
         <Feature key={it.title}>
-          <Seal $tone={tone}>
+          <Seal $tone={it.tone ?? tone}>
             <Icon name={it.icon} size={26} />
           </Seal>
           <div>

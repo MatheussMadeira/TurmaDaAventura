@@ -30,6 +30,7 @@ const OFFSETS = [-200, 0, 200];
 export function CamoPattern({ tone = 'full', id, scale = 1, className }: CamoPatternProps) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const pid = `tda-camo-${id ?? tone}-${uid}`;
+  const gid = `${pid}-g`;
   return (
     <Svg
       $tone={tone}
@@ -48,13 +49,16 @@ export function CamoPattern({ tone = 'full', id, scale = 1, className }: CamoPat
           patternTransform={`scale(${scale})`}
         >
           <rect width={200} height={200} className="ground" />
+          {/* As manchas vazam pelas bordas do tile; as 8 cópias vizinhas fecham a emenda.
+              Desenhamos o conjunto uma vez e reaproveitamos com <use> (8 + 8 nós, não 72). */}
+          <g id={gid}>
+            {BLOBS.map(([cls, d], i) => (
+              <path key={i} d={d} className={cls} />
+            ))}
+          </g>
           {OFFSETS.flatMap((dx) =>
-            OFFSETS.map((dy) => (
-              <g key={`${dx}_${dy}`} transform={`translate(${dx} ${dy})`}>
-                {BLOBS.map(([cls, d], i) => (
-                  <path key={i} d={d} className={cls} />
-                ))}
-              </g>
+            OFFSETS.filter((dy) => dx !== 0 || dy !== 0).map((dy) => (
+              <use key={`${dx}_${dy}`} href={`#${gid}`} transform={`translate(${dx} ${dy})`} />
             )),
           )}
         </pattern>

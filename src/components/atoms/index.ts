@@ -7,3 +7,5 @@ export * from './Media';
 export * from './CamoPattern';
 export * from './TextField';
 export * from './Select';
+export * from './Panel';
+export * from './VisuallyHidden';

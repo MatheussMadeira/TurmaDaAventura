@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
+import { devMetadata, devOnly } from '../guard';
 import { ComponentesView } from './ComponentesView';
 
-export const metadata: Metadata = { title: 'Componentes', robots: { index: false } };
+export const metadata = devMetadata('Componentes');
 
 export default function ComponentesPage() {
+  devOnly();
   return <ComponentesView />;
 }

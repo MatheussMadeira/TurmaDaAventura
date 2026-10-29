@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { GlobalStyle } from '@/design-system/GlobalStyle';
 import { StyledComponentsRegistry } from '@/design-system/StyledComponentsRegistry';
 import { MotionProvider } from '@/motion/MotionProvider';
-import { fraunces, nunito } from './fonts';
+import { fraunces, frauncesItalic, nunito } from './fonts';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
@@ -17,7 +17,11 @@ export const viewport: Viewport = { themeColor: '#1F632A' };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR" data-theme="dia" className={`${fraunces.variable} ${nunito.variable}`}>
+    <html
+      lang="pt-BR"
+      data-theme="dia"
+      className={`${fraunces.variable} ${frauncesItalic.variable} ${nunito.variable}`}
+    >
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />

@@ -199,5 +199,6 @@ export const cssVars = `
   --z-overlay: 100;
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
   --font-body: var(--font-nunito), "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-display-italic: var(--font-fraunces-italic), var(--font-fraunces), "Iowan Old Style", Georgia, serif;
 }
 `;

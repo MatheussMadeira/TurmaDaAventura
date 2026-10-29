@@ -78,6 +78,18 @@ const families = Object.entries(tokens.type.families).map(
   ([key, value]) => `  --font-${key}: ${fontVar(value)};`,
 );
 
+/* A itálica da Fraunces (só o .tagline) é uma instância à parte do next/font, sem preload:
+   não disputa banda com o que pinta a primeira dobra. A Nunito itálica não é carregada (sem uso). */
+const ITALIC_FAMILIES = ['display'];
+const italicFamilies = ITALIC_FAMILIES.map((key) => {
+  const value = tokens.type.families[key] ?? '';
+  const stack = value.replace(/^"?(\w+)"?/, (_, name: string) => {
+    const n = name.toLowerCase();
+    return `var(--font-${n}-italic), var(--font-${n})`;
+  });
+  return `  --font-${key}-italic: ${stack};`;
+});
+
 const dia = [...themed(tokens.color.tokens, 'dia'), ...themed(tokens.shadow.tokens, 'dia')];
 const noite = [...themed(tokens.color.tokens, 'noite'), ...themed(tokens.shadow.tokens, 'noite')];
 
@@ -89,7 +101,7 @@ ${dia.join('\n')}
 ${noite.join('\n')}
 }
 :root {
-${[...scalars, ...families].join('\n')}
+${[...scalars, ...families, ...italicFamilies].join('\n')}
 }
 \`;
 `;

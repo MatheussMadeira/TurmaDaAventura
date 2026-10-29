@@ -34,7 +34,7 @@ import {
   type ButtonVariant,
 } from '@/components';
 
-const Page = styled.div`
+const Page = styled.main`
   background: var(--surface);
   color: var(--ink);
   min-height: 100vh;
@@ -164,7 +164,7 @@ export function ComponentesView() {
   const [filter, setFilter] = useState('todas');
 
   return (
-    <Page data-theme={theme}>
+    <Page id="conteudo" data-theme={theme}>
       <Bar>
         <strong className="label">/_dev/componentes</strong>
         <Button

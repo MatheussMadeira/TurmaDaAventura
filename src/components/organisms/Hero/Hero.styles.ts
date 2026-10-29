@@ -3,8 +3,9 @@ import { media } from '@/design-system/media';
 
 /* Sequência ao carregar em CSS (não espera hidratação): textos 0/80/160/240/320ms,
    foto 120ms, moldura 220ms, pata 480ms. */
+/* opacity inicial 0.01 (não 0): com 0 o Chrome ignora o texto como candidato a LCP — ver motion/Entrance.tsx */
 const inUp = keyframes`
-  from { opacity: 0; transform: translateY(var(--move-md)); }
+  from { opacity: 0.01; transform: translateY(var(--move-md)); }
   to { opacity: 1; transform: none; }
 `;
 const photoIn = keyframes`

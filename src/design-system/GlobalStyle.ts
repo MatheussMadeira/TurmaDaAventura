@@ -14,7 +14,7 @@ const textClass = (name: keyof typeof theme.text) => {
     s.family === 'display'
       ? `font-variation-settings: 'opsz' ${s.opticalSize}, 'SOFT' 100, 'WONK' 0;`
       : '';
-  return `.${name} { font: ${style}${s.fontWeight} ${s.fontSize}/${s.lineHeight} var(--font-${s.family}); ${letter} ${upper} ${variation} }`;
+  return `.${name} { font: ${style}${s.fontWeight} ${s.fontSize}/${s.lineHeight} var(--font-${s.family}${s.fontStyle === 'italic' ? '-italic' : ''}); ${letter} ${upper} ${variation} }`;
 };
 
 const classes = (Object.keys(theme.text) as (keyof typeof theme.text)[]).map(textClass).join('\n');

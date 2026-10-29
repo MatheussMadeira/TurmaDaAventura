@@ -8,3 +8,8 @@ export * from './FilterChips';
 export * from './Stat';
 export * from './FeatureList';
 export * from './LogoStrip';
+export * from './TextLink';
+export * from './CheckList';
+export * from './BenefitPanel';
+export * from './RegionHeading';
+export * from './StoryMedia';

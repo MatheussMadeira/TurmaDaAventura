@@ -1,0 +1,77 @@
+{
+  "_nota": "Nomes fictícios do design — substituir pela equipe real.",
+  "equipe": [
+    {
+      "nickname": "Capitão Trilha",
+      "name": "Rafael",
+      "role": "Coordenador de expedições",
+      "bio": "Desenha os roteiros e garante que cada atividade caiba no espaço.",
+      "badges": [
+        "Primeiros socorros",
+        "Educação física"
+      ],
+      "photo": null,
+      "visivel": true
+    },
+    {
+      "nickname": "Dona Bússola",
+      "name": "Beatriz",
+      "role": "Coordenadora pedagógica",
+      "bio": "Adapta cada brincadeira à faixa etária e forma novos monitores.",
+      "badges": [
+        "Primeiros socorros",
+        "Pedagogia"
+      ],
+      "photo": null,
+      "visivel": true
+    },
+    {
+      "nickname": "Mestre Pipa",
+      "name": "Caio",
+      "role": "Monitor de oficinas",
+      "bio": "Transforma papel, vareta e sucata em brinquedo e orgulho.",
+      "badges": [
+        "Primeiros socorros",
+        "Arte-educação"
+      ],
+      "photo": null,
+      "visivel": true
+    },
+    {
+      "nickname": "Fada da Horta",
+      "name": "Luana",
+      "role": "Monitora de natureza",
+      "bio": "Leva as crianças para plantar, observar e cuidar.",
+      "badges": [
+        "Primeiros socorros",
+        "Biologia"
+      ],
+      "photo": null,
+      "visivel": true
+    },
+    {
+      "nickname": "Guia Faísca",
+      "name": "Diego",
+      "role": "Monitor de gincanas",
+      "bio": "Comanda as equipes, os desafios e as medalhas de expedição.",
+      "badges": [
+        "Primeiros socorros",
+        "Recreação"
+      ],
+      "photo": null,
+      "visivel": true
+    },
+    {
+      "nickname": "Sentinela Sol",
+      "name": "Marina",
+      "role": "Monitora de segurança",
+      "bio": "Cuida do check-in, das pulseiras e da entrega aos responsáveis.",
+      "badges": [
+        "Primeiros socorros",
+        "Brigadista"
+      ],
+      "photo": null,
+      "visivel": true
+    }
+  ]
+}
