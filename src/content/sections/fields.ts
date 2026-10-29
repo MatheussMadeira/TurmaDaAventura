@@ -10,6 +10,8 @@ export interface FieldMeta {
   max?: number;
   hint?: string;
   multiline?: boolean;
+  /** só em campos de foto: proporção do slot, ex.: "5 / 4" (recorte do editor) */
+  ratio?: string;
 }
 
 /** Texto puro, com limite de caracteres. `optional` aceita vazio ("" = ausente). */
@@ -31,12 +33,12 @@ export const tone = (label = 'Cor do selo') =>
   z.enum(['brand', 'olive', 'earth']).meta({ label } satisfies FieldMeta);
 
 /** Referência a uma foto da biblioteca (Media). `null` = placeholder de camuflagem. */
-export const mediaId = (label = 'Foto') =>
+export const mediaId = (label = 'Foto', ratio = '4 / 3') =>
   z
     .string()
     .min(1)
     .nullable()
-    .meta({ label } satisfies FieldMeta);
+    .meta({ label, ratio } satisfies FieldMeta);
 
 /** Link interno (/pagina), âncora (#id) ou externo (https://…). */
 export const href = (label = 'Link') =>

@@ -32,7 +32,6 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
         label: 'Editor visual',
         icon: 'edit',
         permission: 'site',
-        soon: true,
       },
       {
         href: '/admin/fotos',

@@ -10,7 +10,10 @@ config({ path: '.env.local' });
  * (o client gerado do Prisma 7 é ESM; o Playwright carrega os testes como CJS).
  * E-mails @teste.invalid; removidos ao final. As senhas existem só durante o teste.
  */
-const pool = new Pool({ connectionString: process.env.DIRECT_URL ?? process.env.DATABASE_URL });
+const pool = new Pool({
+  connectionString: process.env.DIRECT_URL ?? process.env.DATABASE_URL,
+  idleTimeoutMillis: 2000, // vários specs dividem o processo: a conexão expira sozinha, sem pool.end()
+});
 
 export const TEST_DOMAIN = '@teste.invalid';
 export const GOOD = 'Senha-Boa-2026';
@@ -86,5 +89,55 @@ export async function cleanup() {
     [`%${TEST_DOMAIN}`],
   );
   await pool.query(`delete from "User" where email like $1`, [`%${TEST_DOMAIN}`]);
-  await pool.end();
+}
+
+/* ---- conteúdo das páginas (editor visual): foto do estado antes do teste, para devolver depois ---- */
+interface SectionRow {
+  id: string;
+  key: string;
+  order: number;
+  visible: boolean;
+  draft: unknown;
+  published: unknown;
+  publishedOrder: number | null;
+  publishedVisible: boolean | null;
+  updatedById: string | null;
+}
+
+export async function snapshotSections(slug: string): Promise<SectionRow[]> {
+  const { rows } = await pool.query(
+    `select s.id, s.key, s."order", s.visible, s.draft, s.published, s."publishedOrder",
+            s."publishedVisible", s."updatedById"
+       from "Section" s join "Page" p on p.id = s."pageId" where p.slug = $1`,
+    [slug],
+  );
+  return rows as SectionRow[];
+}
+
+export async function restoreSections(rows: SectionRow[]) {
+  for (const r of rows) {
+    await pool.query(
+      `update "Section" set "order" = $2, visible = $3, draft = $4::jsonb, published = $5::jsonb,
+              "publishedOrder" = $6, "publishedVisible" = $7, "updatedById" = $8 where id = $1`,
+      [
+        r.id,
+        r.order,
+        r.visible,
+        JSON.stringify(r.draft),
+        r.published == null ? null : JSON.stringify(r.published),
+        r.publishedOrder,
+        r.publishedVisible,
+        r.updatedById,
+      ],
+    );
+  }
+}
+
+export async function sectionRow(slug: string, key: string) {
+  const { rows } = await pool.query(
+    `select s.draft, s.published, s."order", s.visible from "Section" s
+       join "Page" p on p.id = s."pageId" where p.slug = $1 and s.key = $2`,
+    [slug, key],
+  );
+  return rows[0] as { draft: any; published: any; order: number; visible: boolean }; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

@@ -10,7 +10,7 @@ const hero = z.object({
   overline: text('Sobre-título', 40, { optional: true }),
   title: text('Título', 70),
   lead: text('Texto de abertura', 320, { multiline: true }),
-  imageId: mediaId('Foto do hero (5:4)'),
+  imageId: mediaId('Foto do hero', '5 / 4'),
   imageAlt: text('Descrição da foto', 160, { hint: 'Usada enquanto não houver foto cadastrada.' }),
   ctaLabel: text('Texto do botão principal', 40, { optional: true }),
   secondary: z.object({
@@ -107,7 +107,7 @@ const ownerPanel = z.object({
     .length(4),
   ctaLabel: text('Texto do botão', 50),
   ctaMessage: text('Mensagem do WhatsApp', 200, { multiline: true }),
-  imageId: mediaId('Foto (4:5)'),
+  imageId: mediaId('Foto', '4 / 5'),
   imageAlt: text('Descrição da foto', 160),
 });
 
@@ -137,7 +137,7 @@ const history = z.object({
   lead: text('Primeiro parágrafo', 320, { multiline: true }),
   body: text('Segundo parágrafo', 420, { multiline: true }),
   tagline: text('Slogan', 50),
-  imageId: mediaId('Foto (5:4)'),
+  imageId: mediaId('Foto', '5 / 4'),
   imageAlt: text('Descrição da foto', 160),
 });
 

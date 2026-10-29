@@ -19,6 +19,8 @@ export interface DialogProps {
   closeOnBackdrop?: boolean;
   /** role="alertdialog" para confirmações destrutivas */
   alert?: boolean;
+  /** folha inferior (celular): encosta embaixo, largura toda */
+  sheet?: boolean;
 }
 
 /**
@@ -34,6 +36,7 @@ export function Dialog({
   wide,
   closeOnBackdrop = true,
   alert,
+  sheet,
 }: DialogProps) {
   const ref = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -101,6 +104,7 @@ export function Dialog({
 
   return createPortal(
     <Overlay
+      $sheet={sheet}
       data-theme={document.documentElement.dataset.theme}
       onMouseDown={(e) => {
         if (closeOnBackdrop && e.target === e.currentTarget) onClose();
@@ -113,6 +117,7 @@ export function Dialog({
         aria-labelledby={titleId}
         tabIndex={-1}
         $wide={wide}
+        $sheet={sheet}
       >
         <DialogTitle id={titleId}>{title}</DialogTitle>
         <div
@@ -128,27 +133,27 @@ export function Dialog({
   );
 }
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ $sheet?: boolean }>`
   position: fixed;
   inset: 0;
   z-index: var(--z-overlay);
   display: grid;
-  place-items: center;
-  padding: var(--space-5);
+  place-items: ${({ $sheet }) => ($sheet ? 'end center' : 'center')};
+  padding: ${({ $sheet }) => ($sheet ? '0' : 'var(--space-5)')};
   background: var(--scrim);
   overflow-y: auto;
   color: var(--ink);
   font-family: var(--font-body);
 `;
-const Panel = styled.div<{ $wide?: boolean }>`
+const Panel = styled.div<{ $wide?: boolean; $sheet?: boolean }>`
   width: 100%;
-  max-width: ${({ $wide }) => ($wide ? '1040px' : '560px')};
-  max-height: calc(100vh - 2 * var(--space-5));
+  max-width: ${({ $wide, $sheet }) => ($sheet ? '100%' : $wide ? '1040px' : '560px')};
+  max-height: ${({ $sheet }) => ($sheet ? '85vh' : 'calc(100vh - 2 * var(--space-5))')};
   overflow-y: auto;
   background: var(--surface-raised);
-  border-radius: var(--radius-lg);
+  border-radius: ${({ $sheet }) => ($sheet ? 'var(--radius-lg) var(--radius-lg) 0 0' : 'var(--radius-lg)')};
   box-shadow: var(--shadow-md), var(--shadow-stamp-card);
-  padding: var(--space-6);
+  padding: ${({ $sheet }) => ($sheet ? 'var(--space-5)' : 'var(--space-6)')};
   display: flex;
   flex-direction: column;
   gap: var(--space-4);

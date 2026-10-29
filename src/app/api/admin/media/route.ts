@@ -61,6 +61,8 @@ export async function POST(req: Request) {
         id: media.id,
         url: media.url,
         alt: media.alt,
+        width: media.width,
+        height: media.height,
       });
     } catch (e) {
       const message =
