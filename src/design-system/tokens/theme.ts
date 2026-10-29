@@ -152,7 +152,10 @@ export const theme = {
       "lineHeight": "68px",
       "fontWeight": 800,
       "fontStyle": "normal",
-      "letterSpacing": "-0.02em"
+      "letterSpacing": "-0.02em",
+      "opticalSize": 36,
+      "fontSizeMobile": "40px",
+      "lineHeightMobile": "44px"
     },
     "h1": {
       "family": "display",
@@ -160,7 +163,10 @@ export const theme = {
       "lineHeight": "54px",
       "fontWeight": 800,
       "fontStyle": "normal",
-      "letterSpacing": "-0.015em"
+      "letterSpacing": "-0.015em",
+      "opticalSize": 36,
+      "fontSizeMobile": "34px",
+      "lineHeightMobile": "40px"
     },
     "h2": {
       "family": "display",
@@ -168,7 +174,10 @@ export const theme = {
       "lineHeight": "42px",
       "fontWeight": 700,
       "fontStyle": "normal",
-      "letterSpacing": "-0.01em"
+      "letterSpacing": "-0.01em",
+      "opticalSize": 36,
+      "fontSizeMobile": "28px",
+      "lineHeightMobile": "34px"
     },
     "h3": {
       "family": "display",
@@ -176,7 +185,10 @@ export const theme = {
       "lineHeight": "32px",
       "fontWeight": 700,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 36,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "h4": {
       "family": "display",
@@ -184,7 +196,10 @@ export const theme = {
       "lineHeight": "26px",
       "fontWeight": 700,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 36,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "tagline": {
       "family": "display",
@@ -192,7 +207,10 @@ export const theme = {
       "lineHeight": "30px",
       "fontWeight": 400,
       "fontStyle": "italic",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 36,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "lead": {
       "family": "body",
@@ -200,7 +218,10 @@ export const theme = {
       "lineHeight": "30px",
       "fontWeight": 500,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "body": {
       "family": "body",
@@ -208,7 +229,10 @@ export const theme = {
       "lineHeight": "27px",
       "fontWeight": 400,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "body-sm": {
       "family": "body",
@@ -216,7 +240,10 @@ export const theme = {
       "lineHeight": "23px",
       "fontWeight": 400,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "label": {
       "family": "body",
@@ -224,7 +251,10 @@ export const theme = {
       "lineHeight": "20px",
       "fontWeight": 800,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "overline": {
       "family": "body",
@@ -232,7 +262,10 @@ export const theme = {
       "lineHeight": "16px",
       "fontWeight": 800,
       "fontStyle": "normal",
-      "letterSpacing": "0.14em"
+      "letterSpacing": "0.14em",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     },
     "caption": {
       "family": "body",
@@ -240,7 +273,10 @@ export const theme = {
       "lineHeight": "18px",
       "fontWeight": 600,
       "fontStyle": "normal",
-      "letterSpacing": "normal"
+      "letterSpacing": "normal",
+      "opticalSize": 0,
+      "fontSizeMobile": "",
+      "lineHeightMobile": ""
     }
   }
 } as const;

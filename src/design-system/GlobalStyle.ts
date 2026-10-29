@@ -9,10 +9,23 @@ const textClass = (name: keyof typeof theme.text) => {
   const style = s.fontStyle === 'italic' ? 'italic ' : '';
   const letter = s.letterSpacing !== 'normal' ? `letter-spacing: ${s.letterSpacing};` : '';
   const upper = name === 'overline' ? 'text-transform: uppercase;' : '';
-  return `.${name} { font: ${style}${s.fontWeight} ${s.fontSize}/${s.lineHeight} var(--font-${s.family}); ${letter} ${upper} }`;
+  // Fraunces: eixos variáveis como no bundle.css (opsz vem do token; SOFT/WONK são fixos).
+  const variation =
+    s.family === 'display'
+      ? `font-variation-settings: 'opsz' ${s.opticalSize}, 'SOFT' 100, 'WONK' 0;`
+      : '';
+  return `.${name} { font: ${style}${s.fontWeight} ${s.fontSize}/${s.lineHeight} var(--font-${s.family}); ${letter} ${upper} ${variation} }`;
 };
 
 const classes = (Object.keys(theme.text) as (keyof typeof theme.text)[]).map(textClass).join('\n');
+
+const mobileOverrides = (Object.keys(theme.text) as (keyof typeof theme.text)[])
+  .filter((name) => theme.text[name].fontSizeMobile !== '')
+  .map((name) => {
+    const s = theme.text[name];
+    return `.${name} { font-size: ${s.fontSizeMobile}; line-height: ${s.lineHeightMobile}; }`;
+  })
+  .join('\n');
 
 export const GlobalStyle = createGlobalStyle`
   ${cssVars}
@@ -44,11 +57,9 @@ export const GlobalStyle = createGlobalStyle`
 
   ${classes}
 
-  /* Mobile (< 768px): display 40/44, h1 34/40, h2 28/34 — ver tokens.json (type.groups[].usage) */
+  /* Mobile: valores de fontSizeMobile/lineHeightMobile do tokens.json */
   @media (max-width: ${parseInt(theme.bp['bp-md'], 10) - 1}px) {
-    .display { font-size: 40px; line-height: 44px; }
-    .h1 { font-size: 34px; line-height: 40px; }
-    .h2 { font-size: 28px; line-height: 34px; }
+    ${mobileOverrides}
   }
 
   @media (prefers-reduced-motion: reduce) {

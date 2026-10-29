@@ -22,6 +22,9 @@ interface TextStyle {
   fontWeight: number;
   fontStyle?: string;
   letterSpacing?: string;
+  opticalSize?: number;
+  fontSizeMobile?: string;
+  lineHeightMobile?: string;
 }
 interface Tokens {
   color: { tokens: Token<ThemedValue>[] };
@@ -105,6 +108,9 @@ const textStyles = Object.fromEntries(
         fontWeight: s.fontWeight,
         fontStyle: s.fontStyle ?? 'normal',
         letterSpacing: s.letterSpacing ?? 'normal',
+        opticalSize: s.opticalSize ?? 0,
+        fontSizeMobile: s.fontSizeMobile ?? '',
+        lineHeightMobile: s.lineHeightMobile ?? '',
       },
     ]),
   ),
