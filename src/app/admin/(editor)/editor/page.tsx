@@ -6,7 +6,11 @@ import { NoPermission, SchemaOutdated } from '@/admin/ui/states';
 import { ToastProvider } from '@/admin/ui/Toast';
 import { PAGES } from '@/content/sections/schemas';
 import { isSchemaOutdated } from '@/lib/dbErrors';
+import { Button } from '@/components/atoms/Button';
+import { Alert } from '@/admin/ui/controls';
+import { timeAgo } from '@/lib/time';
 import { editorLibrary, loadEditorPage } from '@/server/admin/editor';
+import { otherHolder } from '@/server/admin/editLock';
 import { requirePageUser } from '@/server/auth/session';
 
 export const metadata: Metadata = { title: 'Editor visual' };
@@ -17,7 +21,7 @@ export default async function EditorPage({
 }: {
   searchParams: Promise<{ pagina?: string }>;
 }) {
-  const { allowed } = await requirePageUser('site');
+  const { user, allowed } = await requirePageUser('site');
   const theme = (await cookies()).get('tda-theme')?.value === 'noite' ? 'noite' : 'dia';
   const shell = (children: React.ReactNode) => (
     <div data-theme={theme} style={{ minHeight: '100dvh', background: 'var(--surface-sunken)' }}>
@@ -37,6 +41,33 @@ export default async function EditorPage({
     throw e;
   }
   if (!page) notFound();
+
+  // só uma pessoa edita cada página por vez: quem chega depois não entra
+  const holder = await otherHolder(slug, user.id);
+  if (holder) {
+    return shell(
+      <>
+        <Alert tone="warn" title={`${holder.name} está editando a página ${page.title}`}>
+          Começou {timeAgo(holder.since.toISOString())}. Para ninguém sobrescrever o trabalho do
+          outro, só uma pessoa edita cada página por vez. Quando ela sair, a página fica livre —
+          tente de novo em alguns minutos.
+        </Alert>
+        <div
+          style={{
+            display: 'flex',
+            gap: 'var(--space-3)',
+            marginTop: 'var(--space-5)',
+            flexWrap: 'wrap',
+          }}
+        >
+          <Button href={`/admin/editor?pagina=${slug}`}>Tentar de novo</Button>
+          <Button variant="outline" href="/admin">
+            Voltar ao painel
+          </Button>
+        </div>
+      </>,
+    );
+  }
 
   return (
     <div data-theme={theme}>

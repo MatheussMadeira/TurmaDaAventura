@@ -1,6 +1,15 @@
 import { expect, test, type Page } from '@playwright/test';
 import sharp from 'sharp';
-import { GOOD, cleanup, makeUser, restoreSections, sectionRow, snapshotSections } from './fixtures';
+import {
+  GOOD,
+  cleanup,
+  clearLocks,
+  makeUser,
+  restoreSections,
+  sectionRow,
+  snapshotSections,
+  stealLock,
+} from './fixtures';
 
 // mexem no mesmo banco de dev: um de cada vez; o conteúdo do Início é devolvido ao final
 test.describe.configure({ mode: 'serial' });
@@ -9,7 +18,9 @@ let snapshot: Awaited<ReturnType<typeof snapshotSections>>;
 test.beforeAll(async () => {
   snapshot = await snapshotSections('inicio');
 });
+test.beforeEach(clearLocks); // a reserva da aba anterior não vale para o teste seguinte
 test.afterAll(async () => {
+  await clearLocks();
   await restoreSections(snapshot);
   await cleanup();
 });
@@ -216,3 +227,81 @@ test.describe('editor no celular', () => {
     await expect(sheet).toBeHidden();
   });
 });
+
+test.describe('uma pessoa por vez em cada página', () => {
+  test('quem chega depois não entra; ao sair para outra página, a primeira fica livre', async ({
+    browser,
+  }) => {
+    const a = await makeUser('lock-a', { role: 'EQUIPE' });
+    const b = await makeUser('lock-b', { role: 'EQUIPE' });
+    const ctxA = await browser.newContext();
+    const ctxB = await browser.newContext();
+    const pa = await ctxA.newPage();
+    const pb = await ctxB.newPage();
+    await login(pa, a.email);
+    await login(pb, b.email);
+
+    await pa.goto('/admin/editor?pagina=inicio');
+    await expect(preview(pa).getByRole('heading', { level: 1 })).toBeVisible();
+    await expect.poll(async () => (await sectionLockRows()).length).toBe(1);
+
+    // B é barrada na entrada: nada do editor aparece, nem a prévia
+    await pb.goto('/admin/editor?pagina=inicio');
+    await expect(pb.getByText('Teste lock-a está editando a página Início')).toBeVisible();
+    await expect(pb.locator('iframe')).toHaveCount(0);
+    await expect(pb.getByRole('button', { name: 'Publicar alterações' })).toHaveCount(0);
+
+    // outra página continua livre
+    await pb.goto('/admin/editor?pagina=oficina');
+    await expect(pb.getByRole('button', { name: 'Publicar alterações' })).toBeVisible();
+
+    // A troca de página (solta a reserva) e B entra no Início
+    await pa.getByLabel('Editando a página').selectOption('quem-somos');
+    await expect(pa).toHaveURL(/pagina=quem-somos/);
+    await pb.goto('/admin/editor?pagina=inicio');
+    await expect(pb.getByRole('button', { name: 'Publicar alterações' })).toBeVisible();
+
+    await ctxA.close();
+    await ctxB.close();
+  });
+
+  test('se outra pessoa assume a página, a gravação é recusada e a edição pausa', async ({
+    page,
+  }) => {
+    const u = await makeUser('lock-c', { role: 'EQUIPE' });
+    await login(page, u.email);
+    await page.goto('/admin/editor?pagina=inicio');
+    await page.getByRole('button', { name: 'Abertura', exact: true }).click();
+    const before = (await sectionRow('inicio', 'hero')).draft.title;
+
+    await stealLock('inicio');
+    await page.locator('#ed-title').fill('Não pode ser gravado');
+    await expect(
+      page.getByRole('alertdialog', { name: /sendo editada por outra pessoa/ }),
+    ).toBeVisible({ timeout: 10_000 });
+    expect((await sectionRow('inicio', 'hero')).draft.title).toBe(before);
+  });
+
+  test('a mesma pessoa em outra aba assume; a aba antiga é pausada', async ({ context, page }) => {
+    const u = await makeUser('lock-d', { role: 'EQUIPE' });
+    await login(page, u.email);
+    await page.goto('/admin/editor?pagina=inicio');
+    await expect(preview(page).getByRole('heading', { level: 1 })).toBeVisible();
+
+    const second = await context.newPage();
+    await second.goto('/admin/editor?pagina=inicio');
+    await expect(second.getByRole('button', { name: 'Publicar alterações' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Abertura', exact: true }).click();
+    await page.locator('#ed-title').fill('Aba antiga tentando gravar');
+    await expect(
+      page.getByRole('alertdialog', { name: /sendo editada por outra pessoa/ }),
+    ).toBeVisible({ timeout: 10_000 });
+    await second.close();
+  });
+});
+
+async function sectionLockRows() {
+  const { lockRows } = await import('./fixtures');
+  return lockRows();
+}

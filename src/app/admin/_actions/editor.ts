@@ -2,6 +2,7 @@
 
 import { pageBySlug } from '@/content/sections/schemas';
 import { run, type ActionResult } from '@/server/actions';
+import { LOCK_LOST_MESSAGE, holdsLock } from '@/server/admin/editLock';
 import {
   ContentError,
   discardDrafts,
@@ -12,6 +13,13 @@ import {
 } from '@/server/publish';
 
 type Pending = { pending: number };
+
+/** Sem a reserva da página, nada é gravado (mesmo que a tela esteja aberta). */
+const lockLost = (): ActionResult<never> => ({
+  ok: false,
+  error: LOCK_LOST_MESSAGE,
+  fieldErrors: { _lock: 'lost' },
+});
 
 const known = (slug: unknown): slug is string => typeof slug === 'string' && !!pageBySlug(slug);
 
@@ -35,9 +43,11 @@ export async function saveDraftAction(
   slug: string,
   key: string,
   content: unknown,
+  token: string,
 ): Promise<ActionResult<Pending>> {
   return run<Pending>({ permission: 'site' }, async (user) => {
     if (!known(slug) || typeof key !== 'string') return { ok: false, error: 'Página inválida.' };
+    if (!(await holdsLock(slug, token))) return lockLost();
     try {
       await saveSectionDraft(slug, key, content, user.id);
     } catch (e) {
@@ -51,8 +61,10 @@ export async function saveDraftAction(
 export async function saveLayoutAction(
   slug: string,
   layout: { key: string; visible: boolean }[],
+  token: string,
 ): Promise<ActionResult<Pending>> {
   return run<Pending>({ permission: 'site' }, async (user) => {
+    if (known(slug) && !(await holdsLock(slug, token))) return lockLost();
     const def = known(slug) ? pageBySlug(slug) : undefined;
     const valid =
       def &&
@@ -70,9 +82,11 @@ export async function saveLayoutAction(
 
 export async function publishAction(
   slug: string,
+  token: string,
 ): Promise<ActionResult<Pending & { changed: number }>> {
   return run<Pending & { changed: number }>({ permission: 'site' }, async (user) => {
     if (!known(slug)) return { ok: false, error: 'Página inválida.' };
+    if (!(await holdsLock(slug, token))) return lockLost();
     try {
       const r = await publishPage(slug, user.id);
       return {
@@ -86,9 +100,10 @@ export async function publishAction(
   });
 }
 
-export async function discardAction(slug: string): Promise<ActionResult<Pending>> {
+export async function discardAction(slug: string, token: string): Promise<ActionResult<Pending>> {
   return run<Pending>({ permission: 'site' }, async (user) => {
     if (!known(slug)) return { ok: false, error: 'Página inválida.' };
+    if (!(await holdsLock(slug, token))) return lockLost();
     await discardDrafts(slug, user.id);
     return {
       ok: true,

@@ -99,6 +99,11 @@ export function EditorApp(props: EditorAppProps) {
   const frame = useRef<HTMLIFrameElement>(null);
   const stage = useRef<HTMLDivElement>(null);
 
+  // reserva de edição: uma pessoa (uma aba) por vez
+  const [token] = useState(() => crypto.randomUUID());
+  const [lockLost, setLockLost] = useState<{ name?: string } | null>(null);
+  const lockLostRef = useRef(false);
+
   const [hist, setHist] = useState(() => initHistory(props.initialSections));
   const sections = hist.present;
   const sectionsRef = useRef(sections);
@@ -247,24 +252,31 @@ export function EditorApp(props: EditorAppProps) {
     setSave('saving');
     let failed = false;
     for (const { s, json } of ops) {
-      const r = await saveDraftAction(slug, s.key, s.content);
+      const r = await saveDraftAction(slug, s.key, s.content, token);
       if (r.ok) {
         saved.current.content.set(s.key, json);
         if (r.data) setPending(r.data.pending);
-      } else failed = true;
+      } else {
+        failed = true;
+        if (r.fieldErrors?._lock) setLockLost({});
+      }
     }
     if (layoutDirty) {
       const r = await saveLayoutAction(
         slug,
         all.map((s) => ({ key: s.key, visible: s.visible })),
+        token,
       );
       if (r.ok) {
         saved.current.layout = layout;
         if (r.data) setPending(r.data.pending);
-      } else failed = true;
+      } else {
+        failed = true;
+        if (r.fieldErrors?._lock) setLockLost({});
+      }
     }
     setSave(failed ? 'error' : skipped ? 'invalid' : 'saved');
-  }, [slug]);
+  }, [slug, token]);
 
   const flush = useCallback(() => {
     chain.current = chain.current.then(doFlush).catch(() => setSave('error'));
@@ -351,9 +363,56 @@ export function EditorApp(props: EditorAppProps) {
     return () => window.removeEventListener('message', onMessage);
   }, [select, setField]);
 
+  /* ---------- reserva de edição ---------- */
+  const lockCall = useCallback(
+    async (op: 'acquire' | 'release', keepalive = false) => {
+      try {
+        const res = await fetch('/api/admin/editor/lock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, token, op }),
+          keepalive,
+        });
+        if (op === 'acquire' && res.status === 409) {
+          const j = (await res.json().catch(() => null)) as { holder?: { name?: string } } | null;
+          lockLostRef.current = true;
+          setLockLost({ name: j?.holder?.name });
+        }
+      } catch {
+        // sem rede: a reserva segue valendo até expirar; tenta de novo na próxima renovação
+      }
+    },
+    [slug, token],
+  );
+
+  useEffect(() => {
+    void Promise.resolve().then(() => lockCall('acquire'));
+    const beat = window.setInterval(() => {
+      if (!lockLostRef.current) void lockCall('acquire');
+    }, 25_000);
+    const leave = () => {
+      if (!lockLostRef.current) {
+        navigator.sendBeacon(
+          '/api/admin/editor/lock',
+          new Blob([JSON.stringify({ slug, token, op: 'release' })], { type: 'application/json' }),
+        );
+      }
+    };
+    window.addEventListener('pagehide', leave);
+    return () => {
+      window.clearInterval(beat);
+      window.removeEventListener('pagehide', leave);
+    };
+  }, [lockCall, slug, token]);
+
+  useEffect(() => {
+    lockLostRef.current = !!lockLost;
+  }, [lockLost]);
+
   /* ---------- ações ---------- */
   const goToPage = async (next: string) => {
     await flush();
+    await lockCall('release', true); // solta a página antes de sair, para a próxima pessoa entrar
     router.push(`/admin/editor?pagina=${encodeURIComponent(next)}`);
   };
 
@@ -367,7 +426,7 @@ export function EditorApp(props: EditorAppProps) {
         toast.show({ message: 'Corrija os campos marcados antes de publicar.' });
         return;
       }
-      const r = await publishAction(slug);
+      const r = await publishAction(slug, token);
       if (r.ok) {
         setPending(0);
         setSave('saved');
@@ -376,6 +435,7 @@ export function EditorApp(props: EditorAppProps) {
           link: { href: path, label: 'Ver no site' },
         });
       } else {
+        if (r.fieldErrors?._lock) setLockLost({});
         toast.show({ message: r.error });
       }
     } finally {
@@ -385,11 +445,14 @@ export function EditorApp(props: EditorAppProps) {
 
   const discard = async () => {
     setConfirmDiscard(false);
-    const r = await discardAction(slug);
+    const r = await discardAction(slug, token);
     if (r.ok) {
       toast.show({ message: r.message ?? 'Rascunho descartado.' });
       window.location.reload(); // volta ao que está no ar
-    } else toast.show({ message: r.error });
+    } else {
+      if (r.fieldErrors?._lock) setLockLost({});
+      toast.show({ message: r.error });
+    }
   };
 
   const onPhoto = (p: PickerPhoto) => {
@@ -643,6 +706,23 @@ export function EditorApp(props: EditorAppProps) {
             ) : null}
           </div>
         ) : null}
+      </Dialog>
+
+      <Dialog
+        open={!!lockLost}
+        alert
+        closeOnBackdrop={false}
+        onClose={() => undefined}
+        title="Esta página está sendo editada por outra pessoa"
+        footer={<Button href="/admin">Voltar ao painel</Button>}
+      >
+        <p style={{ margin: 0, color: 'var(--ink-muted)' }}>
+          {lockLost?.name
+            ? `${lockLost.name} está editando esta página agora, ou você a abriu em outra aba.`
+            : 'Outra pessoa assumiu a edição desta página, ou você a abriu em outra aba.'}{' '}
+          Para não perder trabalho, a edição aqui foi pausada. O que você já tinha feito ficou salvo
+          no rascunho; espere a outra pessoa terminar e abra a página de novo.
+        </p>
       </Dialog>
 
       <PhotoDialog

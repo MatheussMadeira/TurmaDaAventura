@@ -141,20 +141,20 @@ model TeamMember {
 }
 
 model Media {
-  id                    String   @id @default(cuid())
+  id                     String   @id @default(cuid())
   /// chave no Vercel Blob da versão "master" (sem EXIF/GPS)
-  pathname              String   @unique
-  url                   String
-  width                 Int
-  height                Int
+  pathname               String   @unique
+  url                    String
+  width                  Int
+  height                 Int
   /// tamanhos gerados: [{ width, height, url }] em WebP
-  variants              Json
+  variants               Json
   /// descrição da imagem — OBRIGATÓRIA (acessibilidade)
-  alt                   String
+  alt                    String
   authorizationConfirmed Boolean  @default(false)
-  createdById           String?
-  createdBy             User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  createdAt             DateTime @default(now())
+  createdById            String?
+  createdBy              User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt              DateTime @default(now())
 
   restaurants Restaurant[]
   activities  Activity[]
@@ -187,4 +187,15 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   @@index([createdAt])
+}
+
+/// Reserva de edição: só uma pessoa (uma aba) edita cada página por vez. Vale por alguns
+/// segundos e é renovada enquanto o editor está aberto; se a aba some, a reserva expira sozinha.
+model PageLock {
+  slug       String   @id
+  userId     String
+  userName   String
+  token      String
+  acquiredAt DateTime @default(now())
+  expiresAt  DateTime
 }

@@ -141,3 +141,22 @@ export async function sectionRow(slug: string, key: string) {
   );
   return rows[0] as { draft: any; published: any; order: number; visible: boolean }; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
+
+/* ---- reserva de edição das páginas ---- */
+export async function clearLocks() {
+  await pool.query(`delete from "PageLock"`);
+}
+
+/** Simula outra pessoa/aba assumindo a página (token e dono diferentes). */
+export async function stealLock(slug: string) {
+  await pool.query(
+    `update "PageLock" set token = 'tomada-por-outra-aba-00000', "userId" = 'outra-pessoa',
+            "userName" = 'Fulana de Tal' where slug = $1`,
+    [slug],
+  );
+}
+
+export async function lockRows() {
+  const { rows } = await pool.query(`select slug, "userName" from "PageLock"`);
+  return rows as { slug: string; userName: string }[];
+}
