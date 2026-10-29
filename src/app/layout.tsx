@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { GlobalStyle } from '@/design-system/GlobalStyle';
 import { StyledComponentsRegistry } from '@/design-system/StyledComponentsRegistry';
+import { MotionProvider } from '@/motion/MotionProvider';
 import { fraunces, nunito } from './fonts';
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

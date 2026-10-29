@@ -1,13 +1,15 @@
-import { css } from 'styled-components';
 import { theme } from './tokens/theme';
 
-/** Breakpoints do tokens.json. Mobile-first com `up`; `down` usa max-width (< breakpoint). */
-const bp = theme.bp;
+type Breakpoint = keyof typeof theme.bp;
 
+const px = (key: Breakpoint) => parseInt(theme.bp[key], 10);
+
+/** Helpers de breakpoint (valores do tokens.json). `down` = abaixo do breakpoint (max-width: bp - 1). */
 export const media = {
-  up: (key: keyof typeof bp) => `@media (min-width: ${bp[key]})`,
-  down: (key: keyof typeof bp) => `@media (max-width: ${parseInt(bp[key], 10) - 1}px)`,
+  up: (key: Breakpoint) => `@media (min-width: ${theme.bp[key]})`,
+  down: (key: Breakpoint) => `@media (max-width: ${px(key) - 1}px)`,
   reducedMotion: '@media (prefers-reduced-motion: reduce)',
+  /** container query abaixo do breakpoint: `${media.containerDown('tda-header', 'bp-lg')} { … }` */
+  containerDown: (name: string, key: Breakpoint) =>
+    `@container ${name} (max-width: ${px(key) - 1}px)`,
 } as const;
-
-export { css };
