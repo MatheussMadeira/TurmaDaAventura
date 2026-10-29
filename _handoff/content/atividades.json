@@ -1,0 +1,136 @@
+{
+  "categorias": [
+    "Brincadeiras",
+    "Oficinas manuais",
+    "Gincanas",
+    "Natureza"
+  ],
+  "atividades": [
+    {
+      "slug": "oficina-de-pipas",
+      "categoria": "Oficinas manuais",
+      "icon": "flag",
+      "title": "Oficina de pipas",
+      "description": "Cada criança monta e decora a própria pipa — e depois a gente leva todo mundo pro gramado.",
+      "tags": [
+        "6 a 12 anos",
+        "90 min"
+      ],
+      "image": null,
+      "imageAlt": "Crianças de costas segurando pipas coloridas no gramado",
+      "publicado": true
+    },
+    {
+      "slug": "caca-ao-tesouro",
+      "categoria": "Gincanas",
+      "icon": "compass",
+      "title": "Caça ao tesouro",
+      "description": "Mapa, pistas e enigmas espalhados pelo espaço. Termina com o baú encontrado em equipe.",
+      "tags": [
+        "5 a 12 anos",
+        "60 min"
+      ],
+      "image": null,
+      "imageAlt": "Grupo de crianças olhando um mapa desenhado à mão",
+      "publicado": true
+    },
+    {
+      "slug": "pintura-tintas-naturais",
+      "categoria": "Oficinas manuais",
+      "icon": "palette",
+      "title": "Pintura com tintas naturais",
+      "description": "Tintas de urucum, açafrão e terra feitas na hora. Arte que sai da natureza.",
+      "tags": [
+        "3 a 10 anos",
+        "60 min"
+      ],
+      "image": null,
+      "imageAlt": "Mãos pequenas pintando papel com tinta de urucum",
+      "publicado": true
+    },
+    {
+      "slug": "mini-horta",
+      "categoria": "Natureza",
+      "icon": "leaf",
+      "title": "Mini horta",
+      "description": "Plantio de temperos em vasinhos que cada criança leva pra casa e cuida.",
+      "tags": [
+        "3 a 10 anos",
+        "60 min"
+      ],
+      "image": null,
+      "imageAlt": "Crianças colocando terra em vasinhos com mudas",
+      "publicado": true
+    },
+    {
+      "slug": "circuito-de-aventura",
+      "categoria": "Brincadeiras",
+      "icon": "tree",
+      "title": "Circuito de aventura",
+      "description": "Cordas, túneis e equilíbrio montados com segurança no espaço disponível.",
+      "tags": [
+        "4 a 12 anos",
+        "45 min"
+      ],
+      "image": null,
+      "imageAlt": "Criança atravessando ponte de cordas baixa entre árvores",
+      "publicado": true
+    },
+    {
+      "slug": "acampamento-de-cabanas",
+      "categoria": "Brincadeiras",
+      "icon": "tent",
+      "title": "Acampamento de cabanas",
+      "description": "Tecidos, prendedores e imaginação: cada grupo monta o seu acampamento.",
+      "tags": [
+        "3 a 8 anos",
+        "60 min"
+      ],
+      "image": null,
+      "imageAlt": "Cabanas de tecido montadas no gramado com crianças dentro",
+      "publicado": true
+    },
+    {
+      "slug": "trilha-dos-sentidos",
+      "categoria": "Natureza",
+      "icon": "compass",
+      "title": "Trilha dos sentidos",
+      "description": "Percurso de olhos vendados para sentir texturas, cheiros e sons da natureza.",
+      "tags": [
+        "3 a 8 anos",
+        "45 min"
+      ],
+      "image": null,
+      "imageAlt": "Criança de olhos vendados tocando folhas guiada por monitora",
+      "publicado": true
+    },
+    {
+      "slug": "gincana-das-equipes",
+      "categoria": "Gincanas",
+      "icon": "star",
+      "title": "Gincana das equipes",
+      "description": "Provas de cooperação, corrida e criatividade. Todo mundo ganha medalha de expedição.",
+      "tags": [
+        "6 a 12 anos",
+        "90 min"
+      ],
+      "image": null,
+      "imageAlt": "Equipes com lenços coloridos correndo em revezamento",
+      "publicado": true
+    },
+    {
+      "slug": "brinquedos-de-sucata",
+      "categoria": "Oficinas manuais",
+      "icon": "scissors",
+      "title": "Brinquedos de sucata",
+      "description": "Garrafas, tampinhas e caixas viram carrinhos, bilboquês e chocalhos.",
+      "tags": [
+        "5 a 12 anos",
+        "75 min"
+      ],
+      "image": null,
+      "imageAlt": "Mesa com carrinhos feitos de garrafa e tampinhas",
+      "publicado": true
+    }
+  ]
+}

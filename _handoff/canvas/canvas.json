@@ -1,0 +1,86 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-29T15:40:00Z"},
+  "title": "Turma da Aventura — Site e Admin",
+  "launch": {"view": "canvas", "page": "site"},
+  "pages": [
+    {"id": "site", "name": "Site"},
+    {"id": "admin", "name": "Admin (/admin)"},
+    {"id": "motion", "name": "Motion"}
+  ],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 5700, "title": "Início · desktop", "page": "site", "expand": "fill"},
+    "SiteOficina.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 5500, "title": "Oficina · desktop", "page": "site", "expand": "fill", "is_interactive": true},
+    "SiteRestaurantes.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 4100, "title": "Restaurantes · desktop", "page": "site", "expand": "fill"},
+    "SiteEventos.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 5100, "title": "Eventos corporativos · desktop", "page": "site", "expand": "fill"},
+    "SiteQuemSomos.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 4600, "title": "Quem somos · desktop", "page": "site", "expand": "fill"},
+
+    "MobileInicio.dc.html": {"x": 0, "y": 6020, "w": 390, "h": 9800, "title": "Início · mobile", "page": "site"},
+    "MobileOficina.dc.html": {"x": 470, "y": 6020, "w": 390, "h": 9800, "title": "Oficina · mobile", "page": "site", "is_interactive": true},
+    "MobileRestaurantes.dc.html": {"x": 940, "y": 6020, "w": 390, "h": 7800, "title": "Restaurantes · mobile", "page": "site"},
+    "MobileEventos.dc.html": {"x": 1410, "y": 6020, "w": 390, "h": 9200, "title": "Eventos corporativos · mobile", "page": "site"},
+    "MobileQuemSomos.dc.html": {"x": 1880, "y": 6020, "w": 390, "h": 8800, "title": "Quem somos · mobile", "page": "site"},
+
+    "EstadosHeader.dc.html": {"x": 0, "y": 16240, "w": 1440, "h": 1150, "title": "Header · normal, com rolagem, menu mobile", "page": "site"},
+    "EstadosInteracao.dc.html": {"x": 1520, "y": 16240, "w": 1440, "h": 1300, "title": "Botões e cards · hover, foco, pressionado", "page": "site"},
+    "EstadosFormulario.dc.html": {"x": 3040, "y": 16240, "w": 1440, "h": 1250, "title": "QuoteForm · vazio, erro, preenchido", "page": "site"},
+    "QuoteFormBlock.dc.html": {"x": 4560, "y": 16240, "w": 640, "h": 980, "title": "QuoteForm (bloco reutilizável)", "page": "site"},
+
+    "AdminLogin.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 900, "title": "Login", "page": "admin", "expand": "fill"},
+    "AdminLoginErro.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 900, "title": "Login · erro", "page": "admin"},
+    "AdminLoginMobile.dc.html": {"x": 3040, "y": 0, "w": 390, "h": 1000, "title": "Login · mobile", "page": "admin"},
+
+    "AdminEditor.dc.html": {"x": 0, "y": 1320, "w": 1440, "h": 1000, "title": "Editor visual · texto selecionado", "page": "admin", "expand": "fill"},
+    "AdminEditorFoto.dc.html": {"x": 1520, "y": 1320, "w": 1440, "h": 1000, "title": "Editor visual · trocar foto", "page": "admin"},
+    "AdminEditorPublicado.dc.html": {"x": 3040, "y": 1320, "w": 1440, "h": 1000, "title": "Editor visual · publicado", "page": "admin"},
+    "AdminEditorMobile.dc.html": {"x": 4560, "y": 1320, "w": 390, "h": 844, "title": "Editor visual · mobile", "page": "admin"},
+
+    "AdminPainel.dc.html": {"x": 0, "y": 2740, "w": 1440, "h": 1000, "title": "Painel", "page": "admin", "expand": "fill"},
+    "AdminPainelNoite.dc.html": {"x": 1520, "y": 2740, "w": 1440, "h": 1000, "title": "Painel · tema Noite", "page": "admin"},
+    "AdminRestaurantes.dc.html": {"x": 3040, "y": 2740, "w": 1440, "h": 1000, "title": "Restaurantes · lista", "page": "admin", "expand": "fill"},
+    "AdminRestaurantesNoite.dc.html": {"x": 4560, "y": 2740, "w": 1440, "h": 1000, "title": "Restaurantes · tema Noite", "page": "admin"},
+    "AdminRestauranteEditar.dc.html": {"x": 6080, "y": 2740, "w": 1440, "h": 1300, "title": "Restaurante · editar com prévia", "page": "admin", "expand": "fill"},
+
+    "AdminMidia.dc.html": {"x": 0, "y": 4460, "w": 1440, "h": 1000, "title": "Mídia · biblioteca de fotos", "page": "admin", "expand": "fill"},
+    "AdminUsuarios.dc.html": {"x": 1520, "y": 4460, "w": 1440, "h": 1000, "title": "Usuários", "page": "admin", "expand": "fill"},
+    "AdminContato.dc.html": {"x": 3040, "y": 4460, "w": 1440, "h": 1000, "title": "Configurações · contato e WhatsApp", "page": "admin", "expand": "fill"},
+    "AdminRestaurantesMobile.dc.html": {"x": 4560, "y": 4460, "w": 390, "h": 1300, "title": "Restaurantes · mobile (cartões)", "page": "admin"},
+    "AdminUsuariosMobile.dc.html": {"x": 5030, "y": 4460, "w": 390, "h": 1300, "title": "Usuários · mobile", "page": "admin"},
+
+    "AdminEstados.dc.html": {"x": 0, "y": 6180, "w": 1440, "h": 1500, "title": "Estados · carregando, vazio, erro, salvo, desatualizado", "page": "admin"},
+    "AdminExcluir.dc.html": {"x": 1520, "y": 6180, "w": 1440, "h": 900, "title": "Diálogo · excluir", "page": "admin"},
+    "AdminSidebar.dc.html": {"x": 3040, "y": 6180, "w": 248, "h": 900, "title": "Barra lateral (componente)", "page": "admin"},
+
+    "PrototipoInicio.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 900, "title": "Protótipo · Início desktop (com animações)", "page": "motion", "expand": "fill", "is_interactive": true},
+    "PrototipoInicioMobile.dc.html": {"x": 1520, "y": 0, "w": 390, "h": 844, "title": "Protótipo · Início mobile (com animações)", "page": "motion", "is_interactive": true},
+    "Motion.dc.html": {"x": 0, "y": 1320, "w": 1440, "h": 3500, "title": "Motion · escala e animações de assinatura", "page": "motion", "is_interactive": true},
+    "MotionSpec.dc.html": {"x": 1520, "y": 1320, "w": 1440, "h": 3900, "title": "Motion · especificação por componente", "page": "motion"}
+  },
+  "order": [
+    "Main.dc.html", "SiteOficina.dc.html", "SiteRestaurantes.dc.html", "SiteEventos.dc.html", "SiteQuemSomos.dc.html",
+    "MobileInicio.dc.html", "MobileOficina.dc.html", "MobileRestaurantes.dc.html", "MobileEventos.dc.html", "MobileQuemSomos.dc.html",
+    "EstadosHeader.dc.html", "EstadosInteracao.dc.html", "EstadosFormulario.dc.html", "QuoteFormBlock.dc.html",
+    "AdminLogin.dc.html", "AdminLoginErro.dc.html", "AdminLoginMobile.dc.html",
+    "AdminEditor.dc.html", "AdminEditorFoto.dc.html", "AdminEditorPublicado.dc.html", "AdminEditorMobile.dc.html",
+    "AdminPainel.dc.html", "AdminPainelNoite.dc.html", "AdminRestaurantes.dc.html", "AdminRestaurantesNoite.dc.html", "AdminRestauranteEditar.dc.html",
+    "AdminMidia.dc.html", "AdminUsuarios.dc.html", "AdminContato.dc.html", "AdminRestaurantesMobile.dc.html", "AdminUsuariosMobile.dc.html",
+    "AdminEstados.dc.html", "AdminExcluir.dc.html", "AdminSidebar.dc.html",
+    "PrototipoInicio.dc.html", "PrototipoInicioMobile.dc.html", "Motion.dc.html", "MotionSpec.dc.html"
+  ],
+  "notes": {
+    "t_site_desk": {"x": 0, "y": -300, "text": "Site · desktop 1440", "kind": "title1", "maxW": 7520, "page": "site"},
+    "t_site_mob": {"x": 0, "y": 5720, "text": "Site · mobile 390", "kind": "title1", "maxW": 2270, "page": "site"},
+    "t_site_states": {"x": 0, "y": 15940, "text": "Componentes e estados", "kind": "title1", "maxW": 5200, "page": "site"},
+    "t_adm_acesso": {"x": 0, "y": -300, "text": "Acesso · /admin", "kind": "title1", "maxW": 3430, "page": "admin"},
+    "t_adm_editor": {"x": 0, "y": 1020, "text": "Editor visual do site", "kind": "title1", "maxW": 4950, "page": "admin"},
+    "t_adm_conteudo": {"x": 0, "y": 2440, "text": "Painel e conteúdo", "kind": "title1", "maxW": 7520, "page": "admin"},
+    "t_adm_config": {"x": 0, "y": 4160, "text": "Mídia, usuários e configurações", "kind": "title1", "maxW": 5420, "page": "admin"},
+    "t_adm_estados": {"x": 0, "y": 5880, "text": "Estados e diálogos", "kind": "title1", "maxW": 3290, "page": "admin"},
+    "t_mo_proto": {"x": 0, "y": -300, "text": "Protótipo da Início com animações", "kind": "title1", "maxW": 1910, "page": "motion"},
+    "n_mo_play": {"x": 1990, "y": 0, "w": 360, "text": "Abra com Play e role a página: header encolhe e se esconde, seções entram caminhando, trilha se desenha, pilares carimbam, WhatsApp surge após 1,5s. Os links do menu levam às outras páginas com transição.", "fill": "green", "page": "motion"},
+    "t_mo_spec": {"x": 0, "y": 1020, "text": "Motion · tokens, demos e especificação", "kind": "title1", "maxW": 2960, "page": "motion"}
+  },
+  "designSystems": [
+    {"title": "Turma da Aventura", "namespace": "tda", "artifact": "https://claude.ai/code/artifact/a5f20d42-8439-4801-846e-78061d59040d", "version": "1793286634-55e4", "copiedAt": "2026-10-29T16:30:00Z"}
+  ]
+}

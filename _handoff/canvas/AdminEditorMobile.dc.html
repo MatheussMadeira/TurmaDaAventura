@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Editor do site — mobile</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="ed" style="width: 390px; height: 844px; min-height: 0; overflow: hidden; font-family: var(--font-body); color: var(--ink);">
+  <header class="ed__bar" style="padding: 8px 8px 8px 4px; min-height: 60px; gap: 6px; flex-wrap: nowrap;">
+    <a class="ed__icon" href="AdminPainel.dc.html" aria-label="Sair do editor">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+    </a>
+    <button type="button" class="ed__page" style="border: 0; padding: 0 6px;">
+      <span style="display: flex; flex-direction: column; align-items: flex-start;"><small>2 não publicadas</small>Início</span>
+      <x-import component-from-global-scope="TDA.Icon" name="chevron-down" size="{{s18}}"></x-import>
+    </button>
+    <span style="margin-left: auto;"></span>
+    <x-import component-from-global-scope="TDA.Button" variant="inverse" size="sm">Publicar</x-import>
+  </header>
+
+  <div style="position: relative; flex: 1; overflow: hidden; background: var(--surface);">
+    <div class="page" style="pointer-events: none;">
+      <x-import component-from-global-scope="TDA.Header" current="/"></x-import>
+      <section class="tda-hero tda-hero--light">
+        <div class="tda-hero__inner">
+          <div class="tda-hero__copy">
+            <p class="overline tda-hero__over">Recreação infantil</p>
+            <div class="ev is-sel">
+              <span class="ev__tag" style="top: -38px;">Título · 18/40</span>
+              <h1 class="display tda-hero__title" style="margin: 0;">Bora pra aventura?<span class="ev__caret" aria-hidden="true"></span></h1>
+            </div>
+            <p class="lead tda-hero__lead">A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Folha inferior de edição -->
+    <section class="dlg" role="dialog" aria-label="Editar título" style="position: absolute; left: 0; right: 0; bottom: 0; max-width: none; border-radius: 24px 24px 0 0; padding: 12px 16px 20px; gap: 14px; box-shadow: var(--shadow-md);">
+      <span aria-hidden="true" style="align-self: center; width: 44px; height: 5px; border-radius: 3px; background: var(--line);"></span>
+      <div class="box__head">
+        <div><p class="ed__h" style="margin: 0;">Topo da página</p><h2 class="box__title">Título</h2></div>
+        <button type="button" class="ibtn" aria-label="Fechar"><x-import component-from-global-scope="TDA.Icon" name="close" size="{{s22}}"></x-import></button>
+      </div>
+      <div>
+        <x-import component-from-global-scope="TDA.TextField" label="Título" default-value="Bora pra aventura?" class-name="is-focus"></x-import>
+        <p class="count"><span>Curto e direto: até 5 palavras.</span><span>18/40</span></p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <x-import component-from-global-scope="TDA.Button" variant="outline" full-width="{{yes}}">Desfazer</x-import>
+        <x-import component-from-global-scope="TDA.Button" icon-left="check" full-width="{{yes}}">Aplicar</x-import>
+      </div>
+      <p class="caption" style="margin: 0; text-align: center; color: var(--ink-muted);">Toque em qualquer texto ou foto da prévia para editar.</p>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, s18: 18, s22: 22 }; }
+}
+</script>
+</body>
+</html>

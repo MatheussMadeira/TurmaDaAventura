@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Entrar no painel — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="login" data-route="/admin/login" style="width: 100%; font-family: var(--font-body); color: var(--ink);">
+  <!-- Login/Marca -->
+  <section class="login__brand" aria-label="Turma da Aventura">
+    <div class="login__camo" aria-hidden="true"><x-import component-from-global-scope="TDA.CamoPattern" tone="forest" id="login"></x-import></div>
+    <img class="login__logo" src="/_blob/9b15e42531f3da37d46d74b28192a6fb" alt="Turma da Aventura — Brincar / Aprender / Ensinar">
+    <p class="login__quote">Aqui você cuida do site da Turma: textos, fotos, restaurantes e equipe.</p>
+    <p class="login__note">Acesso restrito à equipe. Sem cadastro público — novos acessos são criados pela Administração.</p>
+  </section>
+
+  <!-- Login/Formulario -->
+  <section class="login__side">
+    <form class="login__form" novalidate="" aria-labelledby="login-title">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <h1 id="login-title" class="h2" style="margin: 0; color: var(--ink); font-family: var(--font-display);">Entrar no painel</h1>
+        <p class="body-sm" style="margin: 0; color: var(--ink-muted);">Use o e-mail e a senha que a Administração enviou para você.</p>
+      </div>
+      <sc-if value="{{erro}}" hint-placeholder-val="{{ false }}">
+        <div class="alert alert--err" role="alert">
+          <x-import component-from-global-scope="TDA.Icon" name="flag" size="{{s20}}"></x-import>
+          <div class="alert__body"><p><strong style="color: var(--danger);">E-mail ou senha incorretos.</strong></p><p>Confira os dois e tente de novo. Depois de 5 tentativas, o acesso fica bloqueado por 15 minutos.</p></div>
+        </div>
+      </sc-if>
+      <x-import component-from-global-scope="TDA.TextField" label="E-mail" type="email" auto-complete="username" placeholder="nome@exemplo.com.br" default-value="{{email}}"></x-import>
+      <x-import component-from-global-scope="TDA.TextField" label="Senha" type="password" auto-complete="current-password" default-value=""></x-import>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <label class="check"><input type="checkbox" checked="">Manter conectado(a)</label>
+        <a class="tlink" href="#">Esqueci minha senha</a>
+      </div>
+      <x-import component-from-global-scope="TDA.Button" type="submit" size="lg" full-width="{{yes}}">Entrar</x-import>
+      <p class="caption" style="margin: 0; color: var(--ink-muted); text-align: center;">turmadaaventura.com.br/admin</p>
+    </form>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"erro":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var erro = !!this.props.erro;
+    return { yes: true, s20: 20, erro: erro, email: erro ? 'nome@exemplo.com.br' : '' };
+  }
+}
+</script>
+</body>
+</html>

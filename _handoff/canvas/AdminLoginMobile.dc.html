@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Entrar no painel — mobile</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 100%; min-height: 1000px; background: var(--surface); font-family: var(--font-body); color: var(--ink);">
+  <dc-import name="AdminLogin" hint-size="100%,1000px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

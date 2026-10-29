@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Início — protótipo com animações</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/motion.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="Inicio" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <!-- Header: encolhe 76→64 e ganha sombra ao rolar; esconde ao descer, volta ao subir -->
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="PrototipoInicio.dc.html" message="Olá! Vim pelo site e quero um orçamento."></x-import>
+
+  <!-- Transição de página: só o conteúdo entra (fade + 12px, 280ms) -->
+  <div class="mx-page-in">
+
+    <!-- Hero: sequência ao carregar (overline → título → texto → botões → destaques), foto 0.96→1, moldura desliza, pata carimba -->
+    <x-import component-from-global-scope="TDA.Hero" overline="Recreação infantil" title="Bora pra aventura?" lead="A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte." image-alt="Crianças de costas correndo num gramado ao fim da tarde, com monitores por perto" message="Olá! Vim pelo site e quero um orçamento." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+
+    <!-- Inicio/TresJeitos: título com traço que se desenha + cards em stagger de 80ms -->
+    <section class="sec sec--sunken" data-section="Inicio/TresJeitos">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Três jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
+        </x-import>
+        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g3">
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Área kids de restaurante com crianças desenhando" icon="utensils" placeholder-id="p-s1" overline="Para famílias" title="Restaurantes" description="Recreação fixa nos fins de semana. As crianças brincam por perto e você come com calma." href="SiteRestaurantes.dc.html" link-label="Ver restaurantes"></x-import>
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Espaço kids montado num salão de eventos" icon="briefcase" placeholder-id="p-s2" tone="earth" overline="Para empresas" title="Eventos corporativos" description="Espaço kids em confraternizações, Dia da Família, convenções e férias na empresa." href="SiteEventos.dc.html" link-label="Ver eventos corporativos"></x-import>
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Crianças montando pipas no pátio" icon="scissors" placeholder-id="p-s3" overline="Para todos" title="Oficina" description="Pipas, mini horta, tintas naturais e gincanas. Atividades manuais e de natureza." href="SiteOficina.dc.html" link-label="Conhecer a Oficina"></x-import>
+        </x-import>
+      </div>
+    </section>
+
+    <!-- Inicio/Pilares: selo com escala + anel que expande, um depois do outro -->
+    <section class="sec" data-section="Inicio/Pilares">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal">
+          <x-import component-from-global-scope="TDA.SectionHeader" align="center" overline="Nosso jeito" title="Brincar / Aprender / Ensinar"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g3">
+          <x-import component-from-global-scope="TDA.ValuePillar" index="{{i0}}" icon="compass" tone="brand" number="01" title="Brincar" text="Brincadeira livre e dirigida, ao ar livre sempre que dá. Criança precisa correr, sujar a mão e rir alto."></x-import>
+          <x-import component-from-global-scope="TDA.ValuePillar" index="{{i1}}" icon="leaf" tone="olive" number="02" title="Aprender" text="Cada atividade traz uma descoberta: sobre a natureza, sobre o grupo e sobre si mesmo."></x-import>
+          <x-import component-from-global-scope="TDA.ValuePillar" index="{{i2}}" icon="heart" tone="earth" number="03" title="Ensinar" text="As crianças ensinam umas às outras — e a gente aprende junto com elas."></x-import>
+        </x-import>
+      </div>
+    </section>
+
+    <!-- Inicio/ComoFunciona: a trilha se desenha (1200ms) e cada marco carimba quando a linha chega -->
+    <section class="sec sec--sunken" data-section="Inicio/ComoFunciona">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Como funciona" title="Do “oi” à aventura em três etapas"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="TDA.Trail" steps="{{steps}}"></x-import>
+      </div>
+    </section>
+
+    <!-- Inicio/OndeEsta -->
+    <section class="sec" data-section="Inicio/OndeEsta">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal" class-name="head-row">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Fim de semana com a Turma" title="Onde a Turma está" description="Restaurantes parceiros com recreação fixa. Chegue, peça seu prato e deixe a aventura com a gente."></x-import>
+          <a class="link-more" href="SiteRestaurantes.dc.html">Ver todos os restaurantes
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </a>
+        </x-import>
+        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g3">
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Pinheiros · Zona Oeste" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000" ages="De 3 a 10 anos" maps-url="#" placeholder-id="pr1" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Brasa &amp; Lenha" neighborhood="Moema · Zona Sul" schedule="Sáb e dom, 12h às 16h" address="Alameda dos Ipês, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr2" image-alt="Crianças em roda no jardim do restaurante"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Rancho Cedro" neighborhood="Granja Viana · Grande SP" schedule="Sáb, dom e feriados, 11h às 17h" address="Estrada do Cedro, km 0" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr3" image-alt="Gramado com circuito de cordas entre árvores"></x-import>
+        </x-import>
+      </div>
+    </section>
+
+    <!-- Inicio/Galeria: imagens com fade + 0.98→1 em stagger -->
+    <section class="sec sec--sunken" data-section="Inicio/Galeria">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Diário de expedição" title="Um pouco do que rola por aqui"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" effect="scale" class-name="gallery">
+          <div><x-import component-from-global-scope="TDA.Media" alt="Crianças de costas empinando pipas num gramado" icon="flag" placeholder-id="pg1"></x-import></div>
+          <div><x-import component-from-global-scope="TDA.Media" alt="Mãos pintando papel com tinta de urucum" icon="palette" placeholder-id="pg2"></x-import></div>
+          <div><x-import component-from-global-scope="TDA.Media" alt="Grupo de crianças montando cabana com galhos" icon="tent" placeholder-id="pg3"></x-import></div>
+          <div><x-import component-from-global-scope="TDA.Media" alt="Monitora mostrando um mapa do tesouro para o grupo" icon="compass" placeholder-id="pg4"></x-import></div>
+          <div><x-import component-from-global-scope="TDA.Media" alt="Crianças plantando mudas na mini horta" icon="leaf" placeholder-id="pg5"></x-import></div>
+          <div><x-import component-from-global-scope="TDA.Media" alt="Circuito de aventura com cordas entre árvores" icon="tree" placeholder-id="pg6"></x-import></div>
+        </x-import>
+      </div>
+    </section>
+
+    <!-- Inicio/CTA: entra com escala; camuflagem deriva ~20px em 20s -->
+    <section class="sec" data-section="Inicio/CTA">
+      <div class="wrap">
+        <x-import component-from-global-scope="TDA.Reveal" effect="scale">
+          <x-import component-from-global-scope="TDA.CTABanner" title="Bora planejar a próxima aventura?" text="Conta pra gente o que você imagina. A gente monta a proposta e responde rapidinho." cta-label="Pedir orçamento no WhatsApp" message="Olá! Vim pelo site e quero um orçamento."></x-import>
+        </x-import>
+      </div>
+    </section>
+  </div>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{nav}}" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+
+  <!-- WhatsAppFloat real: surge após 1,5s ou 30% de rolagem; pulso a cada 20s -->
+  <x-import component-from-global-scope="TDA.WhatsAppFloat" label="Fale com a gente" message="Olá! Vim pelo site e quero saber mais."></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, nul: null, year: 2026, i0: 0, i1: 1, i2: 2,
+      nav: [
+        { label: 'Início', href: 'PrototipoInicio.dc.html' },
+        { label: 'Oficina', href: 'SiteOficina.dc.html' },
+        { label: 'Restaurantes', href: 'SiteRestaurantes.dc.html' },
+        { label: 'Eventos corporativos', href: 'SiteEventos.dc.html' },
+        { label: 'Quem somos', href: 'SiteQuemSomos.dc.html' }
+      ],
+      secondary: { label: 'Conhecer a Oficina', href: 'SiteOficina.dc.html' },
+      highlights: ['Monitores treinados', 'Atividades por faixa etária', 'Montamos tudo no local'],
+      steps: [
+        { icon: 'whatsapp', title: 'Chama no WhatsApp', text: 'Conta o tipo de evento, a data e quantas crianças. Respondemos em horário comercial.' },
+        { icon: 'compass', title: 'Montamos a expedição', text: 'Atividades, materiais e equipe sob medida para o seu espaço e para a idade da turma.' },
+        { icon: 'tent', title: 'A aventura começa', text: 'Chegamos antes, montamos tudo e cuidamos das crianças do começo ao fim.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

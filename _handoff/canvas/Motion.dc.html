@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Motion — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/motion.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="width: 100%; min-height: 3500px; padding: 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 64px; font-family: var(--font-body); color: var(--ink);">
+
+  <!-- Motion/Abertura -->
+  <header style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: end;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <p class="overline" style="margin: 0; color: var(--earth-strong);">Movimento</p>
+      <h1 class="h1" style="margin: 0;">As coisas chegam caminhando</h1>
+      <p class="lead" style="margin: 0; color: var(--ink-muted); max-width: 34em;">O movimento conta a história de uma trilha: de baixo para cima, da esquerda para a direita, e as ações “carimbam”. Suave, rápido e sempre com propósito — fala com adultos.</p>
+    </div>
+    <ul class="body-sm" style="margin: 0; padding: 24px 24px 24px 44px; border-radius: var(--radius-lg); background: var(--surface-raised); border: 1.5px solid var(--line); color: var(--ink-muted); display: flex; flex-direction: column; gap: 8px;">
+      <li>Animar só <strong>transform</strong> e <strong>opacity</strong> (60fps em celular simples).</li>
+      <li>Todo conteúdo legível em até <strong>600ms</strong> depois de entrar na tela.</li>
+      <li>Entradas ao rolar disparam com <strong>20%</strong> visível, uma vez só.</li>
+      <li>Sem bounce exagerado, parallax pesado ou autoplay de carrossel.</li>
+      <li><strong>prefers-reduced-motion:</strong> sem deslocamento, só fade de 150ms.</li>
+    </ul>
+  </header>
+
+  <!-- Motion/Escala -->
+  <section style="display: flex; flex-direction: column; gap: 32px;">
+    <div class="tda-sh"><p class="overline tda-sh__over">Tokens</p><h2 class="h2 tda-sh__title">Escala de movimento</h2></div>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start;">
+      <div style="background: var(--surface-raised); border: 1.5px solid var(--line); border-radius: var(--radius-lg); padding: 28px; display: flex; flex-direction: column; gap: 18px;">
+        <h3 class="h4" style="margin: 0;">Durações</h3>
+        <sc-for list="{{durs}}" as="d" hint-placeholder-count="6">
+          <div style="display: grid; grid-template-columns: 120px 72px 1fr; gap: 16px; align-items: center;">
+            <code style="font: 800 14px/18px var(--font-body); color: var(--brand);">{{d.token}}</code>
+            <span class="label">{{d.value}}</span>
+            <div class="md-dur" style="{{d.style}}"><i></i></div>
+          </div>
+          <p class="caption" style="margin: -10px 0 0 208px; color: var(--ink-muted);">{{d.use}}</p>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+          <sc-for list="{{eases}}" as="e" hint-placeholder-count="4">
+            <div style="background: var(--surface-raised); border: 1.5px solid var(--line); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;"><code style="font: 800 14px/18px var(--font-body); color: var(--brand);">{{e.token}}</code><span class="caption" style="color: var(--ink-muted);">{{e.use}}</span></div>
+              <svg viewBox="-6 -30 112 142" width="100%" height="120" aria-hidden="true" style="overflow: visible;"><path d="M0 100 L100 0" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 4" fill="none"></path><path d="{{e.path}}" stroke="var(--brand)" stroke-width="3" fill="none" stroke-linecap="round"></path></svg>
+              <code class="caption" style="color: var(--ink-muted);">{{e.value}}</code>
+              <div class="md-dur md-ease" style="{{e.style}}"><i></i></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background: var(--surface-raised); border: 1.5px solid var(--line); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+          <h3 class="h4" style="margin: 0;">Distâncias e stagger</h3>
+          <div style="display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap;">
+            <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;"><span style="width: 4px; height: 32px; background: var(--brand); border-radius: 2px;"></span><code class="caption">move-xs · 4px</code><span class="caption" style="color: var(--ink-muted);">seta, afundar, chacoalho</span></div>
+            <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;"><span style="width: 12px; height: 32px; background: var(--brand); border-radius: 2px;"></span><code class="caption">move-sm · 12px</code><span class="caption" style="color: var(--ink-muted);">página, menu</span></div>
+            <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;"><span style="width: 24px; height: 32px; background: var(--brand); border-radius: 2px;"></span><code class="caption">move-md · 24px</code><span class="caption" style="color: var(--ink-muted);">entrada padrão</span></div>
+            <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;"><span style="display: flex; gap: 4px;"><i class="md-bar md-bar--brand" style="width: 18px; height: 32px; display: block;"></i><i class="md-bar md-bar--brand" style="width: 18px; height: 32px; display: block; opacity: .7;"></i><i class="md-bar md-bar--brand" style="width: 18px; height: 32px; display: block; opacity: .45;"></i></span><code class="caption">stagger · 80ms</code><span class="caption" style="color: var(--ink-muted);">máx. 6 itens por grupo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Motion/Assinaturas -->
+  <section style="display: flex; flex-direction: column; gap: 32px;">
+    <div class="head-row">
+      <div class="tda-sh"><p class="overline tda-sh__over">Demonstrações em loop</p><h2 class="h2 tda-sh__title">12 animações de assinatura</h2><p class="lead tda-sh__desc">Cada quadro repete a cada 3,6s só para leitura. No site, cada uma roda uma vez no gatilho indicado.</p></div>
+      <button type="button" class="chip" aria-pressed="{{reducedPressed}}" onClick="{{toggleReduced}}">Ver como fica com prefers-reduced-motion</button>
+    </div>
+
+    <div class="{{gridCls}}" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+
+      <!-- 1 Hero -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage md-hero" style="display: flex; align-items: center; justify-content: space-between; padding: 0 28px;">
+          <div style="display: flex; flex-direction: column; gap: 10px; width: 52%;">
+            <i class="md-l md-bar md-bar--earth" style="width: 40%; height: 8px; display: block;"></i>
+            <i class="md-l md-bar md-bar--brand" style="width: 90%; height: 22px; display: block;"></i>
+            <i class="md-l md-bar" style="width: 100%; height: 26px; display: block;"></i>
+            <span class="md-l" style="display: flex; gap: 8px;"><i class="md-bar md-bar--brand" style="width: 64px; height: 20px; display: block; border-radius: 6px;"></i><i class="md-bar" style="width: 48px; height: 20px; display: block; border-radius: 6px;"></i></span>
+            <i class="md-l md-bar" style="width: 80%; height: 8px; display: block;"></i>
+          </div>
+          <div style="position: relative; width: 120px; height: 100px;">
+            <span class="md-frame" style="position: absolute; inset: 0; border-radius: 22px 22px 22px 6px; background: var(--caqui-200);"></span>
+            <span class="md-photo" style="position: absolute; inset: 0; border-radius: 22px 22px 22px 6px; overflow: hidden;"><x-import component-from-global-scope="TDA.Media" ratio="6 / 5" icon="tent" alt="" placeholder-id="md1" rounded="{{no}}"></x-import></span>
+            <img class="md-paw" src="/_blob/14eca201ef40bb0765855fa7e8c9b51c" alt="" aria-hidden="true" style="position: absolute; width: 30px; right: -10px; top: -18px;">
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">1 · Hero ao carregar</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">Carregar a página (CSS, sem esperar hidratação)</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-slow 500ms · stagger 80ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">ease-enter · pata: ease-stamp</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">0 → 320ms nos textos; foto 120ms; moldura 220ms; pata 480ms</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">opacidade 0, y +24px → 0 · foto 0.96 → 1 · pata 0.6 → 1, −2° → 18°</dd></dl>
+      </article>
+
+      <!-- 2 Trilha -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage">
+          <span class="md-trail-line" aria-hidden="true"></span>
+          <div style="position: relative; width: 100%; display: flex; justify-content: space-between; padding: 0 22px; box-sizing: border-box;">
+            <span class="md-marker"><x-import component-from-global-scope="TDA.Icon" name="whatsapp" size="{{s22}}"></x-import></span>
+            <span class="md-marker"><x-import component-from-global-scope="TDA.Icon" name="compass" size="{{s22}}"></x-import></span>
+            <span class="md-marker"><x-import component-from-global-scope="TDA.Icon" name="tent" size="{{s22}}"></x-import></span>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">2 · Pegadas caminhando (Trail)</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">35% da trilha visível, uma vez</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">linha dur-trail 1200ms · marco dur-slow 500ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">linha ease-standard · marco ease-stamp</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">marco i: i × 1200 / (n − 1) ms; texto +120ms</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">linha recortada 100% → 0 (vertical no mobile) · marco 0.8 → 1</dd></dl>
+      </article>
+
+      <!-- 3 Botão -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage md-press"><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" size="lg">Pedir orçamento</x-import></div>
+        <h3 class="h4" style="margin: 0;">3 · Botão carimbo</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">hover · pressionar · soltar</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-fast 160ms (pressionar 60ms)</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">transform ease-stamp · sombra e cor ease-standard</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">nenhum</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">hover y −1px · pressionado y +4px e sombra some · solta com overshoot</dd></dl>
+      </article>
+
+      <!-- 4 Card -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage">
+          <div class="md-card">
+            <div class="md-img"><x-import component-from-global-scope="TDA.Media" ratio="16 / 7" icon="utensils" alt="" placeholder-id="md4" rounded="{{no}}"></x-import></div>
+            <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;"><strong class="h4" style="font-size: 16px; line-height: 20px;">Restaurantes</strong><span style="display: inline-flex; align-items: center; gap: 4px; font: 800 13px/18px var(--font-body); color: var(--brand);">Ver restaurantes <span class="md-arrow"><x-import component-from-global-scope="TDA.Icon" name="arrow-right" size="{{s16}}"></x-import></span></span></div>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">4 · Cards</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">entrada: 20% visível, stagger · hover/foco</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">entrada dur-slow · hover dur-medium · seta dur-fast</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">ease-enter</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">i × 80ms (máx. 5 × 80 = 400ms)</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">y −4px, shadow-sm → shadow-md, foto 1 → 1.04, seta +4px</dd></dl>
+      </article>
+
+      <!-- 5 Camuflagem -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage md-stage--forest">
+          <div class="md-camo"><x-import component-from-global-scope="TDA.CamoPattern" tone="forest" id="md5"></x-import></div>
+          <img src="/_blob/52c1d09b525f9f1070fb00132a39dee3" alt="" aria-hidden="true" style="position: relative; width: 72px; transform: rotate(-12deg);">
+          <span class="caption" style="position: absolute; right: 12px; bottom: 10px; color: var(--ink-on-forest-muted);">demo acelerada 5×</span>
+        </div>
+        <h3 class="h4" style="margin: 0;">5 · Camuflagem viva</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">seção visível (pausa fora da tela)</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-ambient 20s, loop ida e volta</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">ease-standard</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">nenhum</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">padrão translate(0,0) → (−20px, 12px) · CTABanner e Hero floresta</dd></dl>
+      </article>
+
+      <!-- 6 Pilares -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage"><div style="display: flex; gap: 40px;">
+          <span class="md-pillar md-pillar--brand"><x-import component-from-global-scope="TDA.Icon" name="compass" size="{{s26}}"></x-import></span>
+          <span class="md-pillar md-pillar--olive"><x-import component-from-global-scope="TDA.Icon" name="leaf" size="{{s26}}"></x-import></span>
+          <span class="md-pillar md-pillar--earth"><x-import component-from-global-scope="TDA.Icon" name="heart" size="{{s26}}"></x-import></span>
+        </div></div>
+        <h3 class="h4" style="margin: 0;">6 · Pilares Brincar / Aprender / Ensinar</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">20% do pilar visível, uma vez</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">selo dur-slow · anel 900ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">selo ease-stamp · anel ease-exit</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">i × 160ms · anel +200ms</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">selo 0.7 → 1 · anel 0 → 22px e some (pegada na lama)</dd></dl>
+      </article>
+
+      <!-- 7 WhatsApp -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage" style="place-items: end; padding: 20px;">
+          <div style="position: absolute; left: 20px; top: 20px; right: 120px; display: flex; flex-direction: column; gap: 10px;" aria-hidden="true"><i class="md-bar" style="height: 10px; display: block;"></i><i class="md-bar" style="height: 10px; width: 70%; display: block;"></i><i class="md-bar" style="height: 10px; width: 85%; display: block;"></i></div>
+          <span class="md-wa"><x-import component-from-global-scope="TDA.Icon" name="whatsapp" size="{{s28}}"></x-import></span>
+        </div>
+        <h3 class="h4" style="margin: 0;">7 · WhatsApp flutuante</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">1,5s após carregar ou 30% de rolagem · some com QuoteForm na tela</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">entrada dur-slow · pulso 1,2s a cada 20s</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">entrada ease-enter · pulso ease-exit</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">1500ms · pulso só após 20s sem interação; nunca durante rolagem no mobile</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">y +24px, opacidade 0 → 0, 1 · anel 0 → 18px</dd></dl>
+      </article>
+
+      <!-- 8 Header -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage" style="place-items: stretch;">
+          <div class="md-header"><span class="md-logo"></span><span style="flex: 1;"></span><i class="md-bar" style="width: 36px; height: 8px; display: block;"></i><i class="md-bar" style="width: 36px; height: 8px; display: block;"></i><i class="md-bar md-bar--brand" style="width: 44px; height: 22px; display: block; border-radius: 6px;"></i></div>
+          <div style="position: absolute; left: 16px; right: 16px; top: 88px; display: flex; flex-direction: column; gap: 10px;" aria-hidden="true"><i class="md-bar" style="height: 10px; display: block;"></i><i class="md-bar" style="height: 10px; width: 60%; display: block;"></i><i class="md-bar" style="height: 10px; width: 80%; display: block;"></i></div>
+        </div>
+        <h3 class="h4" style="margin: 0;">8 · Header</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">rolagem &gt; 8px encolhe · descendo &gt; 240px esconde · subindo volta</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-medium 280ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">ease-standard</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">nenhum (rAF, limiar de 6px)</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">altura 76 → 64px, logo 52 → 44px, + shadow-md · escondido y −100%</dd></dl>
+      </article>
+
+      <!-- 9 Menu mobile -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage">
+          <div style="width: 180px; height: 190px; border-radius: 18px; background: var(--surface-raised); border: 1.5px solid var(--line); padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;"><span style="width: 56px; height: 14px; border-radius: 4px; background: var(--brand);"></span><span class="md-burger" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <i class="md-menu-l" style="display: block;"></i><i class="md-menu-l" style="display: block;"></i><i class="md-menu-l" style="display: block;"></i><i class="md-menu-l" style="display: block;"></i>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">9 · Menu mobile</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">tocar no menu</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-medium 280ms · fechar dur-fast</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">abrir ease-enter · fechar ease-exit</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">link i × 50ms</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">hambúrguer → X · links y −12px, opacidade 0 → 0, 1</dd></dl>
+      </article>
+
+      <!-- 10 Formulário -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage" style="place-items: stretch; padding: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span class="label" style="font-size: 14px;">Seu nome</span>
+            <div class="md-input"></div>
+            <span class="md-err">Conta pra gente seu nome.</span>
+            <div class="md-send">
+              <span class="md-send__a"><x-import component-from-global-scope="TDA.Icon" name="whatsapp" size="{{s18}}"></x-import>Continuar no WhatsApp</span>
+              <span class="md-send__b"><span class="tda-steps" aria-hidden="true"><i></i><i></i><i></i></span>Abrindo o WhatsApp…</span>
+              <span class="md-send__c"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s22}}"></x-import></span>
+            </div>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">10 · Formulário de orçamento</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">foco · envio com erro · envio válido</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">anel de foco 280ms · chacoalho 300ms · envio 700ms + check 280ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">foco ease-enter · chacoalho ease-standard · check ease-stamp</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">mensagem de erro desliza junto do chacoalho</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">3 oscilações de 4px · msg y −6px → 0 · pegadas → check → redireciona</dd></dl>
+      </article>
+
+      <!-- 11 Transição de página -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage" style="place-items: stretch; padding: 14px;">
+          <div style="display: flex; flex-direction: column; gap: 8px; height: 100%;">
+            <div style="height: 26px; border-radius: 6px; background: var(--surface-raised); border: 1.5px solid var(--line); display: flex; align-items: center; padding: 0 8px;"><span style="width: 40px; height: 10px; border-radius: 3px; background: var(--brand);"></span></div>
+            <div class="md-page" style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 8px 4px;"><i class="md-bar md-bar--brand" style="width: 55%; height: 16px; display: block;"></i><i class="md-bar" style="height: 10px; display: block;"></i><i class="md-bar" style="height: 10px; width: 75%; display: block;"></i><span style="display: flex; gap: 8px;"><i class="md-bar" style="flex: 1; height: 44px; display: block; border-radius: 8px;"></i><i class="md-bar" style="flex: 1; height: 44px; display: block; border-radius: 8px;"></i></span></div>
+            <div style="height: 22px; border-radius: 6px; background: var(--surface-forest);"></div>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">11 · Transição entre páginas</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">troca de rota (template.tsx)</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-medium 280ms</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">ease-enter</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">nenhum · header e rodapé fixos</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">conteúdo y +12px, opacidade 0 → 0, 1</dd></dl>
+      </article>
+
+      <!-- 12 Filtro -->
+      <article class="md-box" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="md-stage" style="place-items: stretch; padding: 20px;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="md-chips"><span class="md-chip-pill" aria-hidden="true"></span><span class="md-chip" style="width: 92px; text-align: center; box-sizing: border-box;">Todas</span><span class="md-chip" style="width: 92px; text-align: center; box-sizing: border-box;">Gincanas</span><span class="md-chip">Natureza</span></div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;"><div class="md-fcard"></div><div class="md-fcard md-fcard--out"></div><div class="md-fcard md-fcard--out"></div><div class="md-fcard md-fcard--in"></div><div class="md-fcard md-fcard--out"></div><div class="md-fcard md-fcard--in"></div></div>
+          </div>
+        </div>
+        <h3 class="h4" style="margin: 0;">12 · Filtro da Oficina</h3>
+        <dl class="body-sm" style="margin: 0; display: grid; grid-template-columns: 88px 1fr; gap: 4px 12px; color: var(--ink-muted);"><dt style="font-weight: 800; color: var(--ink);">Gatilho</dt><dd style="margin: 0;">tocar em um chip</dd><dt style="font-weight: 800; color: var(--ink);">Duração</dt><dd style="margin: 0;">dur-medium 280ms (layout e chip)</dd><dt style="font-weight: 800; color: var(--ink);">Curva</dt><dd style="margin: 0;">entrada ease-enter · saída ease-exit</dd><dt style="font-weight: 800; color: var(--ink);">Atraso</dt><dd style="margin: 0;">entram depois que os que saem somem (popLayout)</dd><dt style="font-weight: 800; color: var(--ink);">Antes → depois</dt><dd style="margin: 0;">cards 0.94 ↔ 1 com fade, sem pulo de layout · chip ativo desliza (layoutId)</dd></dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- Motion/Reduzido -->
+  <section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; padding: 32px; border-radius: var(--radius-xl); background: var(--surface-earth);">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="overline" style="margin: 0; color: var(--earth-strong);">Acessibilidade</p>
+      <h2 class="h2" style="margin: 0;">Com prefers-reduced-motion</h2>
+      <ul class="body" style="margin: 0; padding-left: 20px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 6px;">
+        <li>Nada se desloca nem escala: entradas viram fade de 150ms (ou aparecem direto).</li>
+        <li>Sem loops: camuflagem parada, sem pulso no WhatsApp, sem chacoalho.</li>
+        <li>Header não se esconde; só ganha sombra.</li>
+        <li>Trilha aparece desenhada; marcos já no lugar.</li>
+        <li>Hover e press continuam mudando cor, sem mover (transições de 1ms).</li>
+        <li>Envio do formulário redireciona na hora, sem estado de pegadas.</li>
+      </ul>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div><p class="doc-label">Padrão</p><div class="md-stage md-hero" style="height: 180px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 10px; padding: 0 20px;"><i class="md-l md-bar md-bar--earth" style="width: 40%; height: 8px; display: block;"></i><i class="md-l md-bar md-bar--brand" style="width: 90%; height: 22px; display: block;"></i><i class="md-l md-bar" style="width: 100%; height: 26px; display: block;"></i><i class="md-l md-bar md-bar--brand" style="width: 50%; height: 20px; display: block;"></i></div></div>
+      <div><p class="doc-label">Reduzido</p><div class="md-stage md-hero md-reduced" style="height: 180px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 10px; padding: 0 20px;"><i class="md-l md-bar md-bar--earth" style="width: 40%; height: 8px; display: block;"></i><i class="md-l md-bar md-bar--brand" style="width: 90%; height: 22px; display: block;"></i><i class="md-l md-bar" style="width: 100%; height: 26px; display: block;"></i><i class="md-l md-bar md-bar--brand" style="width: 50%; height: 20px; display: block;"></i></div></div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var reduced = !!(this.state && this.state.reduced);
+    function bez(a, b, c, d) { return 'M0 100 C' + (a * 100) + ' ' + (100 - b * 100) + ' ' + (c * 100) + ' ' + (100 - d * 100) + ' 100 0'; }
+    return {
+      no: false, s16: 16, s18: 18, s22: 22, s26: 26, s28: 28,
+      gridCls: reduced ? 'md-reduced' : '',
+      reducedPressed: reduced ? 'true' : 'false',
+      toggleReduced: function () { self.setState({ reduced: !reduced }); },
+      durs: [
+        { token: 'dur-instant', value: '100ms', use: 'troca de cor de ícone, check', style: { '--d': '100ms', '--w': '340px' } },
+        { token: 'dur-fast', value: '160ms', use: 'hover e press', style: { '--d': '160ms', '--w': '340px' } },
+        { token: 'dur-medium', value: '280ms', use: 'menus, foco, troca de estado, página', style: { '--d': '280ms', '--w': '340px' } },
+        { token: 'dur-slow', value: '500ms', use: 'entradas de seção, hero', style: { '--d': '500ms', '--w': '340px' } },
+        { token: 'dur-trail', value: '1200ms', use: 'desenho da trilha e das pegadas', style: { '--d': '1200ms', '--w': '340px' } },
+        { token: 'dur-ambient', value: '20s', use: 'camuflagem viva (loop quase imperceptível)', style: { '--d': '20s', '--w': '340px' } }
+      ],
+      eases: [
+        { token: 'ease-enter', value: 'cubic-bezier(0.22, 1, 0.36, 1)', use: 'tudo que entra', path: bez(0.22, 1, 0.36, 1), style: { '--e': 'cubic-bezier(0.22, 1, 0.36, 1)', '--w': '260px' } },
+        { token: 'ease-exit', value: 'cubic-bezier(0.4, 0, 1, 1)', use: 'tudo que sai', path: bez(0.4, 0, 1, 1), style: { '--e': 'cubic-bezier(0.4, 0, 1, 1)', '--w': '260px' } },
+        { token: 'ease-standard', value: 'cubic-bezier(0.4, 0, 0.2, 1)', use: 'mudança no lugar', path: bez(0.4, 0, 0.2, 1), style: { '--e': 'cubic-bezier(0.4, 0, 0.2, 1)', '--w': '260px' } },
+        { token: 'ease-stamp', value: 'cubic-bezier(0.34, 1.56, 0.64, 1)', use: 'carimbo: botões e selos', path: bez(0.34, 1.56, 0.64, 1), style: { '--e': 'cubic-bezier(0.34, 1.56, 0.64, 1)', '--w': '260px' } }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

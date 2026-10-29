@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Fotos — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-route="/admin/fotos" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="midia" role="admin" hint-size="248px,1000px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Site</p>
+        <h1 class="top__title">Fotos</h1>
+      </div>
+      <div class="top__actions">
+        <x-import component-from-global-scope="TDA.Button" icon-left="palette">Enviar fotos</x-import>
+      </div>
+    </div>
+
+    <div class="alert alert--warn">
+      <x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s20}}"></x-import>
+      <div class="alert__body"><p><strong>Regras das fotos</strong></p><p>Só fotos com autorização dos responsáveis. Crianças de costas, de perfil ou em grupo; luz natural. Toda foto precisa de descrição para leitores de tela.</p></div>
+    </div>
+
+    <div class="drop" style="flex-direction: row; gap: 16px; padding: 20px 24px; justify-content: flex-start; text-align: left;">
+      <span class="drop__icon"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{s24}}"></x-import></span>
+      <div style="display: flex; flex-direction: column; gap: 2px;"><strong>Arraste várias fotos de uma vez ou clique para escolher</strong><span class="caption">JPG ou PNG, até 10 MB cada. A gente gera os tamanhos certos para o site.</span></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Filtrar fotos">
+      <button type="button" role="tab" class="tab" aria-selected="true">Todas <span class="tab__n">24</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Sem descrição <span class="tab__n">2</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Usadas no site <span class="tab__n">18</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Não usadas <span class="tab__n">6</span></button>
+    </div>
+
+    <div class="cols cols--4" style="gap: 20px;">
+      <sc-for list="{{fotos}}" as="f" hint-placeholder-count="8">
+        <article class="box" style="padding: 12px; gap: 10px;">
+          <x-import component-from-global-scope="TDA.Media" icon="{{f.icon}}" alt="{{f.alt}}" placeholder-id="{{f.pid}}" caption="{{f.pos}}"></x-import>
+          <sc-if value="{{f.missing}}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="TDA.TextField" label="Descrição da foto" default-value="" error="Escreva o que aparece na foto."></x-import>
+          </sc-if>
+          <sc-if value="{{f.ok}}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="TDA.TextField" label="Descrição da foto" default-value="{{f.alt}}"></x-import>
+          </sc-if>
+          <div class="mcard__row" style="gap: 4px;">
+            <span class="caption" style="color: var(--ink-muted);">{{f.uso}}</span>
+            <div class="row-actions">
+              <button type="button" class="ibtn" aria-label="Substituir foto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3"></path><path d="M18 3v4h-4"></path><path d="M20 12a8 8 0 0 1-14 5.3"></path><path d="M6 21v-4h4"></path></svg></button>
+              <button type="button" class="ibtn ibtn--danger" aria-label="Remover foto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.5h5V7"></path><path d="M6 7l1 13h10l1-13"></path></svg></button>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var f = [
+      ['tent', 'Crianças de costas correndo num gramado', 'Início · topo', 'Usada em 1 lugar'],
+      ['flag', 'Crianças empinando pipas no gramado', 'Galeria · 1', 'Usada em 2 lugares'],
+      ['palette', '', 'Galeria · 2', 'Usada em 1 lugar'],
+      ['leaf', 'Crianças plantando mudas na mini horta', 'Oficina', 'Usada em 1 lugar'],
+      ['compass', 'Monitora mostrando um mapa do tesouro', 'Galeria · 4', 'Usada em 1 lugar'],
+      ['tree', '', 'Não usada', 'Não usada'],
+      ['users', 'Equipe sentada em roda com as crianças', 'Quem somos', 'Usada em 1 lugar'],
+      ['utensils', 'Área kids com mesas baixas e cabana', 'Restaurantes', 'Usada em 1 lugar']
+    ];
+    var fotos = f.map(function (x, i) { return { icon: x[0], alt: x[1], pos: x[2], uso: x[3], pid: 'md' + i, missing: !x[1], ok: !!x[1] }; });
+    return { s20: 20, s24: 24, fotos: fotos };
+  }
+}
+</script>
+</body>
+</html>

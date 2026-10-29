@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Quem somos — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="QuemSomos" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <x-import component-from-global-scope="TDA.Header" current="/quem-somos" message="Olá! Quero conversar com a Turma da Aventura."></x-import>
+
+  <!-- QuemSomos/Historia -->
+  <section class="intro" data-section="QuemSomos/Historia">
+    <div class="wrap">
+      <div class="g12" style="gap: 64px;">
+        <div class="span-6" style="display: flex; flex-direction: column; gap: 24px;">
+          <x-import component-from-global-scope="TDA.SectionHeader" level="{{h1}}" overline="Quem somos" title="A turma por trás da aventura"></x-import>
+          <div class="prose">
+            <p class="lead" style="color: var(--ink);">A Turma nasceu de um quintal: amigos educadores que levavam as próprias crianças para brincar ao ar livre todo fim de semana — e, de repente, os filhos dos vizinhos também queriam ir.</p>
+            <p class="body">Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para restaurantes, empresas e escolas. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.</p>
+          </div>
+          <p class="tagline" style="margin: 0; color: var(--earth-strong);">Brincar / Aprender / Ensinar</p>
+        </div>
+        <div class="span-6 story-media">
+          <x-import component-from-global-scope="TDA.Media" ratio="5 / 4" icon="users" alt="Equipe de monitores sentada em roda com as crianças no gramado" placeholder-id="historia"></x-import>
+          <img class="orn" src="/_blob/14eca201ef40bb0765855fa7e8c9b51c" alt="" aria-hidden="true" style="width: 84px; right: -18px; top: -36px; transform: rotate(18deg);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuemSomos/Pilares -->
+  <section class="sec sec--sunken" data-section="QuemSomos/Pilares">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" align="center" overline="Nosso jeito" title="O que guia cada expedição"></x-import>
+      <div class="g3">
+        <x-import component-from-global-scope="TDA.ValuePillar" icon="compass" tone="brand" number="01" title="Brincar" text="Brincadeira livre e dirigida, ao ar livre sempre que dá. Criança precisa correr, sujar a mão e rir alto."></x-import>
+        <x-import component-from-global-scope="TDA.ValuePillar" icon="leaf" tone="olive" number="02" title="Aprender" text="Cada atividade traz uma descoberta: sobre a natureza, sobre o grupo e sobre si mesmo."></x-import>
+        <x-import component-from-global-scope="TDA.ValuePillar" icon="heart" tone="earth" number="03" title="Ensinar" text="As crianças ensinam umas às outras — e a gente aprende junto com elas."></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuemSomos/Equipe -->
+  <section class="sec" data-section="QuemSomos/Equipe">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Equipe" title="Quem cuida da sua turma" description="Todos os monitores passam por formação própria, checagem de antecedentes e reciclagem de primeiros socorros todo ano."></x-import>
+      <div class="g3">
+        <sc-for list="{{team}}" as="m" hint-placeholder-count="6">
+          <x-import component-from-global-scope="TDA.TeamCard" name="{{m.name}}" nickname="{{m.nick}}" role="{{m.role}}" bio="{{m.bio}}" badges="{{m.badges}}"></x-import>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuemSomos/Seguranca -->
+  <section class="sec sec--earth" data-section="QuemSomos/Seguranca">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Segurança" title="Confiança se constrói com cuidado visível" description="Os números que os pais perguntam — e que a gente faz questão de cumprir."></x-import>
+      <div class="g3">
+        <div class="stat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="users" size="{{i24}}"></x-import></span><p class="stat__n">1 : 6</p><p class="stat__l">Monitor por criança até 5 anos</p><p class="stat__d body-sm">De 6 a 12 anos, um monitor para cada 10 crianças.</p></div>
+        <div class="stat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="heart" size="{{i24}}"></x-import></span><p class="stat__n">100%</p><p class="stat__l">Da equipe com primeiros socorros</p><p class="stat__d body-sm">Certificação renovada todo ano e kit completo em todo evento.</p></div>
+        <div class="stat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{i24}}"></x-import></span><p class="stat__n">Seguro</p><p class="stat__l">Para cada criança atendida</p><p class="stat__d body-sm">Seguro de acidentes pessoais válido durante toda a atividade.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuemSomos/CTA -->
+  <section class="sec" data-section="QuemSomos/CTA">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.CTABanner" title="Bora conversar?" text="Conta o que você imagina e a gente responde no WhatsApp, em horário comercial." cta-label="Chamar no WhatsApp" message="Olá! Quero conversar com a Turma da Aventura."></x-import>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="TDA.Footer" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero conversar com a Turma da Aventura."></x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, year: 2026, h1: 1, i24: 24,
+      team: [
+        { nick: 'Capitão Trilha', name: 'Rafael', role: 'Coordenador de expedições', bio: 'Desenha os roteiros e garante que cada atividade caiba no espaço.', badges: ['Primeiros socorros', 'Educação física'] },
+        { nick: 'Dona Bússola', name: 'Beatriz', role: 'Coordenadora pedagógica', bio: 'Adapta cada brincadeira à faixa etária e forma novos monitores.', badges: ['Primeiros socorros', 'Pedagogia'] },
+        { nick: 'Mestre Pipa', name: 'Caio', role: 'Monitor de oficinas', bio: 'Transforma papel, vareta e sucata em brinquedo e orgulho.', badges: ['Primeiros socorros', 'Arte-educação'] },
+        { nick: 'Fada da Horta', name: 'Luana', role: 'Monitora de natureza', bio: 'Leva as crianças para plantar, observar e cuidar.', badges: ['Primeiros socorros', 'Biologia'] },
+        { nick: 'Guia Faísca', name: 'Diego', role: 'Monitor de gincanas', bio: 'Comanda as equipes, os desafios e as medalhas de expedição.', badges: ['Primeiros socorros', 'Recreação'] },
+        { nick: 'Sentinela Sol', name: 'Marina', role: 'Monitora de segurança', bio: 'Cuida do check-in, das pulseiras e da entrega aos responsáveis.', badges: ['Primeiros socorros', 'Brigadista'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

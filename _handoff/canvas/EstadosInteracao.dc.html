@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Botões e cards — estados</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="width: 100%; min-height: 1300px; padding: 48px; display: flex; flex-direction: column; gap: 40px; font-family: var(--font-body); color: var(--ink); box-sizing: border-box;">
+
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <h1 class="h2" style="margin: 0;">Botões · estados</h1>
+    <p class="body-sm muted">Sombra de carimbo de 4px que some ao pressionar. Foco: contorno 3px em <code>focus</code> com 3px de afastamento. Altura mínima 44px (lg = 56px).</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 140px repeat(5, minmax(0, 1fr)); gap: 24px 16px; align-items: center;">
+    <span></span>
+    <p class="doc-label" style="margin: 0;">Repouso</p>
+    <p class="doc-label" style="margin: 0;">Hover</p>
+    <p class="doc-label" style="margin: 0;">Foco (teclado)</p>
+    <p class="doc-label" style="margin: 0;">Pressionado</p>
+    <p class="doc-label" style="margin: 0;">Desabilitado</p>
+
+    <p class="label" style="margin: 0;">primary</p>
+    <div><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp">Pedir orçamento</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" class-name="is-hover">Pedir orçamento</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" class-name="is-focus">Pedir orçamento</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" class-name="is-pressed">Pedir orçamento</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" disabled="{{yes}}">Pedir orçamento</x-import></div>
+
+    <p class="label" style="margin: 0;">earth</p>
+    <div><x-import component-from-global-scope="TDA.Button" variant="earth" icon-right="arrow-right">Conhecer a Oficina</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="earth" icon-right="arrow-right" class-name="is-hover">Conhecer a Oficina</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="earth" icon-right="arrow-right" class-name="is-focus">Conhecer a Oficina</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="earth" icon-right="arrow-right" class-name="is-pressed">Conhecer a Oficina</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="earth" icon-right="arrow-right" disabled="{{yes}}">Conhecer a Oficina</x-import></div>
+
+    <p class="label" style="margin: 0;">outline</p>
+    <div><x-import component-from-global-scope="TDA.Button" variant="outline">Ver restaurantes</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="outline" class-name="is-hover">Ver restaurantes</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="outline" class-name="is-focus">Ver restaurantes</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="outline" class-name="is-pressed">Ver restaurantes</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="outline" disabled="{{yes}}">Ver restaurantes</x-import></div>
+
+    <p class="label" style="margin: 0;">ghost</p>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost" icon-right="arrow-right">Ver todos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost" icon-right="arrow-right" class-name="is-hover">Ver todos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost" icon-right="arrow-right" class-name="is-focus">Ver todos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost" icon-right="arrow-right" class-name="is-pressed">Ver todos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost" icon-right="arrow-right" disabled="{{yes}}">Ver todos</x-import></div>
+  </div>
+
+  <div style="background: var(--surface-forest); border-radius: var(--radius-lg); padding: 32px; display: grid; grid-template-columns: 140px repeat(4, minmax(0, 1fr)); gap: 24px 16px; align-items: center;">
+    <p class="label" style="margin: 0; color: var(--ink-on-forest);">inverse</p>
+    <div><x-import component-from-global-scope="TDA.Button" variant="inverse" icon-left="whatsapp">Chamar no WhatsApp</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="inverse" icon-left="whatsapp" class-name="is-hover">Chamar no WhatsApp</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="inverse" icon-left="whatsapp" class-name="is-focus">Chamar no WhatsApp</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="inverse" icon-left="whatsapp" class-name="is-pressed">Chamar no WhatsApp</x-import></div>
+    <p class="label" style="margin: 0; color: var(--ink-on-forest);">ghost-inverse</p>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost-inverse">Ver formatos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost-inverse" class-name="is-hover">Ver formatos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost-inverse" class-name="is-focus">Ver formatos</x-import></div>
+    <div><x-import component-from-global-scope="TDA.Button" variant="ghost-inverse" class-name="is-pressed">Ver formatos</x-import></div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <h2 class="h2" style="margin: 0;">Cards · estados</h2>
+    <p class="body-sm muted">Card clicável sobe 4px com shadow-md no hover (200ms ease-out). Pressionado volta quase ao lugar com borda brand.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; align-items: start;">
+    <div><p class="doc-label">Repouso</p><x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes"></x-import></div>
+    <div><p class="doc-label">Hover</p><x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes" class-name="is-hover"></x-import></div>
+    <div><p class="doc-label">Foco (teclado)</p><x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes" class-name="is-focus"></x-import></div>
+    <div><p class="doc-label">Pressionado</p><x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes" class-name="is-pressed"></x-import></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="doc-label" style="margin: 0;">Filtro (chips) · repouso, hover, foco, selecionado</p>
+      <div class="filters">
+        <button type="button" class="chip" aria-pressed="false">Brincadeiras</button>
+        <button type="button" class="chip is-hover" aria-pressed="false">Gincanas</button>
+        <button type="button" class="chip is-focus" aria-pressed="false">Natureza</button>
+        <button type="button" class="chip" aria-pressed="true">Oficinas manuais</button>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="doc-label" style="margin: 0;">Campo · repouso e foco</p>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+        <x-import component-from-global-scope="TDA.TextField" label="Seu nome" placeholder="Como podemos te chamar?"></x-import>
+        <x-import component-from-global-scope="TDA.TextField" label="Seu nome" default-value="Mariana" class-name="is-focus"></x-import>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

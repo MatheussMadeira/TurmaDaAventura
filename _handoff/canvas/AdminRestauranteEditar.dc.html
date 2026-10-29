@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Editar restaurante — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-route="/admin/restaurantes/cantina-do-bosque" style="width: 100%; min-height: 1300px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="restaurantes" role="admin" hint-size="248px,1300px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb"><a href="AdminRestaurantes.dc.html" style="color: var(--brand);">Restaurantes</a> › Editar</p>
+        <h1 class="top__title">Cantina do Bosque</h1>
+      </div>
+      <x-import component-from-global-scope="TDA.Tag" tone="brand" icon="check">No site</x-import>
+    </div>
+
+    <div class="cols cols--form">
+      <form class="box" novalidate="" style="gap: 32px;" aria-label="Dados do restaurante">
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+          <legend class="box__title" style="padding: 0; margin-bottom: 16px;">1 · Restaurante</legend>
+          <div class="fields">
+            <x-import component-from-global-scope="TDA.TextField" label="Nome" required="{{yes}}" default-value="Cantina do Bosque"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Bairro" required="{{yes}}" default-value="Pinheiros"></x-import>
+            <x-import component-from-global-scope="TDA.Select" label="Região" options="{{regioes}}" default-value="Zona Oeste e Granja Viana" hint="Define o grupo em que ele aparece no site."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Link do mapa" type="url" default-value="https://maps.app.goo.gl/…" hint="Usado no botão “Como chegar”."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Endereço" default-value="Rua das Acácias, 000 · Pinheiros" class-name="full"></x-import>
+          </div>
+        </fieldset>
+
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+          <legend class="box__title" style="padding: 0; margin-bottom: 16px;">2 · Recreação</legend>
+          <div class="fields">
+            <div>
+              <x-import component-from-global-scope="TDA.TextField" label="Dias e horários" required="{{yes}}" default-value="Sáb e dom, 12h às 17h"></x-import>
+              <p class="count"><span>Ex.: “Sex, 19h às 23h · Sáb, 12h às 16h”</span><span>21/50</span></p>
+            </div>
+            <x-import component-from-global-scope="TDA.TextField" label="Faixa etária" default-value="De 3 a 10 anos"></x-import>
+          </div>
+          <label class="switch is-on"><span class="switch__track" aria-hidden="true"></span><input type="checkbox" checked="" style="position: absolute; opacity: 0; width: 1px; height: 1px;">Mostrar no site</label>
+        </fieldset>
+
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+          <legend class="box__title" style="padding: 0; margin-bottom: 16px;">3 · Fotos</legend>
+          <div class="fields">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <p class="tda-field__label" style="margin: 0;">Foto do espaço kids (4:3)</p>
+              <div class="pic"><div class="pic__img"><x-import component-from-global-scope="TDA.Media" icon="utensils" alt="" placeholder-id="ed-r"></x-import></div><x-import component-from-global-scope="TDA.Button" variant="outline" size="sm" icon-left="palette">Trocar foto</x-import></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <p class="tda-field__label" style="margin: 0;">Logo do restaurante (opcional)</p>
+              <div class="pic"><div class="pic__img" style="width: 64px; height: 64px; border-radius: 50%; border: 2px dashed var(--line-strong); display: grid; place-items: center; color: var(--ink-subtle);"><x-import component-from-global-scope="TDA.Icon" name="utensils" size="{{s20}}"></x-import></div><x-import component-from-global-scope="TDA.Button" variant="outline" size="sm">Enviar logo</x-import></div>
+            </div>
+            <x-import component-from-global-scope="TDA.TextField" label="Descrição da foto" required="{{yes}}" default-value="Área kids do restaurante com mesas baixas e cabana de tecido" hint="Lida por quem usa leitor de tela." class-name="full"></x-import>
+          </div>
+        </fieldset>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; padding-top: 16px; border-top: 1.5px solid var(--line);">
+          <x-import component-from-global-scope="TDA.Button" variant="ghost" href="AdminRestaurantes.dc.html">Cancelar</x-import>
+          <x-import component-from-global-scope="TDA.Button" variant="outline">Salvar rascunho</x-import>
+          <x-import component-from-global-scope="TDA.Button" icon-left="check">Salvar e publicar</x-import>
+        </div>
+      </form>
+
+      <aside class="box" aria-label="Prévia ao vivo" style="position: sticky; top: 24px; background: var(--surface-sunken); box-shadow: none;">
+        <div class="box__head">
+          <h2 class="box__title">Prévia no site</h2>
+          <span class="caption" style="display: inline-flex; gap: 6px; align-items: center; color: var(--brand);"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--brand);"></span>Ao vivo</span>
+        </div>
+        <p class="box__sub">Exatamente como o card aparece em Restaurantes e na Início. Atualiza enquanto você digita.</p>
+        <div style="max-width: 380px; width: 100%; align-self: center;">
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Pinheiros" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000 · Pinheiros" ages="De 3 a 10 anos" maps-url="#" placeholder-id="prev-r" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { yes: true, s20: 20, regioes: ['Zona Oeste e Granja Viana', 'Zona Sul'] };
+  }
+}
+</script>
+</body>
+</html>

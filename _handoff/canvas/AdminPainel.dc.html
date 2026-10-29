@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-theme="{{theme}}" data-route="/admin" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="painel" role="admin" hint-size="248px,1000px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Olá, Nome da pessoa</p>
+        <h1 class="top__title">Painel</h1>
+      </div>
+      <div class="top__actions">
+        <x-import component-from-global-scope="TDA.Button" variant="outline" icon-right="arrow-right" href="Main.dc.html">Ver o site</x-import>
+        <x-import component-from-global-scope="TDA.Button" icon-left="tent" href="AdminEditor.dc.html">Editar o site</x-import>
+      </div>
+    </div>
+
+    <div class="alert alert--warn" role="status">
+      <x-import component-from-global-scope="TDA.Icon" name="flag" size="{{s20}}"></x-import>
+      <div class="alert__body"><p><strong>3 itens para conferir</strong></p><p>2 fotos da galeria estão sem descrição e 1 restaurante está sem horário de recreação.</p></div>
+      <a class="tlink" href="AdminMidia.dc.html" style="min-height: 0;">Conferir agora</a>
+    </div>
+
+    <div class="cols cols--4">
+      <div class="box kpi"><span class="kpi__icon"><x-import component-from-global-scope="TDA.Icon" name="tent" size="{{s22}}"></x-import></span><p class="kpi__n">5</p><p class="kpi__l">Páginas no ar</p><p class="kpi__d">Última publicação: 0 dias atrás</p></div>
+      <div class="box kpi"><span class="kpi__icon"><x-import component-from-global-scope="TDA.Icon" name="utensils" size="{{s22}}"></x-import></span><p class="kpi__n">6</p><p class="kpi__l">Restaurantes ativos</p><p class="kpi__d">Em 2 regiões</p></div>
+      <div class="box kpi"><span class="kpi__icon"><x-import component-from-global-scope="TDA.Icon" name="scissors" size="{{s22}}"></x-import></span><p class="kpi__n">9</p><p class="kpi__l">Atividades na Oficina</p><p class="kpi__d">4 categorias</p></div>
+      <div class="box kpi"><span class="kpi__icon" style="background: var(--warning-soft); color: var(--warning);"><x-import component-from-global-scope="TDA.Icon" name="flag" size="{{s22}}"></x-import></span><p class="kpi__n">3</p><p class="kpi__l">Itens a conferir</p><p class="kpi__d">Fotos sem descrição, horários</p></div>
+    </div>
+
+    <div class="cols cols--form">
+      <section class="box box--flush" aria-labelledby="ult-alt">
+        <div class="box__head" style="padding: 20px 24px;">
+          <h2 id="ult-alt" class="box__title">Últimas alterações</h2>
+          <a class="tlink" href="#">Ver histórico</a>
+        </div>
+        <table class="tbl">
+          <thead><tr><th scope="col">O que mudou</th><th scope="col">Onde</th><th scope="col">Quem</th><th scope="col">Situação</th></tr></thead>
+          <tbody>
+            <tr><td><div class="cell-main"><div><strong>Título do topo</strong><span>Há 0 min</span></div></div></td><td>Início</td><td>Nome da pessoa</td><td><x-import component-from-global-scope="TDA.Tag" tone="earth" icon="flag">Não publicado</x-import></td></tr>
+            <tr><td><div class="cell-main"><div><strong>Foto do topo</strong><span>Há 0 min</span></div></div></td><td>Início</td><td>Nome da pessoa</td><td><x-import component-from-global-scope="TDA.Tag" tone="earth" icon="flag">Não publicado</x-import></td></tr>
+            <tr><td><div class="cell-main"><div><strong>Novo restaurante</strong><span>Ontem</span></div></div></td><td>Restaurantes</td><td>Nome da pessoa</td><td><x-import component-from-global-scope="TDA.Tag" tone="brand" icon="check">Publicado</x-import></td></tr>
+            <tr><td><div class="cell-main"><div><strong>Atividade “Mini horta”</strong><span>Há 2 dias</span></div></div></td><td>Oficina</td><td>Nome da pessoa</td><td><x-import component-from-global-scope="TDA.Tag" tone="brand" icon="check">Publicado</x-import></td></tr>
+            <tr><td><div class="cell-main"><div><strong>Mensagem do WhatsApp</strong><span>Há 3 dias</span></div></div></td><td>Contato</td><td>Nome da pessoa</td><td><x-import component-from-global-scope="TDA.Tag" tone="brand" icon="check">Publicado</x-import></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="box" aria-labelledby="atalhos">
+        <h2 id="atalhos" class="box__title">Atalhos</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a class="layer" href="AdminEditor.dc.html" style="text-decoration: none; border-color: var(--line); min-height: 56px; padding: 0 14px;"><span class="feat__icon" style="width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand);"><x-import component-from-global-scope="TDA.Icon" name="tent" size="{{s18}}"></x-import></span><span class="layer__name">Editar textos e fotos das páginas</span><x-import component-from-global-scope="TDA.Icon" name="arrow-right" size="{{s18}}"></x-import></a>
+          <a class="layer" href="AdminMidia.dc.html" style="text-decoration: none; border-color: var(--line); min-height: 56px; padding: 0 14px;"><span style="width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; background: var(--earth-soft); color: var(--earth-strong);"><x-import component-from-global-scope="TDA.Icon" name="palette" size="{{s18}}"></x-import></span><span class="layer__name">Enviar fotos para a galeria</span><x-import component-from-global-scope="TDA.Icon" name="arrow-right" size="{{s18}}"></x-import></a>
+          <a class="layer" href="AdminRestauranteEditar.dc.html" style="text-decoration: none; border-color: var(--line); min-height: 56px; padding: 0 14px;"><span style="width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; background: var(--olive-soft); color: var(--olive);"><x-import component-from-global-scope="TDA.Icon" name="utensils" size="{{s18}}"></x-import></span><span class="layer__name">Adicionar restaurante</span><x-import component-from-global-scope="TDA.Icon" name="arrow-right" size="{{s18}}"></x-import></a>
+          <a class="layer" href="AdminContato.dc.html" style="text-decoration: none; border-color: var(--line); min-height: 56px; padding: 0 14px;"><span style="width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand);"><x-import component-from-global-scope="TDA.Icon" name="whatsapp" size="{{s18}}"></x-import></span><span class="layer__name">Trocar número do WhatsApp</span><x-import component-from-global-scope="TDA.Icon" name="arrow-right" size="{{s18}}"></x-import></a>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dia","noite"],"default":"dia"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { theme: this.props.theme || 'dia', s18: 18, s20: 20, s22: 22 };
+  }
+}
+</script>
+</body>
+</html>

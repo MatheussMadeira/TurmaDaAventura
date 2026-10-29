@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usuários — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-route="/admin/usuarios" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="usuarios" role="admin" hint-size="248px,1000px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Administração · só quem é Administração vê esta área</p>
+        <h1 class="top__title">Usuários</h1>
+      </div>
+    </div>
+
+    <div class="alert alert--ok" role="status">
+      <x-import component-from-global-scope="TDA.Icon" name="check" size="{{s20}}"></x-import>
+      <div class="alert__body">
+        <p><strong style="color: var(--brand);">Usuário criado. Esta é a senha temporária:</strong></p>
+        <p style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+          <code style="font: 800 22px/28px var(--font-body); letter-spacing: .08em; color: var(--ink); background: var(--surface-raised); border: 2px dashed var(--brand); border-radius: var(--radius-sm); padding: 6px 14px;">XXXX-XXXX-XXXX</code>
+          <x-import component-from-global-scope="TDA.Button" variant="outline" size="sm">Copiar senha</x-import>
+        </p>
+        <p style="margin-top: 8px;">Ela aparece só desta vez. Envie para a pessoa por um canal seguro — no primeiro acesso, ela cria a própria senha.</p>
+      </div>
+    </div>
+
+    <div class="cols cols--form">
+      <section class="box box--flush only-desk" aria-label="Lista de usuários">
+        <table class="tbl">
+          <thead><tr><th scope="col">Pessoa</th><th scope="col">Papel</th><th scope="col">Último acesso</th><th scope="col">Situação</th><th scope="col"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Ações</span></th></tr></thead>
+          <tbody>
+            <sc-for list="{{users}}" as="u" hint-placeholder-count="4">
+              <tr>
+                <td><div class="cell-main"><span class="side__avatar" style="background: var(--brand-soft); color: var(--brand);" aria-hidden="true">{{u.ini}}</span><div><strong>{{u.name}}</strong><span>{{u.email}}</span></div></div></td>
+                <td><x-import component-from-global-scope="TDA.Tag" tone="{{u.roleTone}}" icon="{{u.roleIcon}}">{{u.role}}</x-import></td>
+                <td>{{u.last}}</td>
+                <td><x-import component-from-global-scope="TDA.Tag" tone="{{u.stTone}}" icon="{{u.stIcon}}">{{u.st}}</x-import></td>
+                <td><div class="row-actions">
+                  <button type="button" class="ibtn" aria-label="Redefinir senha de {{u.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"></path></svg></button>
+                  <button type="button" class="ibtn" aria-label="Mudar papel de {{u.name}}"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s20}}"></x-import></button>
+                  <button type="button" class="ibtn ibtn--danger" aria-label="{{u.toggleLabel}}" disabled="{{u.lock}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M6 6l12 12"></path></svg></button>
+                </div></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+        <p class="caption" style="margin: 0; padding: 14px 16px; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; border-top: 1px solid var(--line);"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s16}}"></x-import>Sempre existe pelo menos uma conta de Administração ativa — por isso a sua não pode ser desativada.</p>
+      </section>
+
+      <div class="mlist only-mob" style="flex-direction: column;">
+        <sc-for list="{{users}}" as="u" hint-placeholder-count="4">
+          <article class="mcard">
+            <div class="cell-main"><span class="side__avatar" style="background: var(--brand-soft); color: var(--brand);" aria-hidden="true">{{u.ini}}</span><div><strong>{{u.name}}</strong><span>{{u.email}}</span></div></div>
+            <div class="mcard__row"><x-import component-from-global-scope="TDA.Tag" tone="{{u.roleTone}}" icon="{{u.roleIcon}}">{{u.role}}</x-import><x-import component-from-global-scope="TDA.Tag" tone="{{u.stTone}}" icon="{{u.stIcon}}">{{u.st}}</x-import></div>
+            <div class="mcard__row"><span class="caption" style="color: var(--ink-muted);">Último acesso: {{u.last}}</span><x-import component-from-global-scope="TDA.Button" variant="ghost" size="sm">Gerenciar</x-import></div>
+          </article>
+        </sc-for>
+      </div>
+
+      <form class="box" novalidate="" aria-labelledby="novo-user" style="gap: 16px;">
+        <h2 id="novo-user" class="box__title">Novo usuário</h2>
+        <p class="box__sub">Sem cadastro público: só a Administração cria acessos.</p>
+        <x-import component-from-global-scope="TDA.TextField" label="Nome" required="{{yes}}" placeholder="Nome da pessoa"></x-import>
+        <x-import component-from-global-scope="TDA.TextField" label="E-mail" type="email" required="{{yes}}" placeholder="email@exemplo.com.br"></x-import>
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px;">
+          <legend class="tda-field__label" style="padding: 0; margin-bottom: 8px;">Papel</legend>
+          <label class="layer is-active" style="min-height: 64px; align-items: flex-start; padding: 12px; gap: 12px;"><input type="radio" name="papel" style="margin-top: 3px; width: 20px; height: 20px; accent-color: var(--brand);"><span><strong style="display: block; font-weight: 800;">Equipe</strong><span class="caption" style="color: var(--ink-muted); font-weight: 600;">Edita textos, fotos, restaurantes, atividades e equipe.</span></span></label>
+          <label class="layer" style="min-height: 64px; align-items: flex-start; padding: 12px; gap: 12px; border-color: var(--line);"><input type="radio" name="papel" style="margin-top: 3px; width: 20px; height: 20px; accent-color: var(--brand);"><span><strong style="display: block; font-weight: 800;">Administração</strong><span class="caption" style="color: var(--ink-muted); font-weight: 600;">Tudo da Equipe + usuários, contato e WhatsApp.</span></span></label>
+        </fieldset>
+        <x-import component-from-global-scope="TDA.Button" icon-left="check" full-width="{{yes}}">Criar usuário</x-import>
+      </form>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    function u(name, email, admin, last, ativo, lock) {
+      return { name: name, email: email, ini: 'NP', role: admin ? 'Administração' : 'Equipe', roleTone: admin ? 'brand' : 'olive', roleIcon: admin ? 'shield' : 'users', last: last, st: ativo ? 'Ativo' : 'Inativo', stTone: ativo ? 'brand' : 'neutral', stIcon: ativo ? 'check' : 'close', toggleLabel: (ativo ? 'Desativar ' : 'Reativar ') + name, lock: !!lock };
+    }
+    return {
+      yes: true, s16: 16, s20: 20,
+      users: [
+        u('Nome da pessoa (você)', 'email@exemplo.com.br', true, 'Agora', true, true),
+        u('Nome da pessoa', 'email@exemplo.com.br', true, 'Há 2 dias', true),
+        u('Nome da pessoa', 'email@exemplo.com.br', false, 'Há 5 dias', true),
+        u('Nome da pessoa', 'email@exemplo.com.br', false, 'Nunca entrou', false)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
