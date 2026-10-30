@@ -6,7 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import type { ImageRef } from '@/content/types';
 import { eventosRenderers } from '@/site/pages/eventos';
 import { inicioRenderers } from '@/site/pages/inicio';
-import { oficinaRenderers } from '@/site/pages/oficina';
+import { oficinasRenderers } from '@/site/pages/oficinas';
 import { quemSomosRenderers } from '@/site/pages/quemSomos';
 import { restaurantesRenderers } from '@/site/pages/restaurantes';
 import type { Ctx, Renderer } from '@/site/render';
@@ -25,7 +25,7 @@ import {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const RENDERERS: Record<string, Record<string, Renderer<any>>> = {
   inicio: inicioRenderers,
-  oficina: oficinaRenderers,
+  oficinas: oficinasRenderers,
   restaurantes: restaurantesRenderers,
   'eventos-corporativos': eventosRenderers,
   'quem-somos': quemSomosRenderers,

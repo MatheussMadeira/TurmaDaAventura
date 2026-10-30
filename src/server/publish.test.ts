@@ -64,7 +64,7 @@ describe('publishPage', () => {
         publishedOrder: 1,
       }),
     ]);
-    const r = await publishPage('oficina', 'u1');
+    const r = await publishPage('oficinas', 'u1');
 
     expect(db.$transaction).toHaveBeenCalledTimes(1);
     expect(calls).toEqual(['section.update', 'section.update', 'auditLog.create', 'tx:3']);
@@ -83,8 +83,8 @@ describe('publishPage', () => {
 
   it('revalida a rota da página, o layout e a tag de conteúdo', async () => {
     db.section.findMany.mockResolvedValue([sec('cta')]);
-    await publishPage('oficina');
-    expect(revalidatePath).toHaveBeenCalledWith('/oficina');
+    await publishPage('oficinas');
+    expect(revalidatePath).toHaveBeenCalledWith('/oficinas');
     expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
     expect(revalidateTag).toHaveBeenCalledWith('content', 'max');
   });
@@ -94,7 +94,7 @@ describe('publishPage', () => {
       sec('cta', { draft: cta('x'.repeat(200)) }),
       sec('catalogo', { draft: intro, published: intro }),
     ]);
-    await expect(publishPage('oficina')).rejects.toBeInstanceOf(ContentError);
+    await expect(publishPage('oficinas')).rejects.toBeInstanceOf(ContentError);
     expect(db.$transaction).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
@@ -107,14 +107,14 @@ describe('publishPage', () => {
 describe('saveSectionDraft', () => {
   it('valida pelo schema e grava só o rascunho (nunca o publicado)', async () => {
     db.page.findUniqueOrThrow.mockResolvedValue({ id: 'p1' });
-    await saveSectionDraft('oficina', 'cta', cta('Título novo'), 'u1');
+    await saveSectionDraft('oficinas', 'cta', cta('Título novo'), 'u1');
     const data = db.section.update.mock.calls[0]![0].data;
     expect(data).toEqual({ draft: cta('Título novo'), updatedById: 'u1' });
     expect(data).not.toHaveProperty('published');
   });
 
   it('recusa conteúdo acima do limite de caracteres, com mensagem por campo', async () => {
-    await expect(saveSectionDraft('oficina', 'cta', cta('x'.repeat(61)))).rejects.toMatchObject({
+    await expect(saveSectionDraft('oficinas', 'cta', cta('x'.repeat(61)))).rejects.toMatchObject({
       issues: [expect.stringContaining('Título: no máximo 60')],
     });
     expect(db.section.update).not.toHaveBeenCalled();
@@ -129,6 +129,6 @@ describe('pendingChanges', () => {
       sec('c', { order: 3 }),
       sec('d', { visible: false }),
     ]);
-    expect(await pendingChanges('oficina')).toBe(3);
+    expect(await pendingChanges('oficinas')).toBe(3);
   });
 });

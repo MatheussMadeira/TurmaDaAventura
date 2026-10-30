@@ -88,7 +88,7 @@ export async function loadPreviewData(slug: string): Promise<Record<string, unkn
   switch (slug) {
     case 'inicio':
       return { restaurants: await getHomeRestaurants() };
-    case 'oficina': {
+    case 'oficinas': {
       const [activities, categories] = await Promise.all([
         getActivities(),
         getActivityCategories(),

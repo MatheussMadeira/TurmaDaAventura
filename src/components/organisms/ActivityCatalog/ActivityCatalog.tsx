@@ -60,7 +60,7 @@ const Item = styled(m.div)`
   }
 `;
 
-/* Filtro da Oficina: chips com pílula que desliza (layoutId) e cards que entram/saem
+/* Filtro das Oficinas: chips com pílula que desliza (layoutId) e cards que entram/saem
    (fade + 0.94 ↔ 1, popLayout) sem pulo de layout. */
 export function ActivityCatalog({ categories, activities }: ActivityCatalogProps) {
   const [cat, setCat] = useState(ALL);

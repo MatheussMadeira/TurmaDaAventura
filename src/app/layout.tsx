@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: { default: 'Turma da Aventura', template: '%s · Turma da Aventura' },
   description:
-    'Recreação infantil com cara de expedição: restaurantes, eventos corporativos e oficinas.',
+    'Recreação infantil com cara de expedição: festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte.',
   icons: { icon: '/brand/simbolo-pegadas.svg' },
 };
 

@@ -37,7 +37,7 @@ beforeEach(() => {
 describe('getPublishedPage — o site lê só o publicado', () => {
   it('ignora o rascunho', async () => {
     db.section.findMany.mockResolvedValue([row('cta', {})]);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     const c = page.sections.find((s) => s.key === 'cta')!.content as { title: string };
     expect(c.title).toBe('PUBLICADO');
     expect(JSON.stringify(page)).not.toContain('RASCUNHO');
@@ -49,7 +49,7 @@ describe('getPublishedPage — o site lê só o publicado', () => {
       row('catalogo', { order: 0, publishedOrder: 0 }),
       row('cta', { order: 1, publishedOrder: 9, publishedVisible: false, visible: true }),
     ]);
-    const keys = (await getPublishedPage('oficina')).sections.map((s) => s.key);
+    const keys = (await getPublishedPage('oficinas')).sections.map((s) => s.key);
     expect(keys).not.toContain('cta'); // oculta na versão publicada
     expect(keys.indexOf('catalogo')).toBeLessThan(keys.indexOf('hero')); // 0 antes de 3
   });
@@ -60,16 +60,16 @@ describe('getPublishedPage — o site lê só o publicado', () => {
       row('hero', { published: { title: 'x'.repeat(500) } }),
     ]);
     const spy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     spy.mockRestore();
-    const def = DEFAULT_PAGES.oficina!;
+    const def = DEFAULT_PAGES.oficinas!;
     expect(page.sections.find((s) => s.key === 'cta')!.content).toEqual(def.cta!.content);
     expect(page.sections.find((s) => s.key === 'hero')!.content).toEqual(def.hero!.content);
   });
 
   it('resolve as fotos citadas (imageId) com a descrição do cadastro', async () => {
     const hero = {
-      ...(DEFAULT_PAGES.oficina!.hero!.content as object),
+      ...(DEFAULT_PAGES.oficinas!.hero!.content as object),
       imageId: 'm1',
     };
     db.section.findMany.mockResolvedValue([row('hero', { published: hero })]);
@@ -82,7 +82,7 @@ describe('getPublishedPage — o site lê só o publicado', () => {
         height: 1600,
       },
     ]);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     expect(db.media.findMany).toHaveBeenCalledWith({ where: { id: { in: ['m1'] } } });
     expect(page.media.m1).toEqual({
       src: 'https://blob/x.webp',

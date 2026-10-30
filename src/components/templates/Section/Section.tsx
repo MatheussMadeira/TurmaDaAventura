@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { media } from '@/design-system/media';
 
 export interface SectionProps {
-  /** valor de data-section, igual ao canvas: "Inicio/Hero", "Oficina/Catalogo"… */
+  /** valor de data-section, igual ao canvas: "Inicio/Hero", "Oficinas/Catalogo"… */
   name: string;
   /** fundo: default = surface · sunken · earth · raised */
   tone?: 'default' | 'sunken' | 'earth' | 'raised';

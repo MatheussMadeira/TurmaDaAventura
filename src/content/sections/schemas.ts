@@ -202,7 +202,7 @@ export const PAGES: PageDef[] = [
     area: 'Inicio',
     sections: [
       { key: 'hero', name: 'Hero', type: 'hero' },
-      { key: 'tres-jeitos', name: 'TresJeitos', type: 'cards' },
+      { key: 'quatro-jeitos', name: 'QuatroJeitos', type: 'cards' },
       { key: 'pilares', name: 'Pilares', type: 'pillars' },
       { key: 'como-funciona', name: 'ComoFunciona', type: 'steps' },
       { key: 'onde-esta', name: 'OndeEsta', type: 'restaurants-home' },
@@ -211,10 +211,10 @@ export const PAGES: PageDef[] = [
     ],
   },
   {
-    slug: 'oficina',
-    path: '/oficina',
-    title: 'Oficina',
-    area: 'Oficina',
+    slug: 'oficinas',
+    path: '/oficinas',
+    title: 'Oficinas',
+    area: 'Oficinas',
     sections: [
       { key: 'hero', name: 'Hero', type: 'hero' },
       { key: 'catalogo', name: 'Catalogo', type: 'intro' },

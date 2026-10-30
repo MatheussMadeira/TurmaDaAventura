@@ -12,12 +12,12 @@ import { Section, Split } from '@/components/templates';
 import type { Activity } from '@/content/types';
 import { opt, section, type Renderer } from '../render';
 
-export interface OficinaData {
+export interface OficinasData {
   categories: string[];
   activities: Activity[];
 }
 
-export const oficinaRenderers: Record<string, Renderer<OficinaData>> = {
+export const oficinasRenderers: Record<string, Renderer<OficinasData>> = {
   hero: section('hero', (c, ctx) => {
     const img = ctx.image(c.imageId);
     return (
@@ -102,7 +102,7 @@ export const oficinaRenderers: Record<string, Renderer<OficinaData>> = {
             </div>
           ) : null}
         </Reveal>
-        <QuoteForm defaultType="Oficina" title={opt(c.formTitle)} nameLabel={opt(c.nameLabel)} />
+        <QuoteForm defaultType="Oficinas" title={opt(c.formTitle)} nameLabel={opt(c.nameLabel)} />
       </Split>
     </Section>
   )),

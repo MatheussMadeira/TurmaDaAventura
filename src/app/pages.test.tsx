@@ -5,7 +5,7 @@ import { expectNoA11yViolations } from '@/test/a11y';
 import { renderWithProviders } from '@/test/render';
 import { contentModuleMock, fixtureGroups } from '@/test/contentFixture';
 import HomePage from './(site)/page';
-import OficinaPage from './(site)/oficina/page';
+import OficinasPage from './(site)/oficinas/page';
 import RestaurantesPage from './(site)/restaurantes/page';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
@@ -27,14 +27,14 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
     ],
   },
   {
-    name: 'Oficina',
-    page: OficinaPage,
+    name: 'Oficinas',
+    page: OficinasPage,
     sections: [
-      'Oficina/Catalogo',
-      'Oficina/ComoMontamos',
-      'Oficina/SegurancaMateriais',
-      'Oficina/PreOrcamento',
-      'Oficina/CTA',
+      'Oficinas/Catalogo',
+      'Oficinas/ComoMontamos',
+      'Oficinas/SegurancaMateriais',
+      'Oficinas/PreOrcamento',
+      'Oficinas/CTA',
     ],
   },
   {
@@ -102,11 +102,11 @@ describe.each(pages)('página $name', ({ page, sections }) => {
   });
 });
 
-describe('Oficina — filtro', () => {
+describe('Oficinas — filtro', () => {
   it('filtra por categoria e anuncia a contagem', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
-    renderWithProviders(await OficinaPage());
+    renderWithProviders(await OficinasPage());
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 9 atividades');
     await user.click(screen.getByRole('button', { name: /natureza/i }));
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 2 atividades');

@@ -67,7 +67,8 @@ export type TeamInput = z.infer<typeof teamSchema>;
 
 export const MESSAGE_KEYS = [
   ['inicio', 'Início'],
-  ['oficina', 'Oficina'],
+  ['oficinas', 'Oficinas'],
+  ['festas-e-aniversarios', 'Festas e aniversários'],
   ['restaurantes', 'Restaurantes'],
   ['eventos-corporativos', 'Eventos corporativos'],
   ['quem-somos', 'Quem somos'],

@@ -97,7 +97,7 @@ export async function saveActivityAction(
         mode === 'draft'
           ? 'Rascunho salvo. Ele ainda não aparece no site.'
           : saved.status === 'PUBLICADO'
-            ? 'Atividade salva e publicada. Ela já aparece na Oficina.'
+            ? 'Atividade salva e publicada. Ela já aparece nas Oficinas.'
             : 'Atividade salva e pausada.',
     };
   });

@@ -6,7 +6,7 @@ test.describe('pedir orçamento pelo formulário', () => {
     await context.route(/^https:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)\//, (r) =>
       r.fulfill({ status: 200, contentType: 'text/html', body: 'ok' }),
     );
-    await page.goto('/oficina');
+    await page.goto('/oficinas');
 
     const submit = page.getByRole('button', { name: /Continuar no WhatsApp/ });
     await submit.scrollIntoViewIfNeeded();

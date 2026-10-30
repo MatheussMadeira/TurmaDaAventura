@@ -85,7 +85,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
         <Kpi
           icon="compass"
           n={data.activitiesPublished}
-          label="Atividades na Oficina"
+          label="Atividades das Oficinas"
           desc={`${data.categories} ${data.categories === 1 ? 'categoria' : 'categorias'}`}
         />
         <Kpi

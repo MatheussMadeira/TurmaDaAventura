@@ -32,7 +32,7 @@ export interface QuoteFormProps {
   title?: string;
   description?: string;
   eventTypes?: string[];
-  /** tipo pré-selecionado (ex.: "Oficina" na página da Oficina) */
+  /** tipo pré-selecionado (ex.: "Oficinas" na página das Oficinas) */
   defaultType?: string;
   /** rótulo do campo de nome (ex.: "Seu nome e empresa") */
   nameLabel?: string;
@@ -45,10 +45,10 @@ export interface QuoteFormProps {
 }
 
 export const EVENT_TYPES = [
+  'Festa ou aniversário',
   'Restaurante (recreação fixa)',
   'Evento corporativo',
-  'Oficina',
-  'Festa ou evento particular',
+  'Oficinas',
   'Outro',
 ];
 

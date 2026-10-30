@@ -46,21 +46,31 @@ export const DEFAULT_PAGES: Defaults = {
     hero: hero({
       overline: 'Recreação infantil',
       title: 'Bora pra aventura?',
-      lead: 'A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte.',
+      lead: 'A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte.',
       imageId: null,
       imageAlt: 'Crianças de costas correndo num gramado ao fim da tarde, com monitores por perto',
       ctaLabel: '',
-      secondary: { label: 'Conhecer a Oficina', href: '/oficina' },
+      secondary: { label: 'Conhecer as Oficinas', href: '/oficinas' },
       highlights: ['Monitores treinados', 'Atividades por faixa etária', 'Montamos tudo no local'],
     }),
-    'tres-jeitos': {
+    'quatro-jeitos': {
       type: 'cards',
       content: {
         overline: 'Onde a Turma aparece',
-        title: 'Três jeitos de viver a aventura',
+        title: 'Quatro jeitos de viver a aventura',
         description:
           'Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe.',
         cards: [
+          {
+            icon: 'star',
+            tone: 'default',
+            overline: 'Para aniversários',
+            title: 'Festas e aniversários',
+            description:
+              'Uma aventura temática na festa do seu filho, em casa, no prédio ou no buffet.',
+            href: '/festas-e-aniversarios',
+            linkLabel: 'Ver festas',
+          },
           {
             icon: 'utensils',
             tone: 'default',
@@ -84,12 +94,12 @@ export const DEFAULT_PAGES: Defaults = {
           {
             icon: 'scissors',
             tone: 'default',
-            overline: 'Para todos',
-            title: 'Oficina',
+            overline: 'Para escolas e grupos',
+            title: 'Oficinas',
             description:
               'Pipas, mini horta, tintas naturais e gincanas. Atividades manuais e de natureza.',
-            href: '/oficina',
-            linkLabel: 'Conhecer a Oficina',
+            href: '/oficinas',
+            linkLabel: 'Conhecer as Oficinas',
           },
         ],
       } satisfies SectionContent<'cards'>,
@@ -157,9 +167,9 @@ export const DEFAULT_PAGES: Defaults = {
     }),
   },
 
-  oficina: {
+  oficinas: {
     hero: hero({
-      overline: 'Oficina',
+      overline: 'Oficinas',
       title: 'Mão na massa, pé na grama',
       lead: 'Brincadeiras, oficinas manuais, gincanas e atividades de natureza. A gente leva os materiais, monta no seu espaço e adapta tudo à idade da turma.',
       imageId: null,
