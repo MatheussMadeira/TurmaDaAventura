@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import type { PublishStatus } from '@/generated/prisma/client';
+import type { ProductStatus, PublishStatus } from '@/generated/prisma/client';
 import { run, type ActionResult } from '@/server/actions';
 import {
   deleteActivity,
@@ -16,6 +16,7 @@ import {
   setRestaurantStatus,
   type SaveMode,
 } from '@/server/admin/restaurants';
+import { deleteProduct, moveProduct, saveProduct, setProductStatus } from '@/server/admin/products';
 import { saveSettings } from '@/server/admin/settings';
 import { deleteTheme, moveTheme, saveTheme, setThemeStatus } from '@/server/admin/themes';
 import { deleteMember, moveMember, saveMember, setMemberVisible } from '@/server/admin/team';
@@ -23,6 +24,9 @@ import { deleteMedia, updateMediaAlt } from '@/server/media';
 
 const STATUSES: PublishStatus[] = ['RASCUNHO', 'PUBLICADO', 'PAUSADO'];
 const isStatus = (v: unknown): v is PublishStatus => STATUSES.includes(v as PublishStatus);
+const PRODUCT_STATUSES: ProductStatus[] = ['RASCUNHO', 'PUBLICADO', 'ESGOTADO'];
+const isProductStatus = (v: unknown): v is ProductStatus =>
+  PRODUCT_STATUSES.includes(v as ProductStatus);
 const isDir = (v: unknown): v is 'up' | 'down' => v === 'up' || v === 'down';
 const isMode = (v: unknown): v is SaveMode => v === 'draft' || v === 'publish';
 
@@ -184,6 +188,63 @@ export async function moveThemeAction(id: string, dir: 'up' | 'down'): Promise<A
     if (!isDir(dir)) return { ok: false, error: 'Direção inválida.' };
     await moveTheme(user, id, dir);
     revalidatePath('/admin/temas');
+    return { ok: true };
+  });
+}
+
+/* ---------------- Produtos (sem preço) ---------------- */
+export async function saveProductAction(
+  id: string | null,
+  input: unknown,
+  mode: SaveMode,
+): Promise<ActionResult<{ id: string }>> {
+  return run<{ id: string }>({ permission: 'activities' }, async (user) => {
+    if (!isMode(mode)) return { ok: false, error: 'Ação inválida.' };
+    const saved = await saveProduct(user, id, input, mode);
+    revalidatePath('/admin/produtos');
+    return {
+      ok: true,
+      data: { id: saved.id },
+      message:
+        mode === 'draft'
+          ? 'Rascunho salvo. Ele ainda não aparece no site.'
+          : saved.status === 'PUBLICADO'
+            ? 'Produto salvo e publicado. Ele já aparece em Produtos.'
+            : saved.status === 'ESGOTADO'
+              ? 'Produto salvo como esgotado. Ele aparece no site sem o botão de adicionar.'
+              : 'Produto salvo como rascunho.',
+    };
+  });
+}
+
+export async function setProductStatusAction(
+  id: string,
+  status: ProductStatus,
+): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    if (!isProductStatus(status)) return { ok: false, error: 'Situação inválida.' };
+    await setProductStatus(user, id, status);
+    revalidatePath('/admin/produtos');
+    return {
+      ok: true,
+      message: status === 'ESGOTADO' ? 'Produto marcado como esgotado.' : 'Situação atualizada.',
+    };
+  });
+}
+
+export async function deleteProductAction(id: string): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    await deleteProduct(user, id);
+    revalidatePath('/admin/produtos');
+    return { ok: true, message: 'Produto excluído.' };
+  });
+}
+
+export async function moveProductAction(id: string, dir: 'up' | 'down'): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    if (!isDir(dir)) return { ok: false, error: 'Direção inválida.' };
+    await moveProduct(user, id, dir);
+    revalidatePath('/admin/produtos');
     return { ok: true };
   });
 }

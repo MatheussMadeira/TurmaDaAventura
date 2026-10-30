@@ -72,7 +72,8 @@ const IBtn = styled.button<{ $tone: 'default' | 'danger' | 'line' }>`
 `;
 
 /* ---------- Situação: sempre ícone + palavra ---------- */
-type Status = 'PUBLICADO' | 'RASCUNHO' | 'PAUSADO' | 'ATIVO' | 'DESATIVADO' | 'BLOQUEADO';
+type Status =
+  'PUBLICADO' | 'RASCUNHO' | 'PAUSADO' | 'ESGOTADO' | 'ATIVO' | 'DESATIVADO' | 'BLOQUEADO';
 const STATUS: Record<
   Status,
   { label: string; icon: IconName | AdminIconName; tone: 'ok' | 'warn' | 'earth' | 'off' }
@@ -80,6 +81,7 @@ const STATUS: Record<
   PUBLICADO: { label: 'No site', icon: 'check', tone: 'ok' },
   RASCUNHO: { label: 'Rascunho', icon: 'edit', tone: 'warn' },
   PAUSADO: { label: 'Pausado', icon: 'pause', tone: 'earth' },
+  ESGOTADO: { label: 'Esgotado', icon: 'flag', tone: 'earth' },
   ATIVO: { label: 'Ativo', icon: 'check', tone: 'ok' },
   DESATIVADO: { label: 'Desativado', icon: 'close', tone: 'off' },
   BLOQUEADO: { label: 'Bloqueado', icon: 'lock', tone: 'warn' },

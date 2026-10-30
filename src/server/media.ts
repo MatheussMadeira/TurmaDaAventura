@@ -100,10 +100,11 @@ export async function uploadImage(input: UploadInput): Promise<Media> {
 
 /** Onde a foto é usada (para "Usada em…" e para bloquear a exclusão). */
 export async function mediaUsage(id: string) {
-  const [restaurants, activities, themes, team, sections] = await Promise.all([
+  const [restaurants, activities, themes, products, team, sections] = await Promise.all([
     db.restaurant.findMany({ where: { imageId: id }, select: { name: true } }),
     db.activity.findMany({ where: { imageId: id }, select: { title: true } }),
     db.partyTheme.findMany({ where: { imageId: id }, select: { title: true } }),
+    db.product.findMany({ where: { imageId: id }, select: { name: true } }),
     db.teamMember.findMany({ where: { photoId: id }, select: { name: true } }),
     db.$queryRaw<{ key: string; slug: string }[]>`
       select s."key", p."slug" from "Section" s join "Page" p on p."id" = s."pageId"
@@ -113,6 +114,7 @@ export async function mediaUsage(id: string) {
     restaurants: restaurants.map((r) => r.name),
     activities: activities.map((a) => a.title),
     themes: themes.map((t) => t.title),
+    products: products.map((p) => p.name),
     team: team.map((t) => t.name),
     sections: sections.map((s) => `${s.slug}/${s.key}`),
   };
