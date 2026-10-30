@@ -86,9 +86,9 @@ export function BagProvider({ children }: { children: ReactNode }) {
     <BagContext.Provider value={api}>
       {children}
       {isOpen ? <BagDrawer /> : null}
-      <ToastRegion role="status" aria-live="polite">
+      <ToastRegion>
         {sent ? (
-          <ToastBubble>
+          <ToastBubble role="status">
             <Icon name="check" size={18} />
             <span>Pedido enviado.</span>
             <button

@@ -185,3 +185,8 @@ export async function mediaCount(prefix = 'E2E %') {
 export async function deleteTestThemes() {
   await pool.query(`delete from "PartyTheme" where title like 'E2E %'`);
 }
+
+/** Remove os produtos criados pelos testes (nome começa com "E2E "). */
+export async function deleteTestProducts() {
+  await pool.query(`delete from "Product" where name like 'E2E %'`);
+}
