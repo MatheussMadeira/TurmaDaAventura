@@ -7,7 +7,8 @@ export const whatsappUrl = (message?: string, phone: string = WHATSAPP) =>
 /** Mensagem contextual por rota (docs/site.md). */
 export const PAGE_MESSAGES: Record<string, string> = {
   '/': 'Olá! Vim pelo site e quero um orçamento.',
-  '/oficina': 'Olá! Quero saber mais sobre a Oficina.',
+  '/oficinas': 'Olá! Quero saber mais sobre as Oficinas.',
+  '/festas-e-aniversarios': 'Olá! Quero orçamento para uma festa de aniversário.',
   '/restaurantes': 'Olá! Tenho um restaurante e quero recreação para as famílias.',
   '/eventos-corporativos': 'Olá! Quero recreação infantil para um evento corporativo.',
   '/quem-somos': 'Olá! Quero conversar com a Turma da Aventura.',
@@ -17,7 +18,8 @@ export const DEFAULT_MESSAGE = 'Olá! Vim pelo site e quero saber mais.';
 
 const ROUTE_KEY: Record<string, string> = {
   '/': 'inicio',
-  '/oficina': 'oficina',
+  '/oficinas': 'oficinas',
+  '/festas-e-aniversarios': 'festas-e-aniversarios',
   '/restaurantes': 'restaurantes',
   '/eventos-corporativos': 'eventos-corporativos',
   '/quem-somos': 'quem-somos',

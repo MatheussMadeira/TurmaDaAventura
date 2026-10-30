@@ -15,7 +15,7 @@ export function timeAgo(date: Date | string, now: Date = new Date()): string {
 
 export const ENTITY_AREA: Record<string, string> = {
   restaurant: 'Restaurantes',
-  activity: 'Oficina',
+  activity: 'Oficinas',
   team: 'Quem somos',
   settings: 'Contato',
   page: 'Páginas',

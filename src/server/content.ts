@@ -4,11 +4,11 @@ import { DEFAULT_PAGES } from '@/content/defaults/pages';
 import { pageBySlug, parseSection, sectionName } from '@/content/sections/schemas';
 import type {
   Activity,
+  PartyTheme,
   ImageRef,
   PublishedPage,
   PublishedSection,
   Restaurant,
-  RestaurantGroup,
   SiteSettings,
   TeamMember,
 } from '@/content/types';
@@ -89,51 +89,33 @@ export const getPublishedPage = cached(
   },
 );
 
-export const getRestaurantGroups = cached(
-  'restaurant-groups',
-  async (): Promise<RestaurantGroup[]> => {
-    const regions = await db.region.findMany({
-      orderBy: { order: 'asc' },
-      include: {
-        restaurants: {
-          where: { status: 'PUBLICADO' },
-          orderBy: { order: 'asc' },
-          include: { image: true },
-        },
-      },
-    });
-    return regions
-      .map((g) => ({
-        id: g.slug,
-        name: g.name,
-        shortName: g.shortName,
-        restaurants: g.restaurants.map((r): Restaurant => ({
-          slug: r.slug,
-          name: r.name,
-          neighborhood: r.neighborhood,
-          schedule: r.schedule,
-          address: r.address,
-          ages: r.ages,
-          // sem link do Maps cadastrado, "Como chegar" abre a busca do Google Maps pelo endereço
-          mapsUrl:
-            r.mapsUrl ||
-            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
-          image: toImage(r.image),
-          imageAlt: r.image?.alt ?? r.imageAlt,
-          destaqueHome: r.destaqueHome,
-          regionShortName: g.shortName,
-        })),
-      }))
-      .filter((g) => g.restaurants.length > 0);
-  },
-);
+/** Restaurantes publicados, na ordem definida no admin (uma lista só, sem regiões). */
+export const getRestaurants = cached('restaurants', async (): Promise<Restaurant[]> => {
+  const rows = await db.restaurant.findMany({
+    where: { status: 'PUBLICADO' },
+    orderBy: { order: 'asc' },
+    include: { image: true },
+  });
+  return rows.map((r): Restaurant => ({
+    slug: r.slug,
+    name: r.name,
+    neighborhood: r.neighborhood,
+    schedule: r.schedule,
+    address: r.address,
+    ages: r.ages,
+    // sem link do Maps cadastrado, "Como chegar" abre a busca do Google Maps pelo endereço
+    mapsUrl:
+      r.mapsUrl ||
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
+    image: toImage(r.image),
+    imageAlt: r.image?.alt ?? r.imageAlt,
+    destaqueHome: r.destaqueHome,
+  }));
+});
 
 export const getHomeRestaurants = cached('home-restaurants', async (): Promise<Restaurant[]> => {
-  const groups = await getRestaurantGroups();
-  return groups
-    .flatMap((g) => g.restaurants)
-    .filter((r) => r.destaqueHome)
-    .slice(0, 3);
+  const all = await getRestaurants();
+  return all.filter((r) => r.destaqueHome).slice(0, 3);
 });
 
 export const getActivities = cached('activities', async (): Promise<Activity[]> => {
@@ -158,6 +140,24 @@ export const getActivities = cached('activities', async (): Promise<Activity[]> 
 export const getActivityCategories = cached('activity-categories', async (): Promise<string[]> => {
   const acts = await getActivities();
   return [...new Set(acts.map((a) => a.categoria))];
+});
+
+/** Temas de festa publicados, na ordem do admin. */
+export const getPartyThemes = cached('party-themes', async (): Promise<PartyTheme[]> => {
+  const rows = await db.partyTheme.findMany({
+    where: { status: 'PUBLICADO' },
+    orderBy: { order: 'asc' },
+    include: { image: true },
+  });
+  return rows.map((t) => ({
+    slug: t.slug,
+    icon: t.icon as IconName,
+    title: t.title,
+    description: t.description,
+    tags: t.tags,
+    image: toImage(t.image),
+    imageAlt: t.image?.alt ?? t.imageAlt,
+  }));
 });
 
 export const getTeam = cached('team', async (): Promise<TeamMember[]> => {

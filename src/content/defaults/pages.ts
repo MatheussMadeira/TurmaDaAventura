@@ -46,21 +46,31 @@ export const DEFAULT_PAGES: Defaults = {
     hero: hero({
       overline: 'Recreação infantil',
       title: 'Bora pra aventura?',
-      lead: 'A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte.',
+      lead: 'A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte.',
       imageId: null,
       imageAlt: 'Crianças de costas correndo num gramado ao fim da tarde, com monitores por perto',
       ctaLabel: '',
-      secondary: { label: 'Conhecer a Oficina', href: '/oficina' },
+      secondary: { label: 'Conhecer as Oficinas', href: '/oficinas' },
       highlights: ['Monitores treinados', 'Atividades por faixa etária', 'Montamos tudo no local'],
     }),
-    'tres-jeitos': {
+    'quatro-jeitos': {
       type: 'cards',
       content: {
         overline: 'Onde a Turma aparece',
-        title: 'Três jeitos de viver a aventura',
+        title: 'Quatro jeitos de viver a aventura',
         description:
           'Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe.',
         cards: [
+          {
+            icon: 'star',
+            tone: 'default',
+            overline: 'Para aniversários',
+            title: 'Festas e aniversários',
+            description:
+              'Uma aventura temática na festa do seu filho, em casa, no prédio ou no buffet.',
+            href: '/festas-e-aniversarios',
+            linkLabel: 'Ver festas',
+          },
           {
             icon: 'utensils',
             tone: 'default',
@@ -84,12 +94,12 @@ export const DEFAULT_PAGES: Defaults = {
           {
             icon: 'scissors',
             tone: 'default',
-            overline: 'Para todos',
-            title: 'Oficina',
+            overline: 'Para escolas e grupos',
+            title: 'Oficinas',
             description:
               'Pipas, mini horta, tintas naturais e gincanas. Atividades manuais e de natureza.',
-            href: '/oficina',
-            linkLabel: 'Conhecer a Oficina',
+            href: '/oficinas',
+            linkLabel: 'Conhecer as Oficinas',
           },
         ],
       } satisfies SectionContent<'cards'>,
@@ -157,9 +167,9 @@ export const DEFAULT_PAGES: Defaults = {
     }),
   },
 
-  oficina: {
+  oficinas: {
     hero: hero({
-      overline: 'Oficina',
+      overline: 'Oficinas',
       title: 'Mão na massa, pé na grama',
       lead: 'Brincadeiras, oficinas manuais, gincanas e atividades de natureza. A gente leva os materiais, monta no seu espaço e adapta tudo à idade da turma.',
       imageId: null,
@@ -280,6 +290,165 @@ export const DEFAULT_PAGES: Defaults = {
     }),
   },
 
+  'festas-e-aniversarios': {
+    hero: hero({
+      overline: 'Festas e aniversários',
+      title: 'Aniversário com cara de expedição',
+      lead: 'A Turma leva recreação, brincadeiras e uma aventura temática para a festa do seu filho — em casa, no salão do prédio ou no buffet. Você recebe os convidados; a gente cuida da criançada.',
+      imageId: null,
+      imageAlt:
+        'Crianças de costas numa roda de brincadeira no quintal de uma festa, com bandeirinhas de tecido',
+      ctaLabel: '',
+      secondary: { label: 'Ver os temas', href: '#temas' },
+      highlights: ['Monitores treinados', 'Brincadeiras por idade', 'Montagem e desmontagem'],
+    }),
+    formatos: {
+      type: 'cards',
+      content: {
+        overline: 'Onde a festa acontece',
+        title: 'A gente se encaixa na sua festa',
+        description:
+          'Levamos tudo o que a recreação precisa e combinamos o horário com você ou com o buffet.',
+        cards: [
+          {
+            icon: 'tent',
+            tone: 'default',
+            overline: '',
+            title: 'Em casa ou no condomínio',
+            description:
+              'Quintal, salão do prédio ou até a sala: a gente adapta as brincadeiras ao espaço.',
+            linkLabel: '',
+          },
+          {
+            icon: 'star',
+            tone: 'earth',
+            overline: '',
+            title: 'Salão de festas e buffet',
+            description:
+              'Recreação em parceria com o buffet, no ritmo da festa e no horário combinado.',
+            linkLabel: '',
+          },
+          {
+            icon: 'tree',
+            tone: 'default',
+            overline: '',
+            title: 'Ao ar livre',
+            description:
+              'Parques, sítios e áreas verdes — o lugar favorito da Turma para uma expedição.',
+            linkLabel: '',
+          },
+        ],
+      } satisfies SectionContent<'cards'>,
+    },
+    temas: {
+      type: 'intro',
+      content: {
+        overline: 'Temas',
+        title: 'Escolha a aventura da festa',
+        description:
+          'Cada tema vira um roteiro de brincadeiras com o nome do aniversariante. Dá para misturar e personalizar.',
+      } satisfies SectionContent<'intro'>,
+    },
+    'o-que-inclui': {
+      type: 'features',
+      content: {
+        overline: 'O que a Turma leva',
+        title: 'Você curte a festa, a gente cuida da aventura',
+        description: '',
+        items: [
+          {
+            icon: 'users',
+            tone: 'brand',
+            title: 'Monitores treinados',
+            text: 'Equipe com primeiros socorros e um adulto atento para cada grupo pequeno.',
+          },
+          {
+            icon: 'compass',
+            tone: 'olive',
+            title: 'Roteiro do tema',
+            text: 'Brincadeiras, desafios e uma história que conduz a festa do começo ao fim.',
+          },
+          {
+            icon: 'scissors',
+            tone: 'earth',
+            title: 'Oficina de lembrancinha',
+            text: 'As próprias crianças fazem a lembrancinha que levam para casa.',
+          },
+          {
+            icon: 'star',
+            tone: 'brand',
+            title: 'Momento do aniversariante',
+            text: 'Uma missão especial e um diploma de explorador só para quem faz aniversário.',
+          },
+          {
+            icon: 'backpack',
+            tone: 'olive',
+            title: 'Materiais da recreação',
+            text: 'Tudo o que as brincadeiras pedem. Bolo, comida e decoração ficam com você ou o buffet.',
+          },
+          {
+            icon: 'shield',
+            tone: 'earth',
+            title: 'Montagem e desmontagem',
+            text: 'Chegamos antes, montamos o espaço e deixamos tudo organizado no final.',
+          },
+        ],
+      } satisfies SectionContent<'features'>,
+    },
+    'como-funciona': {
+      type: 'steps',
+      content: {
+        overline: 'Como funciona',
+        title: 'Da ideia ao parabéns em quatro etapas',
+        description: '',
+        steps: [
+          {
+            icon: 'whatsapp',
+            title: 'Chama no WhatsApp',
+            text: 'Conta a data, o local e quantos convidados vêm.',
+          },
+          {
+            icon: 'compass',
+            title: 'Escolhemos o tema',
+            text: 'Montamos o roteiro com o nome e a idade do aniversariante.',
+          },
+          {
+            icon: 'backpack',
+            title: 'Preparamos a expedição',
+            text: 'Separamos materiais e combinamos tudo com você ou o buffet.',
+          },
+          {
+            icon: 'star',
+            title: 'Festa com a Turma',
+            text: 'Chegamos antes, conduzimos a festa e entregamos tudo organizado.',
+          },
+        ],
+      } satisfies SectionContent<'steps'>,
+    },
+    'pre-orcamento': {
+      type: 'pre-quote',
+      content: {
+        overline: 'Pré-orçamento',
+        title: 'Conta como vai ser a festa',
+        description:
+          'Data, local, número de convidados e a idade do aniversariante já ajudam a gente a montar a proposta.',
+        checks: [
+          'Só nome e tipo são obrigatórios',
+          'Reserve com antecedência: fins de semana lotam',
+          'Cada festa é montada sob medida',
+        ],
+        note: '',
+        formTitle: 'Monte a festa',
+        nameLabel: 'Seu nome',
+      } satisfies SectionContent<'pre-quote'>,
+    },
+    cta: cta({
+      title: 'Bora planejar o aniversário?',
+      text: 'Conta a data e a idade do aniversariante. A gente responde rapidinho no WhatsApp.',
+      ctaLabel: 'Pedir orçamento no WhatsApp',
+    }),
+  },
+
   restaurantes: {
     intro: {
       type: 'intro',
@@ -287,7 +456,7 @@ export const DEFAULT_PAGES: Defaults = {
         overline: 'Fim de semana com a Turma',
         title: 'Onde a Turma está',
         description:
-          'Restaurantes parceiros com recreação fixa e monitores treinados. Você escolhe a mesa, as crianças escolhem a aventura — e todo mundo come em paz.',
+          'Restaurantes parceiros em Belo Horizonte com recreação fixa e monitores treinados. Você escolhe a mesa, as crianças escolhem a aventura — e todo mundo come em paz.',
       } satisfies SectionContent<'intro'>,
     },
     lista: { type: 'data-backed', content: {} },
@@ -489,7 +658,7 @@ export const DEFAULT_PAGES: Defaults = {
         overline: 'Quem somos',
         title: 'A turma por trás da aventura',
         lead: 'A Turma nasceu de um quintal: amigos educadores que levavam as próprias crianças para brincar ao ar livre todo fim de semana — e, de repente, os filhos dos vizinhos também queriam ir.',
-        body: 'Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para restaurantes, empresas e escolas. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.',
+        body: 'Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para festas, restaurantes, empresas e escolas de Belo Horizonte. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.',
         tagline: 'Brincar / Aprender / Ensinar',
         imageId: null,
         imageAlt: 'Equipe de monitores sentada em roda com as crianças no gramado',

@@ -37,20 +37,22 @@ export interface Restaurant {
   image: ImageRef | null;
   imageAlt: string;
   destaqueHome: boolean;
-  /** nome curto da região ("Zona Oeste") */
-  regionShortName: string;
-}
-
-export interface RestaurantGroup {
-  id: string;
-  name: string;
-  shortName: string;
-  restaurants: Restaurant[];
 }
 
 export interface Activity {
   slug: string;
   categoria: string;
+  icon: IconName;
+  title: string;
+  description: string;
+  tags: string[];
+  image: ImageRef | null;
+  imageAlt: string;
+}
+
+/** Tema da página Festas e aniversários (mesma forma de Activity, sem categoria) */
+export interface PartyTheme {
+  slug: string;
   icon: IconName;
   title: string;
   description: string;

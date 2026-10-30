@@ -6,9 +6,9 @@ const box = async (l: Locator) => {
   return b;
 };
 
-test.describe('Oficina — filtro', () => {
+test.describe('Oficinas — filtro', () => {
   test('a pílula desliza do chip antigo para o novo (layoutId)', async ({ page }) => {
-    await page.goto('/oficina');
+    await page.goto('/oficinas');
     const group = page.getByRole('group', { name: 'Filtrar atividades por categoria' });
     const todas = group.getByRole('button', { name: /^Todas/ });
     const natureza = group.getByRole('button', { name: /^Natureza/ });
@@ -65,7 +65,7 @@ test.describe('Header — indicador do menu', () => {
     await page.goto('/');
     const nav = page.getByRole('navigation', { name: 'Principal' });
     const indicator = nav.locator('[data-phase]');
-    const oficina = nav.getByRole('link', { name: 'Oficina', exact: true });
+    const oficina = nav.getByRole('link', { name: 'Oficinas', exact: true });
     const restaurantes = nav.getByRole('link', { name: 'Restaurantes', exact: true });
 
     await expect(indicator).toHaveAttribute('data-phase', 'on'); // já desenhado na página ativa
@@ -84,15 +84,15 @@ test.describe('Header — indicador do menu', () => {
     const second = await box(indicator);
 
     expect(second.x).toBeGreaterThan(first.x + 20); // se moveu
-    expect(second.width).toBeGreaterThan(first.width); // "Restaurantes" é mais largo que "Oficina"
+    expect(second.width).toBeGreaterThan(first.width); // "Restaurantes" é mais largo que "Oficinas"
     expect(Math.abs(second.width - (target.width - 24))).toBeLessThan(2);
   });
 
   test('volta para a página ativa quando o mouse sai', async ({ page }) => {
-    await page.goto('/oficina');
+    await page.goto('/oficinas');
     const nav = page.getByRole('navigation', { name: 'Principal' });
     const indicator = nav.locator('[data-phase]');
-    const oficina = nav.getByRole('link', { name: 'Oficina', exact: true });
+    const oficina = nav.getByRole('link', { name: 'Oficinas', exact: true });
     const quem = nav.getByRole('link', { name: 'Quem somos', exact: true });
 
     await quem.hover();

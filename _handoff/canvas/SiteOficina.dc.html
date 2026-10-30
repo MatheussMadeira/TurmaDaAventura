@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Oficina — Turma da Aventura</title>
+<title>Oficinas — Turma da Aventura</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="styles/tokens.css">
 <link rel="stylesheet" href="ds/tda/components/bundle.css">
@@ -16,16 +16,16 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
 <style>body{margin:0}</style>
 </helmet>
-<div class="page" data-page="Oficina" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+<div class="page" data-page="Oficinas" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
 
-  <!-- Oficina/Header -->
-  <x-import component-from-global-scope="TDA.Header" current="/oficina" message="Olá! Quero saber mais sobre a Oficina."></x-import>
+  <!-- Oficinas/Header -->
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/oficinas" message="Olá! Quero saber mais sobre as Oficinas."></x-import>
 
-  <!-- Oficina/Hero -->
-  <x-import component-from-global-scope="TDA.Hero" overline="Oficina" title="Mão na massa, pé na grama" lead="Brincadeiras, oficinas manuais, gincanas e atividades de natureza. A gente leva os materiais, monta no seu espaço e adapta tudo à idade da turma." image-alt="Crianças sentadas no chão do pátio montando pipas com papel de seda e varetas" message="Olá! Quero saber mais sobre a Oficina." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+  <!-- Oficinas/Hero -->
+  <x-import component-from-global-scope="TDA.Hero" overline="Oficinas" title="Mão na massa, pé na grama" lead="Brincadeiras, oficinas manuais, gincanas e atividades de natureza. A gente leva os materiais, monta no seu espaço e adapta tudo à idade da turma." image-alt="Crianças sentadas no chão do pátio montando pipas com papel de seda e varetas" message="Olá! Quero saber mais sobre as Oficinas." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
 
   <!-- Oficina/Catalogo -->
-  <section class="sec sec--sunken" id="catalogo" data-section="Oficina/Catalogo">
+  <section class="sec sec--sunken" id="catalogo" data-section="Oficinas/Catalogo">
     <div class="wrap">
       <div class="head-row">
         <x-import component-from-global-scope="TDA.SectionHeader" overline="Catálogo de atividades" title="Escolha o roteiro da expedição" description="Misture atividades à vontade: a gente monta a sequência certa para o tempo e o espaço que você tem."></x-import>
@@ -44,7 +44,7 @@
   </section>
 
   <!-- Oficina/ComoMontamos -->
-  <section class="sec" data-section="Oficina/ComoMontamos">
+  <section class="sec" data-section="Oficinas/ComoMontamos">
     <div class="wrap">
       <x-import component-from-global-scope="TDA.SectionHeader" overline="Passo a passo" title="Como montamos uma oficina"></x-import>
       <div style="background: var(--surface-sunken); border-radius: var(--radius-xl); padding: 48px 40px;">
@@ -54,7 +54,7 @@
   </section>
 
   <!-- Oficina/Seguranca -->
-  <section class="sec sec--earth" data-section="Oficina/SegurancaMateriais">
+  <section class="sec sec--earth" data-section="Oficinas/SegurancaMateriais">
     <div class="wrap">
       <x-import component-from-global-scope="TDA.SectionHeader" overline="Segurança e materiais" title="Tudo pensado antes da primeira tesoura" description="Pais e escolas perguntam — e a gente gosta de mostrar."></x-import>
       <ul class="feats">
@@ -69,7 +69,7 @@
   </section>
 
   <!-- Oficina/PreOrcamento -->
-  <section class="sec" data-section="Oficina/PreOrcamento">
+  <section class="sec" data-section="Oficinas/PreOrcamento">
     <div class="wrap">
       <div class="g12" style="align-items: start;">
         <div class="span-5" style="display: flex; flex-direction: column; gap: 24px; padding-top: 16px;">
@@ -81,22 +81,22 @@
           </ul>
         </div>
         <div class="span-7">
-          <dc-import name="QuoteFormBlock" tipo="Oficina" nome-label="Seu nome" estado="vazio" title="Monte seu orçamento" hint-size="100%,900px"></dc-import>
+          <dc-import name="QuoteFormBlock" tipo="Oficinas" nome-label="Seu nome" estado="vazio" title="Monte seu orçamento" hint-size="100%,900px"></dc-import>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Oficina/CTA -->
-  <section class="sec sec--tight" data-section="Oficina/CTA">
+  <section class="sec sec--tight" data-section="Oficinas/CTA">
     <div class="wrap">
-      <x-import component-from-global-scope="TDA.CTABanner" title="Bora colocar a mão na massa?" text="Escolha as atividades ou deixe com a gente. Respondemos rapidinho no WhatsApp." cta-label="Chamar no WhatsApp" message="Olá! Quero saber mais sobre a Oficina."></x-import>
+      <x-import component-from-global-scope="TDA.CTABanner" title="Bora colocar a mão na massa?" text="Escolha as atividades ou deixe com a gente. Respondemos rapidinho no WhatsApp." cta-label="Chamar no WhatsApp" message="Olá! Quero saber mais sobre as Oficinas."></x-import>
     </div>
   </section>
 
-  <x-import component-from-global-scope="TDA.Footer" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
 
-  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero saber mais sobre a Oficina."></x-import></div>
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero saber mais sobre as Oficinas."></x-import></div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5500}}'>
@@ -122,6 +122,15 @@ class Component extends DCLogic {
     return {
       yes: true, year: 2026, i26: 26, i20: 20,
       chips: chips, acts: acts,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
       secondary: { label: 'Ver atividades', href: '#catalogo' },
       highlights: ['Materiais seguros e naturais', 'Atividades de 45 a 90 min', 'Para grupos de 8 a 40 crianças'],
       steps: [

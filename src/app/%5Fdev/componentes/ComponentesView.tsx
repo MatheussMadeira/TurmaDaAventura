@@ -137,7 +137,7 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
 const STATES = ['repouso', 'hover', 'focus', 'pressed', 'disabled'] as const;
 const VARIANTS: { variant: ButtonVariant; label: string }[] = [
   { variant: 'primary', label: 'Pedir orçamento' },
-  { variant: 'earth', label: 'Conhecer a Oficina' },
+  { variant: 'earth', label: 'Conhecer as Oficinas' },
   { variant: 'outline', label: 'Ver restaurantes' },
   { variant: 'ghost', label: 'Ver todos' },
   { variant: 'inverse', label: 'Chamar no WhatsApp' },
@@ -154,7 +154,7 @@ const FILTERS = [
 
 const NAV_DEMO = [
   { label: 'Início', href: '/' },
-  { label: 'Oficina', href: '/oficina' },
+  { label: 'Oficinas', href: '/oficinas' },
   { label: 'Restaurantes', href: '/restaurantes' },
   { label: 'Eventos corporativos', href: '/eventos-corporativos' },
   { label: 'Quem somos', href: '/quem-somos' },
@@ -297,13 +297,13 @@ export function ComponentesView() {
               <Select
                 label="Tipo de evento"
                 placeholder="Escolha uma opção"
-                options={['Oficina', 'Evento corporativo', 'Outro']}
+                options={['Oficinas', 'Evento corporativo', 'Outro']}
               />
               <Select
                 label="Select com erro"
                 placeholder="Escolha uma opção"
                 error="Escolha o tipo de evento."
-                options={['Oficina', 'Evento corporativo']}
+                options={['Oficinas', 'Evento corporativo']}
               />
               <TextField label="Quer contar mais?" multiline />
             </Cols>
@@ -371,7 +371,7 @@ export function ComponentesView() {
                 title="Oficina de pipas"
                 description="Cada criança monta e decora a própria pipa."
                 tags={['A partir de 5 anos', '60 min']}
-                href="/oficina"
+                href="/oficinas"
               />
               <ServiceCard
                 tone="earth"
@@ -384,7 +384,7 @@ export function ComponentesView() {
             <Cols $min="280px">
               <RestaurantCard
                 name="Restaurante Exemplo"
-                neighborhood="Zona Sul"
+                neighborhood="Savassi"
                 schedule="Sáb e dom, 12h às 17h"
                 address="Rua Exemplo, 000"
                 ages="De 3 a 12 anos"
@@ -479,10 +479,10 @@ export function ComponentesView() {
           >
             <Label>Header · normal, rolado</Label>
             <Frame $bg="var(--surface-sunken)">
-              <Header static current="/oficina" items={NAV_DEMO} />
+              <Header static current="/oficinas" items={NAV_DEMO} />
             </Frame>
             <Frame $bg="var(--surface-sunken)">
-              <Header static scrolled current="/oficina" items={NAV_DEMO} />
+              <Header static scrolled current="/oficinas" items={NAV_DEMO} />
             </Frame>
             <Label>Header · mobile fechado e aberto (390px)</Label>
             <Row>
@@ -490,7 +490,7 @@ export function ComponentesView() {
                 <Header static current="/" items={NAV_DEMO} />
               </Frame>
               <Frame $w={390}>
-                <Header static defaultOpen current="/oficina" items={NAV_DEMO} />
+                <Header static defaultOpen current="/oficinas" items={NAV_DEMO} />
               </Frame>
             </Row>
 
@@ -500,7 +500,7 @@ export function ComponentesView() {
                 overline="Recreação infantil"
                 title="Bora pra aventura?"
                 lead="Recreação que transforma qualquer espaço em trilha."
-                secondary={{ label: 'Conhecer a Oficina', href: '/oficina' }}
+                secondary={{ label: 'Conhecer as Oficinas', href: '/oficinas' }}
                 highlights={['De 3 a 12 anos', 'Monitores treinados', 'Orçamento sob medida']}
                 imageAlt="Crianças em atividade ao ar livre"
               />
@@ -547,7 +547,7 @@ export function ComponentesView() {
 
             <Label>QuoteForm · vazio (tipo pré-selecionado), com erro, preenchido</Label>
             <Cols $min="420px">
-              <QuoteForm defaultType="Oficina" />
+              <QuoteForm defaultType="Oficinas" />
               <QuoteForm
                 defaultErrors={{
                   nome: 'Conta pra gente seu nome.',

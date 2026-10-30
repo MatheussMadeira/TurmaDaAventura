@@ -4,7 +4,7 @@ import { NoPermission } from '@/admin/ui/states';
 import { listActivities } from '@/server/admin/activities';
 import { requirePageUser } from '@/server/auth/session';
 
-export const metadata: Metadata = { title: 'Atividades' };
+export const metadata: Metadata = { title: 'Atividades das Oficinas' };
 export const dynamic = 'force-dynamic';
 
 const TABS = [

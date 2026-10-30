@@ -19,7 +19,9 @@ import restaurantes from '../src/content/restaurantes.json';
 import atividades from '../src/content/atividades.json';
 import equipe from '../src/content/equipe.json';
 import contato from '../src/content/contato.json';
+import temasFesta from '../src/content/temas-festa.json';
 import { decideForce } from '../src/server/seedGuard';
+import { upgradeV2 } from './upgradeV2';
 
 config({ path: '.env.local' });
 config();
@@ -71,35 +73,29 @@ async function seedPages() {
 
 async function seedRestaurants() {
   let n = 0;
-  for (const [ri, g] of restaurantes.regioes.entries()) {
-    const region = await db.region.upsert({
-      where: { slug: g.id },
-      update: force ? { name: g.nome, shortName: g.nomeCurto ?? g.nome, order: ri } : {},
-      create: { slug: g.id, name: g.nome, shortName: g.nomeCurto ?? g.nome, order: ri },
+  for (const [i, r] of restaurantes.restaurantes.entries()) {
+    const data = {
+      name: r.name,
+      neighborhood: r.neighborhood,
+      schedule: r.schedule,
+      address: r.address,
+      ages: r.ages,
+      mapsUrl: r.mapsUrl,
+      order: i,
+      status: r.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
+      destaqueHome: r.destaqueHome,
+      imageAlt: r.imageAlt,
+    };
+    const exists = await db.restaurant.findUnique({ where: { slug: r.slug } });
+    if (exists && !force) continue;
+    // o que falta entra no FIM da lista (não bate com a ordem que o cliente já definiu)
+    if (!force) data.order = await db.restaurant.count();
+    await db.restaurant.upsert({
+      where: { slug: r.slug },
+      update: data,
+      create: { slug: r.slug, ...data },
     });
-    for (const [i, r] of g.restaurantes.entries()) {
-      const data = {
-        name: r.name,
-        neighborhood: r.neighborhood,
-        schedule: r.schedule,
-        address: r.address,
-        ages: r.ages,
-        mapsUrl: r.mapsUrl,
-        regionId: region.id,
-        order: i,
-        status: r.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
-        destaqueHome: r.destaqueHome,
-        imageAlt: r.imageAlt,
-      };
-      const exists = await db.restaurant.findUnique({ where: { slug: r.slug } });
-      if (exists && !force) continue;
-      await db.restaurant.upsert({
-        where: { slug: r.slug },
-        update: data,
-        create: { slug: r.slug, ...data },
-      });
-      n++;
-    }
+    n++;
   }
   return n;
 }
@@ -123,6 +119,31 @@ async function seedActivities() {
       where: { slug: a.slug },
       update: data,
       create: { slug: a.slug, ...data },
+    });
+    n++;
+  }
+  return n;
+}
+
+async function seedThemes() {
+  let n = 0;
+  for (const [i, t] of temasFesta.temas.entries()) {
+    const data = {
+      icon: t.icon,
+      title: t.title,
+      description: t.description,
+      tags: t.tags,
+      imageAlt: t.imageAlt,
+      order: i,
+      status: t.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
+    };
+    const exists = await db.partyTheme.findUnique({ where: { slug: t.slug } });
+    if (exists && !force) continue;
+    if (!force) data.order = await db.partyTheme.count();
+    await db.partyTheme.upsert({
+      where: { slug: t.slug },
+      update: data,
+      create: { slug: t.slug, ...data },
     });
     n++;
   }
@@ -219,7 +240,10 @@ async function main() {
   await guardForce();
   const sections = await seedPages();
   const rest = await seedRestaurants();
+  // ajustes v2: atualiza textos antigos que o cliente ainda não editou (com --force já vem tudo novo)
+  const upgrade = force ? { updated: [], notUpdated: [] } : await upgradeV2(db);
   const acts = await seedActivities();
+  const themes = await seedThemes();
   const team = await seedTeam();
   const settings = await seedSettings();
   await seedAdmin();
@@ -227,12 +251,23 @@ async function main() {
     data: {
       action: 'seed',
       entity: 'site',
-      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${team} pessoas${settings ? ', configurações' : ''}`,
+      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${themes} temas de festa, ${team} pessoas${settings ? ', configurações' : ''}`,
       published: true,
     },
   });
+  if (upgrade.updated.length) {
+    console.log(`
+Atualizados para a versão 2 (${upgrade.updated.length}):`);
+    for (const l of upgrade.updated) console.log(`  ✓ ${l}`);
+  }
+  if (upgrade.notUpdated.length) {
+    console.log(`
+NÃO atualizados, porque já foram editados no painel (${upgrade.notUpdated.length}):`);
+    for (const l of upgrade.notUpdated) console.log(`  • ${l}`);
+    console.log('  (confira se o texto atual ainda faz sentido; nada foi sobrescrito)');
+  }
   console.log(
-    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
+    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${themes} temas de festa · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
   );
 }
 

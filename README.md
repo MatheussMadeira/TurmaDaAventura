@@ -45,6 +45,8 @@ npm run db:seed               # cria o que falta; NÃO sobrescreve edições
 npm run db:seed -- --force    # recria o conteúdo das seções (textos do canvas)
 ```
 
+**Atualização de textos (ajustes v2).** O seed normal também atualiza textos antigos que **ainda são os originais** (Oficina→Oficinas, Início com quatro jeitos, cidade e bairros de Belo Horizonte). Campo que o cliente já editou no painel **não é tocado**: no fim, o seed imprime a lista “NÃO atualizados, porque já foram editados” para revisão manual. O que falta (a página de festas, os temas, restaurantes ausentes) é criado no **fim** das listas.
+
 `--force` **recusa rodar** em banco de produção (`VERCEL_ENV=production` ou host em `PRODUCTION_DB_HOSTS`). Só com `ALLOW_DESTRUCTIVE_SEED=1` ele prossegue — e mesmo assim exige digitar o host do banco no terminal.
 
 ## Scripts
@@ -60,8 +62,8 @@ npm run db:seed -- --force    # recria o conteúdo das seções (textos do canva
 ## Estrutura
 
 ```
-src/app/(site)/      páginas públicas (Início, Oficina, Restaurantes, Eventos, Quem somos)
-src/app/admin/       painel (login, painel, restaurantes, atividades, equipe, fotos, usuários, contato)
+src/app/(site)/      páginas públicas (Início, Oficinas, Festas e aniversários, Restaurantes, Eventos, Quem somos)
+src/app/admin/       painel (login, painel, restaurantes, atividades das Oficinas, temas de festa, equipe, fotos, usuários, contato)
 src/app/admin/(editor)/  editor visual (/admin/editor) e a prévia em iframe (/admin/preview/[slug])
 src/admin/editor/    editor: painel gerado do schema, prévia, recorte de foto, desfazer/refazer
 src/components/      Atomic Design (atoms · molecules · organisms · templates)
@@ -94,7 +96,7 @@ npm run build && npx next start -p 3200   # um servidor de produção
 PLAYWRIGHT_BASE_URL=http://localhost:3200 npx playwright test --workers=1
 ```
 
-Cobrem: orçamento (erro → corrige → abre o wa.me), login e bloqueio, troca de senha, permissões, criar usuário da Equipe, editor (editar, desfazer, publicar, esconder/reordenar), troca de foto com descrição e a reserva de edição.
+Cobrem: menu com 6 itens (1024/1180/1280/1440), redirect 301 de /oficina, página Festas e aniversários, restaurantes sem região, temas de festa no admin, orçamento (erro → corrige → abre o wa.me), login e bloqueio, troca de senha, permissões, criar usuário da Equipe, editor (editar, desfazer, publicar, esconder/reordenar), troca de foto com descrição e a reserva de edição.
 
 - Rodam contra o banco e o Blob **de desenvolvimento** (`.env.local`). **Nunca aponte para a produção.**
 - Os testes criam usuários `@teste.invalid` e uma foto `E2E …`; ao final apagam tudo e devolvem o conteúdo do Início ao estado de antes.

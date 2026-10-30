@@ -17,7 +17,7 @@ export default async function DashboardPage() {
         pages: d.pages,
         lastPublishAt: d.lastPublishAt?.toISOString() ?? null,
         restaurantsActive: d.restaurantsActive,
-        regions: d.regions,
+        neighborhoods: d.neighborhoods,
         activitiesPublished: d.activitiesPublished,
         categories: d.categories,
         pending: d.pending,

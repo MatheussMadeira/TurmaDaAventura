@@ -31,7 +31,7 @@ export const useToast = () => useContext(Ctx);
 
 const TTL = 6000;
 
-/** Confirmação discreta, sem sair da página. Região aria-live; some sozinha (ou ao clicar numa ação). */
+/** Confirmação discreta, sem sair da página. Aviso aria-live; some sozinho (ou ao clicar numa ação). */
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<ToastData | null>(null);
   const seq = useRef(0);

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>QuoteForm — pré-orçamento</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<form class="tda-card tda-quote" novalidate="" aria-label="Pré-orçamento" style="font-family: var(--font-body); color: var(--ink); width: 100%; box-sizing: border-box;">
+  <div class="tda-quote__head">
+    <h3 class="h3">{{title}}</h3>
+    <p class="body-sm tda-card__text">Preencha o básico e a conversa abre no WhatsApp com tudo pronto. Respondemos em horário comercial.</p>
+  </div>
+  <sc-if value="{{isErro}}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: var(--radius-md); background: var(--danger-soft); color: var(--danger); font: 700 15px/22px var(--font-body);">
+      <x-import component-from-global-scope="TDA.Icon" name="flag" size="{{iconSize}}"></x-import>
+      <p style="margin: 0; color: var(--ink);"><strong style="color: var(--danger);">Revise 2 campos</strong> para continuar no WhatsApp.</p>
+    </div>
+  </sc-if>
+  <div class="tda-quote__grid">
+    <x-import component-from-global-scope="TDA.TextField" label="{{nomeLabel}}" required="{{yes}}" default-value="{{v.nome}}" error="{{e.nome}}" auto-complete="name"></x-import>
+    <x-import component-from-global-scope="TDA.Select" label="Tipo de evento" required="{{yes}}" options="{{types}}" placeholder="Escolha uma opção" default-value="{{v.tipo}}" error="{{e.tipo}}"></x-import>
+    <x-import component-from-global-scope="TDA.TextField" label="Data (se já souber)" type="date" default-value="{{v.data}}"></x-import>
+    <x-import component-from-global-scope="TDA.TextField" label="Nº de crianças" type="number" input-mode="numeric" default-value="{{v.criancas}}" hint="Uma estimativa já ajuda."></x-import>
+    <x-import component-from-global-scope="TDA.TextField" label="Idades" placeholder="Ex.: 4 a 10 anos" default-value="{{v.idades}}"></x-import>
+    <x-import component-from-global-scope="TDA.TextField" label="Cidade ou local" default-value="{{v.cidade}}" auto-complete="address-level2"></x-import>
+    <x-import component-from-global-scope="TDA.TextField" label="Quer contar mais?" multiline="{{yes}}" default-value="{{v.msg}}" class-name="tda-quote__full"></x-import>
+  </div>
+  <x-import component-from-global-scope="TDA.Button" type="submit" icon-left="whatsapp" size="lg" full-width="{{yes}}">Continuar no WhatsApp</x-import>
+  <p class="caption tda-quote__note">Não divulgamos preços no site: cada aventura é montada sob medida.</p>
+</form>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo":{"editor":"enum","options":["","Festa ou aniversário","Restaurante (recreação fixa)","Evento corporativo","Oficinas","Outro"],"default":""},"nomeLabel":{"editor":"enum","options":["Seu nome","Seu nome e empresa"],"default":"Seu nome"},"estado":{"editor":"enum","options":["vazio","erro","preenchido"],"default":"vazio"},"title":{"editor":null,"default":"Monte seu orçamento"},"$preview":{"width":640,"height":980}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var estado = this.props.estado || 'vazio';
+    var tipo = this.props.tipo || '';
+    var empresa = (this.props.nomeLabel || '') === 'Seu nome e empresa';
+    var v = { nome: '', tipo: tipo, data: '', criancas: '', idades: '', cidade: '', msg: '' };
+    var e = {};
+    if (estado === 'erro') {
+      v.tipo = '';
+      v.data = '2026-12-12';
+      e = { nome: empresa ? 'Conta pra gente seu nome e o da empresa.' : 'Conta pra gente seu nome.', tipo: 'Escolha o tipo de evento.' };
+    }
+    if (estado === 'preenchido') {
+      v = {
+        nome: empresa ? 'Mariana · Empresa Exemplo' : 'Mariana',
+        tipo: tipo || 'Oficinas',
+        data: '2026-11-21',
+        criancas: '18',
+        idades: '5 a 9 anos',
+        cidade: 'Savassi, Belo Horizonte',
+        msg: 'Queremos uma oficina de pipas no pátio, no sábado de manhã.'
+      };
+    }
+    return {
+      yes: true,
+      iconSize: 20,
+      title: this.props.title || 'Monte seu orçamento',
+      nomeLabel: this.props.nomeLabel || 'Seu nome',
+      isErro: estado === 'erro',
+      v: v,
+      e: e,
+      types: ['Festa ou aniversário', 'Restaurante (recreação fixa)', 'Evento corporativo', 'Oficinas', 'Outro']
+    };
+  }
+}
+</script>
+</body>
+</html>

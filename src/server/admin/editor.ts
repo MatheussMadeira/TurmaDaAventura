@@ -7,7 +7,8 @@ import {
   getActivities,
   getActivityCategories,
   getHomeRestaurants,
-  getRestaurantGroups,
+  getPartyThemes,
+  getRestaurants,
   getTeam,
 } from '../content';
 import { db } from '../db';
@@ -88,15 +89,17 @@ export async function loadPreviewData(slug: string): Promise<Record<string, unkn
   switch (slug) {
     case 'inicio':
       return { restaurants: await getHomeRestaurants() };
-    case 'oficina': {
+    case 'oficinas': {
       const [activities, categories] = await Promise.all([
         getActivities(),
         getActivityCategories(),
       ]);
       return { activities, categories };
     }
+    case 'festas-e-aniversarios':
+      return { themes: await getPartyThemes() };
     case 'restaurantes':
-      return { groups: await getRestaurantGroups() };
+      return { restaurants: await getRestaurants() };
     case 'quem-somos':
       return { team: await getTeam() };
     default:

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Contato e WhatsApp — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-route="/admin/contato" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="contato" role="admin" hint-size="248px,1000px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Administração</p>
+        <h1 class="top__title">Contato e WhatsApp</h1>
+      </div>
+      <div class="top__actions">
+        <x-import component-from-global-scope="TDA.Button" variant="outline" icon-left="whatsapp">Abrir conversa de teste</x-import>
+        <x-import component-from-global-scope="TDA.Button" icon-left="check">Salvar e publicar</x-import>
+      </div>
+    </div>
+
+    <div class="cols cols--form">
+      <div style="display: flex; flex-direction: column; gap: 20px; min-width: 0;">
+        <section class="box" aria-labelledby="c-dados">
+          <h2 id="c-dados" class="box__title">Dados de contato</h2>
+          <p class="box__sub">Aparecem no rodapé de todas as páginas e no botão flutuante.</p>
+          <div class="fields">
+            <x-import component-from-global-scope="TDA.TextField" label="WhatsApp (com DDD)" required="{{yes}}" type="tel" placeholder="(00) 00000-0000" default-value="(00) 00000-0000" hint="Todo orçamento do site chega neste número."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Instagram" default-value="@turmadaaventura"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="E-mail" type="email" placeholder="email@exemplo.com.br"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Cidade" default-value="Belo Horizonte · MG"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Horário de resposta" default-value="Seg a sex, 9h às 18h" hint="Usado no texto “Respondemos em horário comercial”." class-name="full"></x-import>
+          </div>
+        </section>
+
+        <section class="box" aria-labelledby="c-msgs">
+          <h2 id="c-msgs" class="box__title">Mensagem pronta por página</h2>
+          <p class="box__sub">É o texto que já chega escrito quando alguém toca no botão de WhatsApp daquela página.</p>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <x-import component-from-global-scope="TDA.TextField" label="Início" default-value="Olá! Vim pelo site e quero um orçamento."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Oficinas" default-value="Olá! Quero saber mais sobre as Oficinas."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Festas e aniversários" default-value="Olá! Quero orçamento para uma festa de aniversário."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Restaurantes (donos)" default-value="Olá! Tenho um restaurante e quero recreação para as famílias."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Eventos corporativos" default-value="Olá! Quero recreação infantil para um evento corporativo."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Quem somos" default-value="Olá! Quero conversar com a Turma da Aventura."></x-import>
+          </div>
+        </section>
+      </div>
+
+      <aside class="box" aria-label="Prévia" style="position: sticky; top: 24px; background: var(--surface-sunken); box-shadow: none;">
+        <h2 class="box__title">Prévia</h2>
+        <p class="box__sub">Como o contato aparece no site.</p>
+        <div style="background: var(--surface-forest); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+          <p class="overline" style="margin: 0; color: var(--caqui-200);">Fale com a gente</p>
+          <span style="display: inline-flex; gap: 8px; align-items: center; color: var(--ink-on-forest); font: 600 16px/22px var(--font-body);"><x-import component-from-global-scope="TDA.Icon" name="whatsapp" size="{{s18}}"></x-import>WhatsApp</span>
+          <span style="display: inline-flex; gap: 8px; align-items: center; color: var(--ink-on-forest); font: 600 16px/22px var(--font-body);"><x-import component-from-global-scope="TDA.Icon" name="instagram" size="{{s18}}"></x-import>@turmadaaventura</span>
+          <span style="display: inline-flex; gap: 8px; align-items: center; color: var(--ink-on-forest); font: 600 16px/22px var(--font-body);"><x-import component-from-global-scope="TDA.Icon" name="map-pin" size="{{s18}}"></x-import>Belo Horizonte · MG</span>
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente"></x-import>
+        </div>
+        <div class="alert alert--info" style="font-size: 14px; line-height: 20px;">
+          <x-import component-from-global-scope="TDA.Icon" name="mail" size="{{s18}}"></x-import>
+          <p style="font-weight: 600;">Depois de salvar, use “Abrir conversa de teste” para conferir se o número e a mensagem estão certos.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, s18: 18 }; }
+}
+</script>
+</body>
+</html>

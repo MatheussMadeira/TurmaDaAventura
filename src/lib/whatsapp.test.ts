@@ -10,14 +10,14 @@ describe('whatsapp', () => {
   });
 
   it('usa a mensagem contextual de cada rota', () => {
-    expect(messageForPath('/oficina')).toBe('Olá! Quero saber mais sobre a Oficina.');
+    expect(messageForPath('/oficinas')).toBe('Olá! Quero saber mais sobre as Oficinas.');
     expect(messageForPath('/eventos-corporativos')).toContain('evento corporativo');
     expect(messageForPath('/rota-desconhecida')).toBe('Olá! Vim pelo site e quero saber mais.');
     expect(messageForPath(null)).toBe('Olá! Vim pelo site e quero saber mais.');
   });
 
   it('inclui só os campos preenchidos e nenhum preço', () => {
-    const msg = buildQuoteMessage({ nome: 'Ana', tipo: 'Oficina', criancas: '12' });
+    const msg = buildQuoteMessage({ nome: 'Ana', tipo: 'Oficinas', criancas: '12' });
     expect(msg).toContain('• Nome: Ana');
     expect(msg).toContain('• Nº de crianças: 12');
     expect(msg).not.toContain('Data');

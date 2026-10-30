@@ -2,6 +2,13 @@ import Link from 'next/link';
 import styled, { keyframes } from 'styled-components';
 import { media } from '@/design-system/media';
 
+/**
+ * Com 6 itens, o menu completo só cabe a partir de ~1180px de largura do cabeçalho (medido com os
+ * textos reais); abaixo disso vira sanfona. É um valor só do Header (não é um breakpoint do sistema).
+ */
+export const HEADER_FULL_MENU_MIN = 1180;
+const collapse = `@container tda-header (max-width: ${HEADER_FULL_MENU_MIN - 1}px)`;
+
 const linkIn = keyframes`
   from { opacity: 0; transform: translateY(var(--move-sm)); }
   to { opacity: 1; transform: none; }
@@ -48,7 +55,7 @@ export const Inner = styled.div`
     min-height: 64px;
   }
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     min-height: 64px;
     flex-wrap: wrap;
     gap: var(--space-3);
@@ -65,7 +72,7 @@ export const Nav = styled.nav`
   position: relative;
   margin-left: auto;
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     order: 4;
     flex-basis: 100%;
     margin: 0;
@@ -85,7 +92,7 @@ export const List = styled.ul`
   display: flex;
   gap: var(--space-1);
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     flex-direction: column;
 
     [data-open='true'] & > li {
@@ -124,7 +131,7 @@ export const NavLink = styled(Link)`
     color: var(--brand);
   }
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     width: 100%;
     box-sizing: border-box;
     font-size: 18px;
@@ -163,7 +170,7 @@ export const Indicator = styled.span`
     transition: transform var(--dur-medium) var(--ease-enter);
   }
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     display: none;
   }
   ${media.reducedMotion} {
@@ -172,7 +179,7 @@ export const Indicator = styled.span`
 `;
 
 export const Cta = styled.div`
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     order: 2;
     margin-left: auto;
   }
@@ -197,7 +204,7 @@ export const Toggle = styled.button`
     outline-offset: 2px;
   }
 
-  ${media.containerDown('tda-header', 'bp-lg')} {
+  ${collapse} {
     display: grid;
     order: 3;
   }

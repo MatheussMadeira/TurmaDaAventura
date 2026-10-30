@@ -11,5 +11,4 @@ export * from './LogoStrip';
 export * from './TextLink';
 export * from './CheckList';
 export * from './BenefitPanel';
-export * from './RegionHeading';
 export * from './StoryMedia';

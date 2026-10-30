@@ -70,7 +70,7 @@
       </sc-if>
       <div class="ed__frame" style="transform: scale(0.64);">
         <div class="page" style="pointer-events: none;">
-          <x-import component-from-global-scope="TDA.Header" current="/"></x-import>
+          <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/"></x-import>
           <section class="tda-hero tda-hero--light">
             <div class="tda-hero__inner">
               <div class="tda-hero__copy">
@@ -85,10 +85,10 @@
                   </sc-if>
                   <h1 class="display tda-hero__title" style="margin: 0;">Bora pra aventura?<sc-if value="{{isTexto}}" hint-placeholder-val="{{ true }}"><span class="ev__caret" aria-hidden="true"></span></sc-if></h1>
                 </div>
-                <p class="lead tda-hero__lead">A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte.</p>
+                <p class="lead tda-hero__lead">A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte.</p>
                 <div class="tda-hero__actions">
                   <x-import component-from-global-scope="TDA.WhatsAppButton" size="lg">Pedir orçamento no WhatsApp</x-import>
-                  <x-import component-from-global-scope="TDA.Button" size="lg" variant="outline" icon-right="arrow-right">Conhecer a Oficina</x-import>
+                  <x-import component-from-global-scope="TDA.Button" size="lg" variant="outline" icon-right="arrow-right">Conhecer as Oficinas</x-import>
                 </div>
                 <ul class="tda-hero__hl">
                   <li><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import>Monitores treinados</li>
@@ -110,11 +110,12 @@
           </section>
           <section class="sec sec--sunken">
             <div class="wrap">
-              <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Três jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
-              <div class="g3">
+              <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Quatro jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
+              <div class="g4">
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="star" title="Festas e aniversários" description="Aventura temática na festa." href="#" link-label="Ver festas"></x-import>
                 <x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes"></x-import>
                 <x-import component-from-global-scope="TDA.ServiceCard" icon="briefcase" tone="earth" title="Eventos corporativos" description="Espaço kids em confraternizações." href="#" link-label="Ver eventos"></x-import>
-                <x-import component-from-global-scope="TDA.ServiceCard" icon="scissors" title="Oficina" description="Pipas, mini horta, tintas naturais." href="#" link-label="Conhecer a Oficina"></x-import>
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="scissors" title="Oficinas" description="Pipas, mini horta, tintas naturais." href="#" link-label="Conhecer as Oficinas"></x-import>
               </div>
             </div>
           </section>
@@ -139,8 +140,8 @@
           <p class="count"><span>Curto e direto: até 5 palavras.</span><span>18/40</span></p>
         </div>
         <div>
-          <x-import component-from-global-scope="TDA.TextField" label="Texto de apoio" multiline="{{yes}}" rows="{{r3}}" default-value="A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte."></x-import>
-          <p class="count"><span></span><span>168/220</span></p>
+          <x-import component-from-global-scope="TDA.TextField" label="Texto de apoio" multiline="{{yes}}" rows="{{r3}}" default-value="A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte."></x-import>
+          <p class="count"><span></span><span>169/220</span></p>
         </div>
         <x-import component-from-global-scope="TDA.TextField" label="Mensagem que chega no WhatsApp" default-value="Olá! Vim pelo site e quero um orçamento." hint="O texto do botão segue a regra da marca e não muda aqui."></x-import>
         <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -214,7 +215,7 @@ class Component extends DCLogic {
   renderVals() {
     var m = this.props.modo || 'texto';
     var isTexto = m === 'texto', isFoto = m === 'foto', isPub = m === 'publicado';
-    var names = ['Topo da página', 'Três jeitos', 'Brincar / Aprender / Ensinar', 'Como funciona', 'Onde a Turma está', 'Galeria', 'Faixa de CTA'];
+    var names = ['Topo da página', 'Quatro jeitos', 'Brincar / Aprender / Ensinar', 'Como funciona', 'Onde a Turma está', 'Galeria', 'Faixa de CTA'];
     var layers = names.map(function (n, i) {
       var off = n === 'Galeria' && !isPub ? false : false;
       return { name: n, cls: 'layer' + (i === 0 && !isPub ? ' is-active' : ''), on: true, off: false, eyeLabel: 'Esconder ' + n };
@@ -222,6 +223,10 @@ class Component extends DCLogic {
     layers.push({ name: 'Perguntas frequentes (oculta)', cls: 'layer is-off', on: false, off: true, eyeLabel: 'Mostrar Perguntas frequentes' });
     return {
       yes: true, no: false, s18: 18, s20: 20, s22: 22, s24: 24, r3: 3, h100: 100,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
       isTexto: isTexto, isFoto: isFoto, isPub: isPub,
       statusText: isPub ? 'Tudo publicado · agora há pouco' : '2 alterações não publicadas',
       layers: layers,

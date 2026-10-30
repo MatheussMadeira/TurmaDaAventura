@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Restaurantes — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-theme="{{theme}}" data-route="/admin/restaurantes" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="restaurantes" role="admin" hint-size="248px,1000px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Conteúdo</p>
+        <h1 class="top__title">Restaurantes</h1>
+      </div>
+      <div class="top__actions">
+        <x-import component-from-global-scope="TDA.Button" icon-left="utensils" href="AdminRestauranteEditar.dc.html">Novo restaurante</x-import>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Filtrar restaurantes">
+      <button type="button" role="tab" class="tab" aria-selected="true">Ativos <span class="tab__n">6</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Rascunhos <span class="tab__n">1</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Pausados <span class="tab__n">0</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Todos <span class="tab__n">7</span></button>
+    </div>
+
+    <!-- Desktop: tabela -->
+    <section class="box box--flush only-desk" aria-label="Lista de restaurantes">
+      <table class="tbl">
+        <thead><tr><th scope="col">Restaurante</th><th scope="col">Recreação</th><th scope="col">Idades</th><th scope="col">Situação</th><th scope="col"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Ações</span></th></tr></thead>
+        <tbody>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+            <tr class="{{r.cls}}">
+              <td><div class="cell-main"><div class="thumb"><x-import component-from-global-scope="TDA.Media" icon="utensils" alt="" placeholder-id="{{r.pid}}"></x-import></div><div><strong>{{r.name}}</strong><span>{{r.bairro}}</span></div></div></td>
+              <td>{{r.horario}}</td>
+              <td>{{r.idades}}</td>
+              <td><x-import component-from-global-scope="TDA.Tag" tone="{{r.tone}}" icon="{{r.icon}}">{{r.status}}</x-import></td>
+              <td><div class="row-actions">
+                <a class="ibtn" href="SiteRestaurantes.dc.html" aria-label="Ver {{r.name}} no site"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"></path><path d="M20 4l-9 9"></path><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"></path></svg></a>
+                <a class="ibtn" href="AdminRestauranteEditar.dc.html" aria-label="Editar {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg></a>
+                <a class="ibtn ibtn--danger" href="AdminExcluir.dc.html" aria-label="Excluir {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.5h5V7"></path><path d="M6 7l1 13h10l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></a>
+              </div></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Celular: cartões -->
+    <div class="mlist only-mob" style="flex-direction: column;">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+        <article class="mcard">
+          <div class="mcard__row">
+            <div class="cell-main"><div class="thumb"><x-import component-from-global-scope="TDA.Media" icon="utensils" alt="" placeholder-id="{{r.pidm}}"></x-import></div><div><strong>{{r.name}}</strong><span>{{r.bairro}}</span></div></div>
+          </div>
+          <div class="mcard__meta">
+            <span><x-import component-from-global-scope="TDA.Icon" name="clock" size="{{s16}}"></x-import>{{r.horario}}</span>
+            <span><x-import component-from-global-scope="TDA.Icon" name="users" size="{{s16}}"></x-import>{{r.idades}}</span>
+          </div>
+          <div class="mcard__row">
+            <x-import component-from-global-scope="TDA.Tag" tone="{{r.tone}}" icon="{{r.icon}}">{{r.status}}</x-import>
+            <div class="row-actions">
+              <a class="ibtn" href="AdminRestauranteEditar.dc.html" aria-label="Editar {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg></a>
+              <a class="ibtn ibtn--danger" href="AdminExcluir.dc.html" aria-label="Excluir {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.5h5V7"></path><path d="M6 7l1 13h10l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></a>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+
+    <p class="caption" style="margin: 0; color: var(--ink-muted); display: flex; gap: 6px; align-items: center;"><x-import component-from-global-scope="TDA.Icon" name="compass" size="{{s16}}"></x-import>A ordem desta lista é a ordem em que os restaurantes aparecem no site.</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dia","noite"],"default":"dia"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var ok = { status: 'No site', tone: 'brand', icon: 'check' };
+    var base = [
+      ['Brasa & Lenha', 'Belvedere', 'Sáb e dom, 12h às 16h', '3 a 12 anos', ok],
+      ['Cantina do Bosque', 'Savassi', 'Sáb e dom, 12h às 17h', '3 a 10 anos', ok],
+      ['Empório Jatobá', 'Lourdes', 'Sex 19h às 23h · Sáb 12h às 16h', '4 a 12 anos', ok],
+      ['Quintal Ipê', 'Sion', 'Dom, 12h às 17h', '2 a 8 anos', ok],
+      ['Rancho Cedro', 'Pampulha', 'Sáb, dom e feriados, 11h às 17h', '3 a 12 anos', ok],
+      ['Trattoria Serra', 'Buritis', 'Sáb e dom, 12h às 17h', '3 a 12 anos', ok],
+      ['Nome do restaurante', 'Bairro', 'Falta o horário', '—', { status: 'Rascunho', tone: 'earth', icon: 'flag' }]
+    ];
+    var rows = base.map(function (b, i) {
+      return { name: b[0], bairro: b[1], horario: b[2], idades: b[3], status: b[4].status, tone: b[4].tone, icon: b[4].icon, pid: 'rt' + i, pidm: 'rm' + i, cls: i === 1 ? 'is-hover' : '' };
+    });
+    return { theme: this.props.theme || 'dia', rows: rows, s16: 16 };
+  }
+}
+</script>
+</body>
+</html>

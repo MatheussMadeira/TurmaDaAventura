@@ -6,9 +6,9 @@ import { DEFAULT_PAGES } from '@/content/defaults/pages';
 import { PAGES, pageBySlug, sectionName } from '@/content/sections/schemas';
 import type {
   Activity,
+  PartyTheme,
   PublishedPage,
   Restaurant,
-  RestaurantGroup,
   SiteSettings,
   TeamMember,
 } from '@/content/types';
@@ -16,6 +16,7 @@ import contato from '@/content/contato.json';
 import atividades from '@/content/atividades.json';
 import equipe from '@/content/equipe.json';
 import restaurantes from '@/content/restaurantes.json';
+import temasFesta from '@/content/temas-festa.json';
 import type { IconName } from '@/lib/iconNames';
 
 export const fixturePage = (slug: string): PublishedPage => {
@@ -32,27 +33,34 @@ export const fixturePage = (slug: string): PublishedPage => {
   };
 };
 
-export const fixtureGroups = (): RestaurantGroup[] =>
-  restaurantes.regioes.map((g) => ({
-    id: g.id,
-    name: g.nome,
-    shortName: g.nomeCurto,
-    restaurants: g.restaurantes
-      .filter((r) => r.publicado)
-      .map((r): Restaurant => ({
-        slug: r.slug,
-        name: r.name,
-        neighborhood: r.neighborhood,
-        schedule: r.schedule,
-        address: r.address,
-        ages: r.ages,
-        mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
-        image: null,
-        imageAlt: r.imageAlt,
-        destaqueHome: r.destaqueHome,
-        regionShortName: g.nomeCurto,
-      })),
-  }));
+export const fixtureRestaurants = (): Restaurant[] =>
+  restaurantes.restaurantes
+    .filter((r) => r.publicado)
+    .map((r): Restaurant => ({
+      slug: r.slug,
+      name: r.name,
+      neighborhood: r.neighborhood,
+      schedule: r.schedule,
+      address: r.address,
+      ages: r.ages,
+      mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
+      image: null,
+      imageAlt: r.imageAlt,
+      destaqueHome: r.destaqueHome,
+    }));
+
+export const fixtureThemes = (): PartyTheme[] =>
+  temasFesta.temas
+    .filter((t) => t.publicado)
+    .map((t) => ({
+      slug: t.slug,
+      icon: t.icon as IconName,
+      title: t.title,
+      description: t.description,
+      tags: t.tags,
+      image: null,
+      imageAlt: t.imageAlt,
+    }));
 
 export const fixtureActivities = (): Activity[] =>
   atividades.atividades
@@ -91,12 +99,12 @@ export const fixtureSettings = (): SiteSettings => ({
 
 export const contentModuleMock = () => ({
   getPublishedPage: async (slug: string) => fixturePage(slug),
-  getRestaurantGroups: async () => fixtureGroups(),
+  getRestaurants: async () => fixtureRestaurants(),
   getHomeRestaurants: async () =>
-    fixtureGroups()
-      .flatMap((g) => g.restaurants)
+    fixtureRestaurants()
       .filter((r) => r.destaqueHome)
       .slice(0, 3),
+  getPartyThemes: async () => fixtureThemes(),
   getActivities: async () => fixtureActivities(),
   getActivityCategories: async () => [...new Set(fixtureActivities().map((a) => a.categoria))],
   getTeam: async () => fixtureTeam(),

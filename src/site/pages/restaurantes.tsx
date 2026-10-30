@@ -2,19 +2,17 @@ import { Entrance } from '@/motion/Entrance';
 import { Reveal } from '@/motion/Reveal';
 import { Panel } from '@/components/atoms/Panel';
 import { CTABanner } from '@/components/organisms/CTABanner';
-import { RegionAnchors } from '@/components/organisms/RegionAnchors';
 import { FeatureList } from '@/components/molecules/FeatureList';
-import { RegionHeading } from '@/components/molecules/RegionHeading';
 import { RestaurantCard } from '@/components/molecules/RestaurantCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { StoryMedia } from '@/components/molecules/StoryMedia';
 import { WhatsAppButton } from '@/components/molecules/WhatsAppButton';
 import { Grid, Section, Split } from '@/components/templates';
-import type { RestaurantGroup } from '@/content/types';
+import type { Restaurant } from '@/content/types';
 import { opt, section, type Renderer } from '../render';
 
 export interface RestaurantesData {
-  groups: RestaurantGroup[];
+  restaurants: Restaurant[];
 }
 
 export const restaurantesRenderers: Record<string, Renderer<RestaurantesData>> = {
@@ -29,50 +27,43 @@ export const restaurantesRenderers: Record<string, Renderer<RestaurantesData>> =
           description={opt(c.description)}
         />
       </Entrance>
-      <RegionAnchors
-        regions={ctx.data.groups.map((g) => ({
-          id: g.id,
-          name: g.name,
-          count: g.restaurants.length,
-        }))}
-      />
     </Section>
   )),
 
-  lista: section('data-backed', (_c, ctx, name) => (
-    <Section name={name} tone="sunken" gap="lg">
-      {ctx.data.groups.map((g) => (
-        <div
-          key={g.id}
-          id={g.id}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--space-6)',
-            scrollMarginTop: 'var(--space-10)',
-          }}
-        >
-          <RegionHeading name={g.name} count={g.restaurants.length} />
-          <Grid cols={3}>
-            {g.restaurants.map((r) => (
-              <RestaurantCard
-                key={r.slug}
-                name={r.name}
-                neighborhood={r.neighborhood}
-                schedule={r.schedule}
-                address={r.address}
-                ages={r.ages}
-                mapsUrl={r.mapsUrl}
-                image={r.image?.src}
-                imageAlt={r.image?.alt ?? r.imageAlt}
-                placeholderId={`rest-${r.slug}`}
-              />
-            ))}
-          </Grid>
-        </div>
-      ))}
-    </Section>
-  )),
+  lista: section('data-backed', (_c, ctx, name) => {
+    const list = ctx.data.restaurants;
+    return (
+      <Section name={name} tone="sunken" gap="lg">
+        {list.length ? (
+          <>
+            <h2 className="h3" style={{ margin: 0 }}>
+              {list.length} {list.length === 1 ? 'restaurante' : 'restaurantes'} com a Turma
+            </h2>
+            <Grid cols={3}>
+              {list.map((r) => (
+                <RestaurantCard
+                  key={r.slug}
+                  name={r.name}
+                  neighborhood={r.neighborhood}
+                  schedule={r.schedule}
+                  address={r.address}
+                  ages={r.ages}
+                  mapsUrl={r.mapsUrl}
+                  image={r.image?.src}
+                  imageAlt={r.image?.alt ?? r.imageAlt}
+                  placeholderId={`rest-${r.slug}`}
+                />
+              ))}
+            </Grid>
+          </>
+        ) : (
+          <p className="body" style={{ margin: 0, color: 'var(--ink-muted)' }}>
+            Em breve, restaurantes com a Turma por aqui.
+          </p>
+        )}
+      </Section>
+    );
+  }),
 
   'tem-um-restaurante': section('owner-panel', (c, ctx, name) => {
     const img = ctx.image(c.imageId);

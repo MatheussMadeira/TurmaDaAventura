@@ -18,7 +18,7 @@ export interface DashboardData {
   pages: number;
   lastPublishAt: string | null;
   restaurantsActive: number;
-  regions: number;
+  neighborhoods: number;
   activitiesPublished: number;
   categories: number;
   pending: { text: string; href: string }[];
@@ -80,12 +80,12 @@ export function Dashboard({ data }: { data: DashboardData }) {
           icon="utensils"
           n={data.restaurantsActive}
           label="Restaurantes ativos"
-          desc={`Em ${data.regions} ${data.regions === 1 ? 'região' : 'regiões'}`}
+          desc={`Em ${data.neighborhoods} ${data.neighborhoods === 1 ? 'bairro' : 'bairros'} de BH`}
         />
         <Kpi
           icon="compass"
           n={data.activitiesPublished}
-          label="Atividades na Oficina"
+          label="Atividades nas Oficinas"
           desc={`${data.categories} ${data.categories === 1 ? 'categoria' : 'categorias'}`}
         />
         <Kpi

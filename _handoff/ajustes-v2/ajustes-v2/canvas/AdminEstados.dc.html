@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel — estados</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" style="width: 100%; min-height: 1500px; display: block; padding: 48px; box-sizing: border-box; font-family: var(--font-body); color: var(--ink);">
+  <h1 class="top__title" style="margin-bottom: 8px;">Estados do painel</h1>
+  <p class="box__sub" style="margin-bottom: 32px;">Cada lista e formulário do painel usa estes mesmos estados. Movimento curto (160–200ms), sem spinner.</p>
+
+  <div class="cols" style="gap: 32px;">
+    <!-- Carregando -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Carregando · blocos de espera</p>
+      <div class="box box--flush" aria-busy="true" aria-label="Carregando restaurantes">
+        <div style="padding: 14px 16px; background: var(--surface-sunken); display: flex; gap: 24px;"><span class="sk" style="width: 120px; height: 12px;"></span><span class="sk" style="width: 80px; height: 12px;"></span><span class="sk" style="width: 100px; height: 12px;"></span></div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: flex; gap: 12px; align-items: center;"><span class="sk" style="width: 56px; height: 44px;"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 8px;"><span class="sk" style="width: 55%; height: 14px;"></span><span class="sk" style="width: 30%; height: 12px;"></span></div><span class="sk" style="width: 84px; height: 26px; border-radius: 999px;"></span></div>
+          <div style="display: flex; gap: 12px; align-items: center;"><span class="sk" style="width: 56px; height: 44px;"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 8px;"><span class="sk" style="width: 45%; height: 14px;"></span><span class="sk" style="width: 25%; height: 12px;"></span></div><span class="sk" style="width: 84px; height: 26px; border-radius: 999px;"></span></div>
+          <div style="display: flex; gap: 12px; align-items: center;"><span class="sk" style="width: 56px; height: 44px;"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 8px;"><span class="sk" style="width: 60%; height: 14px;"></span><span class="sk" style="width: 35%; height: 12px;"></span></div><span class="sk" style="width: 84px; height: 26px; border-radius: 999px;"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vazio -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Vazio · símbolo da marca + próximo passo</p>
+      <div class="box empty">
+        <img src="/_blob/b836b8a3c664bb8d1ab72382e2ad9119" alt="" aria-hidden="true">
+        <h3>Nenhum restaurante por aqui ainda</h3>
+        <p>Cadastre o primeiro parceiro e ele aparece na página Restaurantes.</p>
+        <x-import component-from-global-scope="TDA.Button" icon-left="utensils">Novo restaurante</x-import>
+      </div>
+    </section>
+
+    <!-- Erro de validação -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Erro de validação · aviso no topo + mensagem no campo</p>
+      <div class="box">
+        <div class="alert alert--err" role="alert">
+          <x-import component-from-global-scope="TDA.Icon" name="flag" size="{{s20}}"></x-import>
+          <div class="alert__body"><p><strong style="color: var(--danger);">Revise 2 campos</strong></p><p>Nada foi salvo ainda. Corrija e tente de novo.</p></div>
+        </div>
+        <div class="fields">
+          <x-import component-from-global-scope="TDA.TextField" label="Nome" required="{{yes}}" default-value="" error="Escreva o nome do restaurante."></x-import>
+          <x-import component-from-global-scope="TDA.TextField" label="Dias e horários" required="{{yes}}" default-value="" error="Diga quando a recreação acontece. Ex.: Sáb e dom, 12h às 17h."></x-import>
+        </div>
+      </div>
+    </section>
+
+    <!-- Salvo -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Salvo · confirmação discreta, sem sair da página</p>
+      <div class="box" style="gap: 20px;">
+        <div class="alert alert--ok" role="status">
+          <x-import component-from-global-scope="TDA.Icon" name="check" size="{{s20}}"></x-import>
+          <div class="alert__body"><p><strong style="color: var(--brand);">Restaurante salvo e publicado.</strong></p><p>Ele já aparece no site.</p></div>
+        </div>
+        <div><div class="toast" role="status"><span class="toast__icon"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import></span>Rascunho salvo.<a href="#">Desfazer</a></div></div>
+      </div>
+    </section>
+
+    <!-- Sistema desatualizado -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Sistema desatualizado · no lugar da tela, nunca página de erro</p>
+      <div class="box empty" style="background: var(--warning-soft); border-color: transparent;">
+        <span class="drop__icon" style="background: var(--surface-raised); color: var(--warning); width: 64px; height: 64px;"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{s28}}"></x-import></span>
+        <h3>O banco precisa ser atualizado</h3>
+        <p>O site continua no ar normalmente. Para voltar a editar, é preciso aplicar uma atualização — leva menos de um minuto.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+          <x-import component-from-global-scope="TDA.Button" variant="earth">Atualizar agora</x-import>
+          <x-import component-from-global-scope="TDA.Button" variant="ghost">Avisar quem cuida do site</x-import>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sem permissão -->
+    <section style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="ed__h" style="margin: 0;">Sem permissão · papel Equipe abrindo Usuários</p>
+      <div class="box empty">
+        <span class="drop__icon" style="width: 64px; height: 64px;"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s28}}"></x-import></span>
+        <h3>Esta área é só da Administração</h3>
+        <p>Se você precisa criar um acesso ou trocar o WhatsApp do site, peça para alguém da Administração.</p>
+        <x-import component-from-global-scope="TDA.Button" variant="outline" href="AdminPainel.dc.html">Voltar ao painel</x-import>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, s18: 18, s20: 20, s28: 28 }; }
+}
+</script>
+</body>
+</html>

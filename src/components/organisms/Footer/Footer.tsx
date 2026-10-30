@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { trackWhatsappClick } from '@/lib/analytics';
-import { NAV_ITEMS, type NavItem } from '@/lib/nav';
+import { FOOTER_ITEMS, type NavItem } from '@/lib/nav';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { Icon } from '../../atoms/Icon';
 import { Logo } from '../../atoms/Logo';
@@ -22,10 +22,10 @@ export interface FooterProps {
 }
 
 const DEFAULT_ABOUT =
-  'Recreação infantil para restaurantes, eventos corporativos e oficinas. Monitores treinados, brincadeiras ao ar livre e muita imaginação.';
+  'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.';
 
 export function Footer({
-  items = NAV_ITEMS,
+  items = FOOTER_ITEMS,
   about = DEFAULT_ABOUT,
   phone,
   phoneLabel = 'WhatsApp',

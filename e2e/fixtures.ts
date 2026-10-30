@@ -180,3 +180,8 @@ export async function mediaCount(prefix = 'E2E %') {
   ]);
   return rows[0].n as number;
 }
+
+/** Remove os temas de festa criados pelos testes (título começa com "E2E "). */
+export async function deleteTestThemes() {
+  await pool.query(`delete from "PartyTheme" where title like 'E2E %'`);
+}

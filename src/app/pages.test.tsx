@@ -3,9 +3,10 @@ import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoA11yViolations } from '@/test/a11y';
 import { renderWithProviders } from '@/test/render';
-import { contentModuleMock, fixtureGroups } from '@/test/contentFixture';
+import { contentModuleMock, fixtureRestaurants } from '@/test/contentFixture';
 import HomePage from './(site)/page';
-import OficinaPage from './(site)/oficina/page';
+import OficinasPage from './(site)/oficinas/page';
+import FestasPage from './(site)/festas-e-aniversarios/page';
 import RestaurantesPage from './(site)/restaurantes/page';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
@@ -18,7 +19,7 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
     name: 'Início',
     page: HomePage,
     sections: [
-      'Inicio/TresJeitos',
+      'Inicio/QuatroJeitos',
       'Inicio/Pilares',
       'Inicio/ComoFunciona',
       'Inicio/OndeEsta',
@@ -27,14 +28,26 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
     ],
   },
   {
-    name: 'Oficina',
-    page: OficinaPage,
+    name: 'Oficinas',
+    page: OficinasPage,
     sections: [
-      'Oficina/Catalogo',
-      'Oficina/ComoMontamos',
-      'Oficina/SegurancaMateriais',
-      'Oficina/PreOrcamento',
-      'Oficina/CTA',
+      'Oficinas/Catalogo',
+      'Oficinas/ComoMontamos',
+      'Oficinas/SegurancaMateriais',
+      'Oficinas/PreOrcamento',
+      'Oficinas/CTA',
+    ],
+  },
+  {
+    name: 'Festas e aniversários',
+    page: FestasPage,
+    sections: [
+      'Festas/Formatos',
+      'Festas/Temas',
+      'Festas/OQueInclui',
+      'Festas/ComoFunciona',
+      'Festas/PreOrcamento',
+      'Festas/CTA',
     ],
   },
   {
@@ -102,11 +115,11 @@ describe.each(pages)('página $name', ({ page, sections }) => {
   });
 });
 
-describe('Oficina — filtro', () => {
+describe('Oficinas — filtro', () => {
   it('filtra por categoria e anuncia a contagem', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
-    renderWithProviders(await OficinaPage());
+    renderWithProviders(await OficinasPage());
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 9 atividades');
     await user.click(screen.getByRole('button', { name: /natureza/i }));
     expect(screen.getByRole('status')).toHaveTextContent('Mostrando 2 atividades');
@@ -117,45 +130,56 @@ describe('Oficina — filtro', () => {
   });
 });
 
-describe('restaurantes — endereço e overline', () => {
+describe('Festas e aniversários', () => {
+  it('mostra os 6 temas com etiquetas, foto 16:10 (placeholder) e âncora #temas', async () => {
+    const { container } = renderWithProviders(await FestasPage());
+    const temas = container.querySelector('[data-section="Festas/Temas"]')!;
+    expect(temas.id).toBe('temas');
+    expect(temas.querySelectorAll('article')).toHaveLength(6);
+    expect(temas.textContent).toContain('Expedição na floresta');
+    expect(temas.querySelectorAll('[data-media]')).toHaveLength(6);
+    expect(temas.textContent).toContain('Personalizável');
+  });
+
+  it('o botão secundário do Hero leva para os temas', async () => {
+    renderWithProviders(await FestasPage());
+    expect(screen.getByRole('link', { name: /Ver os temas/ })).toHaveAttribute('href', '#temas');
+  });
+
+  it('o formulário já vem com o tipo "Festa ou aniversário" e título "Monte a festa"', async () => {
+    renderWithProviders(await FestasPage());
+    expect(screen.getByLabelText(/tipo de evento/i)).toHaveValue('Festa ou aniversário');
+    expect(screen.getByText('Monte a festa')).toBeInTheDocument();
+  });
+});
+
+describe('restaurantes — endereço, overline e título', () => {
   it('endereços sem o bairro em todos os registros', () => {
-    const groups = fixtureGroups();
-    expect(groups.length).toBeGreaterThan(0);
-    for (const r of groups.flatMap((g) => g.restaurants)) {
+    const list = fixtureRestaurants();
+    expect(list.length).toBeGreaterThan(0);
+    for (const r of list) {
       expect(r.address).not.toContain('·');
       expect(r.address).not.toContain(r.neighborhood);
     }
   });
 
-  it('Início: overline "{bairro} · {região}" (ex.: Pinheiros · Zona Oeste)', async () => {
+  it('Início: overline do card é só o bairro', async () => {
     const { container } = renderWithProviders(await HomePage());
     const overlines = [
       ...container.querySelectorAll('[data-section="Inicio/OndeEsta"] article .overline'),
     ].map((el) => el.textContent);
-    expect(overlines).toEqual([
-      'Pinheiros · Zona Oeste',
-      'Granja Viana · Zona Oeste',
-      'Moema · Zona Sul',
-    ]);
+    expect(overlines).toEqual(['Belvedere', 'Savassi', 'Pampulha']);
   });
 
-  it('Restaurantes: overline é só o bairro (a região já é o título do grupo)', async () => {
+  it('Restaurantes: um título só ("N restaurantes com a Turma"), sem chips de âncora, grade única', async () => {
     const { container } = renderWithProviders(await RestaurantesPage());
-    const overlines = [
-      ...container.querySelectorAll('[data-section="Restaurantes/Lista"] article .overline'),
-    ].map((el) => el.textContent);
-    expect(overlines).toEqual([
-      'Pinheiros',
-      'Vila Madalena',
-      'Granja Viana',
-      'Moema',
-      'Campo Belo',
-      'Brooklin',
+    const lista = container.querySelector('[data-section="Restaurantes/Lista"]')!;
+    const overlines = [...lista.querySelectorAll('article .overline')].map((el) => el.textContent);
+    expect(overlines).toEqual(fixtureRestaurants().map((r) => r.neighborhood));
+    expect([...lista.querySelectorAll('h2')].map((h) => h.textContent)).toEqual([
+      `${fixtureRestaurants().length} restaurantes com a Turma`,
     ]);
-    expect(
-      [...container.querySelectorAll('[data-section="Restaurantes/Lista"] h2')].map(
-        (h) => h.textContent,
-      ),
-    ).toEqual(['Zona Oeste e Granja Viana', 'Zona Sul']);
+    // sem chips de âncora na introdução
+    expect(container.querySelectorAll('[data-section="Restaurantes/Intro"] a').length).toBe(0);
   });
 });

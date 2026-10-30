@@ -26,18 +26,19 @@
   <div class="mx-page-in">
 
     <!-- Hero: sequência ao carregar (overline → título → texto → botões → destaques), foto 0.96→1, moldura desliza, pata carimba -->
-    <x-import component-from-global-scope="TDA.Hero" overline="Recreação infantil" title="Bora pra aventura?" lead="A gente leva brincadeiras, oficinas e gincanas para restaurantes, empresas e eventos. Monitores treinados, atividades por idade e muita natureza — você só curte." image-alt="Crianças de costas correndo num gramado ao fim da tarde, com monitores por perto" message="Olá! Vim pelo site e quero um orçamento." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+    <x-import component-from-global-scope="TDA.Hero" overline="Recreação infantil" title="Bora pra aventura?" lead="A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte." image-alt="Crianças de costas correndo num gramado ao fim da tarde, com monitores por perto" message="Olá! Vim pelo site e quero um orçamento." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
 
-    <!-- Inicio/TresJeitos: título com traço que se desenha + cards em stagger de 80ms -->
-    <section class="sec sec--sunken" data-section="Inicio/TresJeitos">
+    <!-- Inicio/QuatroJeitos: título com traço que se desenha + cards em stagger de 80ms -->
+    <section class="sec sec--sunken" data-section="Inicio/QuatroJeitos">
       <div class="wrap">
         <x-import component-from-global-scope="TDA.Reveal">
-          <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Três jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Quatro jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
         </x-import>
-        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g3">
+        <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g4">
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Crianças numa roda de brincadeira em festa de aniversário no quintal" icon="star" placeholder-id="p-s0" overline="Para aniversários" title="Festas e aniversários" description="Uma aventura temática na festa do seu filho, em casa, no prédio ou no buffet." href="SiteFestas.dc.html" link-label="Ver festas"></x-import>
           <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Área kids de restaurante com crianças desenhando" icon="utensils" placeholder-id="p-s1" overline="Para famílias" title="Restaurantes" description="Recreação fixa nos fins de semana. As crianças brincam por perto e você come com calma." href="SiteRestaurantes.dc.html" link-label="Ver restaurantes"></x-import>
           <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Espaço kids montado num salão de eventos" icon="briefcase" placeholder-id="p-s2" tone="earth" overline="Para empresas" title="Eventos corporativos" description="Espaço kids em confraternizações, Dia da Família, convenções e férias na empresa." href="SiteEventos.dc.html" link-label="Ver eventos corporativos"></x-import>
-          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Crianças montando pipas no pátio" icon="scissors" placeholder-id="p-s3" overline="Para todos" title="Oficina" description="Pipas, mini horta, tintas naturais e gincanas. Atividades manuais e de natureza." href="SiteOficina.dc.html" link-label="Conhecer a Oficina"></x-import>
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{nul}}" image-alt="Crianças montando pipas no pátio" icon="scissors" placeholder-id="p-s3" overline="Para escolas e grupos" title="Oficinas" description="Pipas, mini horta, tintas naturais e gincanas. Atividades manuais e de natureza." href="SiteOficina.dc.html" link-label="Conhecer as Oficinas"></x-import>
         </x-import>
       </div>
     </section>
@@ -76,9 +77,9 @@
           </a>
         </x-import>
         <x-import component-from-global-scope="TDA.Reveal" stagger="{{yes}}" class-name="g3">
-          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Pinheiros · Zona Oeste" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000" ages="De 3 a 10 anos" maps-url="#" placeholder-id="pr1" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
-          <x-import component-from-global-scope="TDA.RestaurantCard" name="Brasa &amp; Lenha" neighborhood="Moema · Zona Sul" schedule="Sáb e dom, 12h às 16h" address="Alameda dos Ipês, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr2" image-alt="Crianças em roda no jardim do restaurante"></x-import>
-          <x-import component-from-global-scope="TDA.RestaurantCard" name="Rancho Cedro" neighborhood="Granja Viana · Grande SP" schedule="Sáb, dom e feriados, 11h às 17h" address="Estrada do Cedro, km 0" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr3" image-alt="Gramado com circuito de cordas entre árvores"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Savassi" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000" ages="De 3 a 10 anos" maps-url="#" placeholder-id="pr1" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Brasa &amp; Lenha" neighborhood="Belvedere" schedule="Sáb e dom, 12h às 16h" address="Alameda dos Ipês, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr2" image-alt="Crianças em roda no jardim do restaurante"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Rancho Cedro" neighborhood="Pampulha" schedule="Sáb, dom e feriados, 11h às 17h" address="Rua do Cedro, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="pr3" image-alt="Gramado com circuito de cordas entre árvores"></x-import>
         </x-import>
       </div>
     </section>
@@ -110,7 +111,7 @@
     </section>
   </div>
 
-  <x-import component-from-global-scope="TDA.Footer" items="{{nav}}" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
 
   <!-- WhatsAppFloat real: surge após 1,5s ou 30% de rolagem; pulso a cada 20s -->
   <x-import component-from-global-scope="TDA.WhatsAppFloat" label="Fale com a gente" message="Olá! Vim pelo site e quero saber mais."></x-import>
@@ -123,12 +124,22 @@ class Component extends DCLogic {
       yes: true, nul: null, year: 2026, i0: 0, i1: 1, i2: 2,
       nav: [
         { label: 'Início', href: 'PrototipoInicio.dc.html' },
-        { label: 'Oficina', href: 'SiteOficina.dc.html' },
+        { label: 'Oficinas', href: 'SiteOficina.dc.html' },
+        { label: 'Festas', href: 'SiteFestas.dc.html' },
         { label: 'Restaurantes', href: 'SiteRestaurantes.dc.html' },
         { label: 'Eventos corporativos', href: 'SiteEventos.dc.html' },
         { label: 'Quem somos', href: 'SiteQuemSomos.dc.html' }
       ],
-      secondary: { label: 'Conhecer a Oficina', href: 'SiteOficina.dc.html' },
+      footNav: [
+        { label: 'Início', href: 'PrototipoInicio.dc.html' },
+        { label: 'Oficinas', href: 'SiteOficina.dc.html' },
+        { label: 'Festas e aniversários', href: 'SiteFestas.dc.html' },
+        { label: 'Restaurantes', href: 'SiteRestaurantes.dc.html' },
+        { label: 'Eventos corporativos', href: 'SiteEventos.dc.html' },
+        { label: 'Quem somos', href: 'SiteQuemSomos.dc.html' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
+      secondary: { label: 'Conhecer as Oficinas', href: 'SiteOficina.dc.html' },
       highlights: ['Monitores treinados', 'Atividades por faixa etária', 'Montamos tudo no local'],
       steps: [
         { icon: 'whatsapp', title: 'Chama no WhatsApp', text: 'Conta o tipo de evento, a data e quantas crianças. Respondemos em horário comercial.' },

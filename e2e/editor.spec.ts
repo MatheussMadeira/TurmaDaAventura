@@ -294,7 +294,7 @@ test.describe('uma pessoa por vez em cada página', () => {
     await expect(pb.getByRole('button', { name: 'Publicar alterações' })).toHaveCount(0);
 
     // outra página continua livre
-    await pb.goto('/admin/editor?pagina=oficina');
+    await pb.goto('/admin/editor?pagina=oficinas');
     await expect(pb.getByRole('button', { name: 'Publicar alterações' })).toBeVisible();
 
     // A troca de página (solta a reserva) e B entra no Início

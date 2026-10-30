@@ -52,7 +52,7 @@ export function localBusinessJsonLd(contact: SiteSettings) {
     '@type': 'LocalBusiness',
     name: SITE_NAME,
     description:
-      'Recreação infantil para restaurantes, eventos corporativos e oficinas, com monitores treinados e atividades por faixa etária.',
+      'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte, com monitores treinados e atividades por faixa etária.',
     url: SITE_URL,
     image: `${SITE_URL}${OG_IMAGE.url}`,
     logo: `${SITE_URL}${OG_IMAGE.url}`,
@@ -66,6 +66,11 @@ export function localBusinessJsonLd(contact: SiteSettings) {
       addressCountry: 'BR',
     },
     areaServed: { '@type': 'City', name: city },
-    knowsAbout: ['Recreação infantil', 'Oficinas infantis', 'Eventos corporativos com espaço kids'],
+    knowsAbout: [
+      'Recreação infantil',
+      'Festas e aniversários infantis',
+      'Oficinas infantis',
+      'Eventos corporativos com espaço kids',
+    ],
   };
 }

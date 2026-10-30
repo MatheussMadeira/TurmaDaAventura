@@ -119,7 +119,7 @@ export function ActivitiesList({
     <Stack>
       <PageTop
         crumb="Conteúdo"
-        title="Atividades"
+        title="Atividades das Oficinas"
         actions={
           <Button href="/admin/atividades/novo" iconLeft="plus">
             Nova atividade
@@ -136,7 +136,7 @@ export function ActivitiesList({
               </Button>
             }
           >
-            Cadastre a primeira e ela aparece no catálogo da Oficina.
+            Cadastre a primeira e ela aparece no catálogo das Oficinas.
           </EmptyState>
         </Box>
       ) : (
@@ -146,7 +146,7 @@ export function ActivitiesList({
           </TabsWrap>
           {rows.length ? (
             <DataList
-              caption="Atividades"
+              caption="Atividades das Oficinas"
               rows={rows}
               rowKey={(r) => r.id}
               columns={[
@@ -229,7 +229,7 @@ export function ActivitiesList({
               Tente outra aba ou cadastre uma nova atividade.
             </EmptyState>
           )}
-          <Footnote>A ordem desta lista é a ordem do catálogo da Oficina.</Footnote>
+          <Footnote>A ordem desta lista é a ordem do catálogo das Oficinas.</Footnote>
         </Box>
       )}
 
@@ -277,7 +277,7 @@ export function ActivitiesList({
               <strong>{toDelete.title}</strong> · {toDelete.category}
             </p>
             <p style={{ margin: 0, color: 'var(--ink-muted)' }}>
-              O card sai do catálogo da Oficina. As fotos continuam na biblioteca. Se for só uma
+              O card sai do catálogo das Oficinas. As fotos continuam na biblioteca. Se for só uma
               pausa, prefira pausar: ele some do site e volta com um clique.
             </p>
           </>
@@ -459,7 +459,7 @@ export function ActivityForm({
           <Box>
             <BoxTitle>Prévia no site</BoxTitle>
             <BoxSub>
-              Como o card aparece no catálogo da Oficina. Atualiza enquanto você digita.
+              Como o card aparece no catálogo das Oficinas. Atualiza enquanto você digita.
             </BoxSub>
             <ServiceCard
               image={photo?.url ?? null}

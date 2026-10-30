@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Admin — barra lateral</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<aside class="side" aria-label="Menu do painel" style="font-family: var(--font-body); color: var(--ink-on-forest);">
+  <div class="side__logo">
+    <img src="/_blob/f11104659df2006f9c6db858d89e2b9b" alt="Turma da Aventura" height="40">
+    <p class="side__tag">Painel</p>
+  </div>
+  <nav aria-label="Seções do painel" style="display: flex; flex-direction: column; gap: 4px;">
+    <p class="side__group">Site</p>
+    <ul class="side__nav">
+      <sc-for list="{{site}}" as="it" hint-placeholder-count="3">
+        <li><a class="side__link" href="{{it.href}}" aria-current="{{it.current}}"><x-import component-from-global-scope="TDA.Icon" name="{{it.icon}}" size="{{s}}"></x-import>{{it.label}}<sc-if value="{{it.n}}" hint-placeholder-val="{{ false }}"><span class="side__count">{{it.n}}</span></sc-if></a></li>
+      </sc-for>
+    </ul>
+    <p class="side__group">Conteúdo</p>
+    <ul class="side__nav">
+      <sc-for list="{{conteudo}}" as="it" hint-placeholder-count="3">
+        <li><a class="side__link" href="{{it.href}}" aria-current="{{it.current}}"><x-import component-from-global-scope="TDA.Icon" name="{{it.icon}}" size="{{s}}"></x-import>{{it.label}}<sc-if value="{{it.n}}" hint-placeholder-val="{{ false }}"><span class="side__count">{{it.n}}</span></sc-if></a></li>
+      </sc-for>
+    </ul>
+    <sc-if value="{{isAdmin}}" hint-placeholder-val="{{ true }}">
+      <p class="side__group">Administração</p>
+      <ul class="side__nav">
+        <sc-for list="{{admin}}" as="it" hint-placeholder-count="2">
+          <li><a class="side__link" href="{{it.href}}" aria-current="{{it.current}}"><x-import component-from-global-scope="TDA.Icon" name="{{it.icon}}" size="{{s}}"></x-import>{{it.label}}</a></li>
+        </sc-for>
+      </ul>
+    </sc-if>
+  </nav>
+  <div class="side__user">
+    <span class="side__avatar" aria-hidden="true">NP</span>
+    <div class="side__who">
+      <p class="side__name">Nome da pessoa</p>
+      <p class="side__role">{{roleLabel}}</p>
+    </div>
+    <a class="side__out" href="AdminLogin.dc.html">Sair</a>
+  </div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["painel","editor","midia","restaurantes","atividades","temas","equipe","usuarios","contato"],"default":"painel"},"role":{"editor":"enum","options":["admin","equipe"],"default":"admin"},"$preview":{"width":248,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var a = this.props.active || 'painel';
+    function mk(id, label, icon, href, n) { return { id: id, label: label, icon: icon, href: href, n: n || null, current: id === a ? 'page' : 'false' }; }
+    var isAdmin = (this.props.role || 'admin') === 'admin';
+    return {
+      s: 20,
+      isAdmin: isAdmin,
+      roleLabel: isAdmin ? 'Administração' : 'Equipe',
+      site: [
+        mk('painel', 'Painel', 'compass', 'AdminPainel.dc.html'),
+        mk('editor', 'Editar o site', 'tent', 'AdminEditor.dc.html'),
+        mk('midia', 'Fotos', 'palette', 'AdminMidia.dc.html', 2)
+      ],
+      conteudo: [
+        mk('restaurantes', 'Restaurantes', 'utensils', 'AdminRestaurantes.dc.html'),
+        mk('atividades', 'Atividades das Oficinas', 'scissors', 'AdminRestaurantes.dc.html'),
+        mk('temas', 'Temas de festa', 'star', 'AdminRestaurantes.dc.html'),
+        mk('equipe', 'Equipe', 'users', 'AdminRestaurantes.dc.html')
+      ],
+      admin: [
+        mk('usuarios', 'Usuários', 'shield', 'AdminUsuarios.dc.html'),
+        mk('contato', 'Contato e WhatsApp', 'whatsapp', 'AdminContato.dc.html')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Festas e aniversários — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="Festas" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/festas-e-aniversarios" message="Olá! Quero orçamento para uma festa de aniversário."></x-import>
+
+  <!-- Festas/Hero -->
+  <x-import component-from-global-scope="TDA.Hero" overline="Festas e aniversários" title="Aniversário com cara de expedição" lead="A Turma leva recreação, brincadeiras e uma aventura temática para a festa do seu filho — em casa, no salão do prédio ou no buffet. Você recebe os convidados; a gente cuida da criançada." image-alt="Crianças de costas numa roda de brincadeira no quintal de uma festa, com bandeirinhas de tecido" message="Olá! Quero orçamento para uma festa de aniversário." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+
+  <!-- Festas/Formatos -->
+  <section class="sec sec--sunken" data-section="Festas/Formatos">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a festa acontece" title="A gente se encaixa na sua festa" description="Levamos tudo o que a recreação precisa e combinamos o horário com você ou com o buffet."></x-import>
+      <div class="g3">
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="tent" title="Em casa ou no condomínio" description="Quintal, salão do prédio ou até a sala: a gente adapta as brincadeiras ao espaço."></x-import>
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="star" tone="earth" title="Salão de festas e buffet" description="Recreação em parceria com o buffet, no ritmo da festa e no horário combinado."></x-import>
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="tree" title="Ao ar livre" description="Parques, sítios e áreas verdes — o lugar favorito da Turma para uma expedição."></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festas/Temas -->
+  <section class="sec" id="temas" data-section="Festas/Temas">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Temas" title="Escolha a aventura da festa" description="Cada tema vira um roteiro de brincadeiras com o nome do aniversariante. Dá para misturar e personalizar."></x-import>
+      <div class="g3">
+        <sc-for list="{{temas}}" as="t" hint-placeholder-count="6">
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{t.img}}" image-alt="{{t.alt}}" icon="{{t.icon}}" title="{{t.title}}" description="{{t.text}}" tags="{{t.tags}}" placeholder-id="{{t.id}}"></x-import>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festas/Inclui -->
+  <section class="sec sec--earth" data-section="Festas/OQueInclui">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="O que a Turma leva" title="Você curte a festa, a gente cuida da aventura"></x-import>
+      <ul class="feats">
+        <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="users" size="{{i26}}"></x-import></span><div><h3 class="h4">Monitores treinados</h3><p class="body-sm">Equipe com primeiros socorros e um adulto atento para cada grupo pequeno.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="compass" size="{{i26}}"></x-import></span><div><h3 class="h4">Roteiro do tema</h3><p class="body-sm">Brincadeiras, desafios e uma história que conduz a festa do começo ao fim.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="scissors" size="{{i26}}"></x-import></span><div><h3 class="h4">Oficina de lembrancinha</h3><p class="body-sm">As próprias crianças fazem a lembrancinha que levam para casa.</p></div></li>
+        <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="star" size="{{i26}}"></x-import></span><div><h3 class="h4">Momento do aniversariante</h3><p class="body-sm">Uma missão especial e um diploma de explorador só para quem faz aniversário.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{i26}}"></x-import></span><div><h3 class="h4">Materiais da recreação</h3><p class="body-sm">Tudo o que as brincadeiras pedem. Bolo, comida e decoração ficam com você ou o buffet.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{i26}}"></x-import></span><div><h3 class="h4">Montagem e desmontagem</h3><p class="body-sm">Chegamos antes, montamos o espaço e deixamos tudo organizado no final.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Festas/ComoFunciona -->
+  <section class="sec" data-section="Festas/ComoFunciona">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Como funciona" title="Da ideia ao parabéns em quatro etapas"></x-import>
+      <div style="background: var(--surface-sunken); border-radius: var(--radius-xl); padding: 48px 40px;">
+        <x-import component-from-global-scope="TDA.Trail" steps="{{steps}}"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festas/PreOrcamento -->
+  <section class="sec sec--tight" data-section="Festas/PreOrcamento">
+    <div class="wrap">
+      <div class="g12" style="align-items: start;">
+        <div class="span-5" style="display: flex; flex-direction: column; gap: 24px; padding-top: 16px;">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Pré-orçamento" title="Conta como vai ser a festa" description="Data, local, número de convidados e a idade do aniversariante já ajudam a gente a montar a proposta."></x-import>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Só nome e tipo são obrigatórios</li>
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Reserve com antecedência: fins de semana lotam</li>
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Cada festa é montada sob medida</li>
+          </ul>
+        </div>
+        <div class="span-7">
+          <dc-import name="QuoteFormBlock" tipo="Festa ou aniversário" nome-label="Seu nome" estado="vazio" title="Monte a festa" hint-size="100%,900px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festas/CTA -->
+  <section class="sec" data-section="Festas/CTA">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.CTABanner" title="Bora planejar o aniversário?" text="Conta a data e a idade do aniversariante. A gente responde rapidinho no WhatsApp." cta-label="Pedir orçamento no WhatsApp" message="Olá! Quero orçamento para uma festa de aniversário."></x-import>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
+
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero orçamento para uma festa de aniversário."></x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, year: 2026, i26: 26, i20: 20,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
+      secondary: { label: 'Ver os temas', href: '#temas' },
+      highlights: ['Monitores treinados', 'Brincadeiras por idade', 'Montagem e desmontagem'],
+      temas: [
+        { id: 'ft1', icon: 'tree', title: 'Expedição na floresta', text: 'Trilha com pistas, ponte de cordas e diploma de explorador para cada convidado.', tags: ['4 a 10 anos', 'Personalizável'], alt: 'Crianças seguindo uma trilha de pistas entre árvores', img: null },
+        { id: 'ft2', icon: 'tent', title: 'Acampamento da Turma', text: 'Cabanas de tecido, lanternas e histórias em roda. Funciona até em apartamento.', tags: ['3 a 8 anos', 'Personalizável'], alt: 'Cabanas de tecido montadas num salão com crianças dentro', img: null },
+        { id: 'ft3', icon: 'compass', title: 'Caça ao tesouro', text: 'Mapa com o nome do aniversariante, enigmas pelo caminho e um baú no final.', tags: ['5 a 12 anos', 'Personalizável'], alt: 'Grupo de crianças abrindo um baú de madeira no gramado', img: null },
+        { id: 'ft4', icon: 'flag', title: 'Safári dos bichos', text: 'Pegadas pelo chão, binóculos de papel e um desafio para cada animal encontrado.', tags: ['3 a 7 anos', 'Personalizável'], alt: 'Crianças com binóculos de papel olhando pegadas desenhadas no chão', img: null },
+        { id: 'ft5', icon: 'star', title: 'Olimpíada da Turma', text: 'Gincana por equipes com provas de cooperação e medalha para todo mundo.', tags: ['6 a 12 anos', 'Personalizável'], alt: 'Equipes com lenços coloridos correndo em revezamento', img: null },
+        { id: 'ft6', icon: 'palette', title: 'Ateliê de artes', text: 'Pintura com tintas naturais e lembrancinha feita pelas próprias crianças.', tags: ['3 a 10 anos', 'Personalizável'], alt: 'Mãos de crianças pintando com tinta de urucum numa mesa comprida', img: null }
+      ],
+      steps: [
+        { icon: 'whatsapp', title: 'Chama no WhatsApp', text: 'Conta a data, o local e quantos convidados vêm.' },
+        { icon: 'compass', title: 'Escolhemos o tema', text: 'Montamos o roteiro com o nome e a idade do aniversariante.' },
+        { icon: 'backpack', title: 'Preparamos a expedição', text: 'Separamos materiais e combinamos tudo com você ou o buffet.' },
+        { icon: 'star', title: 'Festa com a Turma', text: 'Chegamos antes, conduzimos a festa e entregamos tudo organizado.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

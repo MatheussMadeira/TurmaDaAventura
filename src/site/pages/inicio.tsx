@@ -33,7 +33,7 @@ export const inicioRenderers: Record<string, Renderer<InicioData>> = {
     );
   }),
 
-  'tres-jeitos': section('cards', (c, _ctx, name) => (
+  'quatro-jeitos': section('cards', (c, _ctx, name) => (
     <Section name={name} tone="sunken">
       <Reveal>
         <SectionHeader
@@ -42,7 +42,7 @@ export const inicioRenderers: Record<string, Renderer<InicioData>> = {
           description={opt(c.description)}
         />
       </Reveal>
-      <Grid cols={3}>
+      <Grid cols={c.cards.length >= 4 ? 4 : 3}>
         {c.cards.map((card) => (
           <ServiceCard
             key={card.title}
@@ -112,7 +112,7 @@ export const inicioRenderers: Record<string, Renderer<InicioData>> = {
           <RestaurantCard
             key={r.slug}
             name={r.name}
-            neighborhood={`${r.neighborhood} · ${r.regionShortName}`}
+            neighborhood={r.neighborhood}
             schedule={r.schedule}
             address={r.address}
             ages={r.ages}

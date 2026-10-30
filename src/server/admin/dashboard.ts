@@ -8,26 +8,39 @@ export interface Pending {
 
 /** Números do painel, itens a conferir e últimas alterações. */
 export async function getDashboard() {
-  const [pages, restaurants, activities, team, photos, regions, categories, recent, lastPublish] =
-    await Promise.all([
-      db.page.count(),
-      db.restaurant.groupBy({ by: ['status'], _count: true }),
-      db.activity.groupBy({ by: ['status'], _count: true }),
-      db.teamMember.count({ where: { visible: true } }),
-      db.media.count(),
-      db.region.count(),
-      db.activity.findMany({
-        where: { status: 'PUBLICADO' },
-        distinct: ['category'],
-        select: { category: true },
-      }),
-      db.auditLog.findMany({
-        orderBy: { createdAt: 'desc' },
-        take: 6,
-        include: { user: { select: { name: true } } },
-      }),
-      db.auditLog.findFirst({ where: { action: 'publish' }, orderBy: { createdAt: 'desc' } }),
-    ]);
+  const [
+    pages,
+    restaurants,
+    activities,
+    team,
+    photos,
+    neighborhoods,
+    categories,
+    recent,
+    lastPublish,
+  ] = await Promise.all([
+    db.page.count(),
+    db.restaurant.groupBy({ by: ['status'], _count: true }),
+    db.activity.groupBy({ by: ['status'], _count: true }),
+    db.teamMember.count({ where: { visible: true } }),
+    db.media.count(),
+    db.restaurant.findMany({
+      where: { status: 'PUBLICADO' },
+      distinct: ['neighborhood'],
+      select: { neighborhood: true },
+    }),
+    db.activity.findMany({
+      where: { status: 'PUBLICADO' },
+      distinct: ['category'],
+      select: { category: true },
+    }),
+    db.auditLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 6,
+      include: { user: { select: { name: true } } },
+    }),
+    db.auditLog.findFirst({ where: { action: 'publish' }, orderBy: { createdAt: 'desc' } }),
+  ]);
 
   const count = (rows: { status: string; _count: number }[], s: string) =>
     rows.find((r) => r.status === s)?._count ?? 0;
@@ -70,7 +83,7 @@ export async function getDashboard() {
     pages,
     lastPublishAt: lastPublish?.createdAt ?? null,
     restaurantsActive: count(restaurants, 'PUBLICADO'),
-    regions,
+    neighborhoods: neighborhoods.length,
     activitiesPublished: count(activities, 'PUBLICADO'),
     categories: categories.length,
     team,

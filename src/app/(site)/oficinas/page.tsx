@@ -1,23 +1,23 @@
 import type { Metadata } from 'next';
 import { getActivities, getActivityCategories, getPublishedPage } from '@/server/content';
-import { oficinaRenderers } from '@/site/pages/oficina';
+import { oficinasRenderers } from '@/site/pages/oficinas';
 import { findContent, metaDescription, renderSections } from '@/site/render';
 import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPublishedPage('oficina');
+  const page = await getPublishedPage('oficinas');
   return pageMetadata({
-    title: 'Oficina',
+    title: 'Oficinas',
     description: metaDescription(findContent<'hero'>(page, 'hero')?.lead ?? ''),
-    path: '/oficina',
+    path: '/oficinas',
   });
 }
 
-export default async function OficinaPage() {
+export default async function OficinasPage() {
   const [page, activities, categories] = await Promise.all([
-    getPublishedPage('oficina'),
+    getPublishedPage('oficinas'),
     getActivities(),
     getActivityCategories(),
   ]);
-  return <>{renderSections(page, oficinaRenderers, { activities, categories })}</>;
+  return <>{renderSections(page, oficinasRenderers, { activities, categories })}</>;
 }

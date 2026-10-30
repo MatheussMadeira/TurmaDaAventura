@@ -1,7 +1,7 @@
 /** Nomes que a equipe vê na lista de seções do editor (o `name` do schema é o do canvas, técnico). */
 const LABELS: Record<string, string> = {
   hero: 'Abertura',
-  'tres-jeitos': 'Três jeitos de brincar',
+  'quatro-jeitos': 'Quatro jeitos de viver a aventura',
   pilares: 'Pilares',
   'como-funciona': 'Como funciona',
   'onde-esta': 'Onde estamos',
@@ -14,6 +14,8 @@ const LABELS: Record<string, string> = {
   lista: 'Lista de restaurantes',
   'tem-um-restaurante': 'Tem um restaurante?',
   formatos: 'Formatos de evento',
+  temas: 'Temas de festa',
+  'o-que-inclui': 'O que a Turma leva',
   empresas: 'Empresas atendidas',
   beneficios: 'Benefícios',
   historia: 'Nossa história',
@@ -21,7 +23,8 @@ const LABELS: Record<string, string> = {
 };
 
 const PER_PAGE: Record<string, Record<string, string>> = {
-  oficina: { seguranca: 'Segurança e materiais' },
+  'festas-e-aniversarios': { formatos: 'Onde a festa acontece' },
+  oficinas: { seguranca: 'Segurança e materiais' },
   'quem-somos': { seguranca: 'Segurança em números' },
 };
 

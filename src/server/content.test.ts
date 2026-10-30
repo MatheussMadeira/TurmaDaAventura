@@ -10,11 +10,11 @@ vi.mock('next/cache', () => ({
 const db = {
   section: { findMany: vi.fn() },
   media: { findMany: vi.fn() },
-  region: { findMany: vi.fn() },
+  restaurant: { findMany: vi.fn() },
 };
 vi.mock('./db', () => ({ db }));
 
-const { getPublishedPage, getRestaurantGroups } = await import('./content');
+const { getPublishedPage, getRestaurants } = await import('./content');
 const { DEFAULT_PAGES } = await import('@/content/defaults/pages');
 
 const cta = (title: string) => ({ title, text: '', ctaLabel: 'Chamar' });
@@ -37,7 +37,7 @@ beforeEach(() => {
 describe('getPublishedPage — o site lê só o publicado', () => {
   it('ignora o rascunho', async () => {
     db.section.findMany.mockResolvedValue([row('cta', {})]);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     const c = page.sections.find((s) => s.key === 'cta')!.content as { title: string };
     expect(c.title).toBe('PUBLICADO');
     expect(JSON.stringify(page)).not.toContain('RASCUNHO');
@@ -49,7 +49,7 @@ describe('getPublishedPage — o site lê só o publicado', () => {
       row('catalogo', { order: 0, publishedOrder: 0 }),
       row('cta', { order: 1, publishedOrder: 9, publishedVisible: false, visible: true }),
     ]);
-    const keys = (await getPublishedPage('oficina')).sections.map((s) => s.key);
+    const keys = (await getPublishedPage('oficinas')).sections.map((s) => s.key);
     expect(keys).not.toContain('cta'); // oculta na versão publicada
     expect(keys.indexOf('catalogo')).toBeLessThan(keys.indexOf('hero')); // 0 antes de 3
   });
@@ -60,16 +60,16 @@ describe('getPublishedPage — o site lê só o publicado', () => {
       row('hero', { published: { title: 'x'.repeat(500) } }),
     ]);
     const spy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     spy.mockRestore();
-    const def = DEFAULT_PAGES.oficina!;
+    const def = DEFAULT_PAGES.oficinas!;
     expect(page.sections.find((s) => s.key === 'cta')!.content).toEqual(def.cta!.content);
     expect(page.sections.find((s) => s.key === 'hero')!.content).toEqual(def.hero!.content);
   });
 
   it('resolve as fotos citadas (imageId) com a descrição do cadastro', async () => {
     const hero = {
-      ...(DEFAULT_PAGES.oficina!.hero!.content as object),
+      ...(DEFAULT_PAGES.oficinas!.hero!.content as object),
       imageId: 'm1',
     };
     db.section.findMany.mockResolvedValue([row('hero', { published: hero })]);
@@ -82,7 +82,7 @@ describe('getPublishedPage — o site lê só o publicado', () => {
         height: 1600,
       },
     ]);
-    const page = await getPublishedPage('oficina');
+    const page = await getPublishedPage('oficinas');
     expect(db.media.findMany).toHaveBeenCalledWith({ where: { id: { in: ['m1'] } } });
     expect(page.media.m1).toEqual({
       src: 'https://blob/x.webp',
@@ -97,38 +97,46 @@ describe('getPublishedPage — o site lê só o publicado', () => {
   });
 });
 
-describe('getRestaurantGroups', () => {
-  it('só consulta restaurantes PUBLICADOS e monta o link do Maps quando falta', async () => {
-    db.region.findMany.mockResolvedValue([
+describe('getRestaurants', () => {
+  it('só consulta restaurantes PUBLICADOS, na ordem do admin, e monta o link do Maps quando falta', async () => {
+    db.restaurant.findMany.mockResolvedValue([
       {
-        slug: 'zona-sul',
-        name: 'Zona Sul',
-        shortName: 'Zona Sul',
-        restaurants: [
-          {
-            slug: 'a',
-            name: 'Brasa & Lenha',
-            neighborhood: 'Moema',
-            schedule: 's',
-            address: 'Alameda dos Ipês, 000',
-            ages: 'a',
-            mapsUrl: '',
-            image: null,
-            imageAlt: 'alt',
-            destaqueHome: true,
-          },
-        ],
+        slug: 'a',
+        name: 'Brasa & Lenha',
+        neighborhood: 'Belvedere',
+        schedule: 's',
+        address: 'Alameda dos Ipês, 000',
+        ages: 'a',
+        mapsUrl: '',
+        image: null,
+        imageAlt: 'alt',
+        destaqueHome: true,
       },
-      { slug: 'vazia', name: 'Vazia', shortName: 'Vazia', restaurants: [] },
     ]);
-    const groups = await getRestaurantGroups();
-    expect(db.region.findMany.mock.calls[0]![0].include.restaurants.where).toEqual({
-      status: 'PUBLICADO',
-    });
-    expect(groups.map((g) => g.id)).toEqual(['zona-sul']); // região sem restaurante some
-    expect(groups[0]!.restaurants[0]!.mapsUrl).toContain('google.com/maps/search');
-    expect(groups[0]!.restaurants[0]!.mapsUrl).toContain(
-      encodeURIComponent('Alameda dos Ipês, 000'),
-    );
+    const list = await getRestaurants();
+    const args = db.restaurant.findMany.mock.calls[0]![0];
+    expect(args.where).toEqual({ status: 'PUBLICADO' });
+    expect(args.orderBy).toEqual({ order: 'asc' });
+    expect(list).toHaveLength(1);
+    expect(list[0]!.mapsUrl).toContain('google.com/maps/search');
+    expect(list[0]!.mapsUrl).toContain(encodeURIComponent('Alameda dos Ipês, 000'));
+  });
+
+  it('com link do mapa cadastrado, usa o link', async () => {
+    db.restaurant.findMany.mockResolvedValue([
+      {
+        slug: 'b',
+        name: 'B',
+        neighborhood: 'Savassi',
+        schedule: 's',
+        address: 'Rua X, 000',
+        ages: 'a',
+        mapsUrl: 'https://maps.app.goo.gl/abc',
+        image: null,
+        imageAlt: '',
+        destaqueHome: false,
+      },
+    ]);
+    expect((await getRestaurants())[0]!.mapsUrl).toBe('https://maps.app.goo.gl/abc');
   });
 });

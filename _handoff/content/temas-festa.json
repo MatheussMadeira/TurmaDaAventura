@@ -1,0 +1,83 @@
+{
+  "_nota": "Temas da página Festas e aniversários. Sem preço.",
+  "temas": [
+    {
+      "slug": "expedicao-na-floresta",
+      "icon": "tree",
+      "title": "Expedição na floresta",
+      "description": "Trilha com pistas, ponte de cordas e diploma de explorador para cada convidado.",
+      "tags": [
+        "4 a 10 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Crianças seguindo uma trilha de pistas entre árvores",
+      "publicado": true
+    },
+    {
+      "slug": "acampamento-da-turma",
+      "icon": "tent",
+      "title": "Acampamento da Turma",
+      "description": "Cabanas de tecido, lanternas e histórias em roda. Funciona até em apartamento.",
+      "tags": [
+        "3 a 8 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Cabanas de tecido montadas num salão com crianças dentro",
+      "publicado": true
+    },
+    {
+      "slug": "caca-ao-tesouro",
+      "icon": "compass",
+      "title": "Caça ao tesouro",
+      "description": "Mapa com o nome do aniversariante, enigmas pelo caminho e um baú no final.",
+      "tags": [
+        "5 a 12 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Grupo de crianças abrindo um baú de madeira no gramado",
+      "publicado": true
+    },
+    {
+      "slug": "safari-dos-bichos",
+      "icon": "flag",
+      "title": "Safári dos bichos",
+      "description": "Pegadas pelo chão, binóculos de papel e um desafio para cada animal encontrado.",
+      "tags": [
+        "3 a 7 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Crianças com binóculos de papel olhando pegadas desenhadas no chão",
+      "publicado": true
+    },
+    {
+      "slug": "olimpiada-da-turma",
+      "icon": "star",
+      "title": "Olimpíada da Turma",
+      "description": "Gincana por equipes com provas de cooperação e medalha para todo mundo.",
+      "tags": [
+        "6 a 12 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Equipes com lenços coloridos correndo em revezamento",
+      "publicado": true
+    },
+    {
+      "slug": "atelie-de-artes",
+      "icon": "palette",
+      "title": "Ateliê de artes",
+      "description": "Pintura com tintas naturais e lembrancinha feita pelas próprias crianças.",
+      "tags": [
+        "3 a 10 anos",
+        "Personalizável"
+      ],
+      "image": null,
+      "imageAlt": "Mãos de crianças pintando com tinta de urucum numa mesa comprida",
+      "publicado": true
+    }
+  ]
+}

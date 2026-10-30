@@ -8,7 +8,7 @@ const content = {
   imageId: null,
   imageAlt: 'Foto',
   ctaLabel: '',
-  secondary: { label: 'Conhecer a Oficina', href: '/oficina' },
+  secondary: { label: 'Conhecer as Oficinas', href: '/oficinas' },
   highlights: ['Monitores treinados', 'Montamos tudo no local'],
 };
 
@@ -20,7 +20,7 @@ describe('annotateSection — liga o texto da tela ao campo do schema', () => {
       <p>Recreação  infantil</p>
       <h1>Bora pra aventura?</h1>
       <p>Texto de abertura.</p>
-      <a><span>Conhecer a Oficina</span></a>
+      <a><span>Conhecer as Oficinas</span></a>
       <ul><li>Monitores treinados</li><li>Montamos tudo no local</li></ul>
       <div data-media></div>`;
   });

@@ -18,7 +18,7 @@
 </helmet>
 <div class="page" data-page="QuemSomos" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
 
-  <x-import component-from-global-scope="TDA.Header" current="/quem-somos" message="Olá! Quero conversar com a Turma da Aventura."></x-import>
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/quem-somos" message="Olá! Quero conversar com a Turma da Aventura."></x-import>
 
   <!-- QuemSomos/Historia -->
   <section class="intro" data-section="QuemSomos/Historia">
@@ -28,7 +28,7 @@
           <x-import component-from-global-scope="TDA.SectionHeader" level="{{h1}}" overline="Quem somos" title="A turma por trás da aventura"></x-import>
           <div class="prose">
             <p class="lead" style="color: var(--ink);">A Turma nasceu de um quintal: amigos educadores que levavam as próprias crianças para brincar ao ar livre todo fim de semana — e, de repente, os filhos dos vizinhos também queriam ir.</p>
-            <p class="body">Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para restaurantes, empresas e escolas. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.</p>
+            <p class="body">Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para festas, restaurantes, empresas e escolas de Belo Horizonte. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.</p>
           </div>
           <p class="tagline" style="margin: 0; color: var(--earth-strong);">Brincar / Aprender / Ensinar</p>
         </div>
@@ -83,7 +83,7 @@
     </div>
   </section>
 
-  <x-import component-from-global-scope="TDA.Footer" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
 
   <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero conversar com a Turma da Aventura."></x-import></div>
 </div>
@@ -93,6 +93,15 @@ class Component extends DCLogic {
   renderVals() {
     return {
       yes: true, year: 2026, h1: 1, i24: 24,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
       team: [
         { nick: 'Capitão Trilha', name: 'Rafael', role: 'Coordenador de expedições', bio: 'Desenha os roteiros e garante que cada atividade caiba no espaço.', badges: ['Primeiros socorros', 'Educação física'] },
         { nick: 'Dona Bússola', name: 'Beatriz', role: 'Coordenadora pedagógica', bio: 'Adapta cada brincadeira à faixa etária e forma novos monitores.', badges: ['Primeiros socorros', 'Pedagogia'] },

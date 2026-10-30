@@ -10,13 +10,14 @@ import { db } from '@/server/db';
 async function load() {
   try {
     const { user } = await requirePageUser();
-    const [restaurants, activities, team, photos] = await Promise.all([
+    const [restaurants, activities, themes, team, photos] = await Promise.all([
       db.restaurant.count({ where: { status: 'PUBLICADO' } }),
       db.activity.count({ where: { status: 'PUBLICADO' } }),
+      db.partyTheme.count({ where: { status: 'PUBLICADO' } }),
       db.teamMember.count({ where: { visible: true } }),
       db.media.count(),
     ]);
-    return { user, counts: { restaurants, activities, team, photos } };
+    return { user, counts: { restaurants, activities, themes, team, photos } };
   } catch (e) {
     unstable_rethrow(e); // redirects do requirePageUser
     if (isSchemaOutdated(e)) return null;
