@@ -1,4 +1,4 @@
-export type WhatsappPlacement = 'header' | 'hero' | 'cta' | 'float' | 'form' | 'footer';
+export type WhatsappPlacement = 'header' | 'hero' | 'cta' | 'float' | 'form' | 'footer' | 'bag';
 
 interface AnalyticsWindow extends Window {
   dataLayer?: Record<string, unknown>[];
@@ -7,7 +7,13 @@ interface AnalyticsWindow extends Window {
 }
 
 /** Evento `whatsapp_click` para GA4 (gtag/dataLayer) e Meta Pixel, quando presentes. */
-export function trackWhatsappClick(params: { page: string; placement: WhatsappPlacement }) {
+export function trackWhatsappClick(params: {
+  page: string;
+  placement: WhatsappPlacement;
+  /** pedido da sacola: produtos distintos e soma das quantidades */
+  items?: number;
+  units?: number;
+}) {
   if (typeof window === 'undefined') return;
   const w = window as AnalyticsWindow;
   w.dataLayer?.push({ event: 'whatsapp_click', ...params });

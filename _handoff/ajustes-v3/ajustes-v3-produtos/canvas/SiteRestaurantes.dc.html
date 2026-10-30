@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Restaurantes — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="Restaurantes" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/restaurantes" message="Olá! Tenho um restaurante e quero recreação para as famílias."></x-import>
+
+  <!-- Restaurantes/Intro -->
+  <section class="intro" data-section="Restaurantes/Intro">
+    <div class="wrap" style="gap: 32px;">
+      <x-import component-from-global-scope="TDA.SectionHeader" level="{{h1}}" overline="Fim de semana com a Turma" title="Onde a Turma está" description="Restaurantes parceiros em Belo Horizonte com recreação fixa e monitores treinados. Você escolhe a mesa, as crianças escolhem a aventura — e todo mundo come em paz."></x-import>
+    </div>
+    <img class="orn" src="/_blob/b836b8a3c664bb8d1ab72382e2ad9119" alt="" aria-hidden="true" style="right: 120px; top: 72px; width: 132px; transform: rotate(14deg);">
+  </section>
+
+  <!-- Restaurantes/Lista -->
+  <section class="sec sec--sunken" data-section="Restaurantes/Lista">
+    <div class="wrap" style="gap: 32px;">
+      <h2 class="h3" style="margin: 0;">6 restaurantes com a Turma</h2>
+      <div class="g3">
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Brasa &amp; Lenha" neighborhood="Belvedere" schedule="Sáb e dom, 12h às 16h" address="Alameda dos Ipês, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="rs1" image-alt="Crianças em roda no jardim do restaurante"></x-import>
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Savassi" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000" ages="De 3 a 10 anos" maps-url="#" placeholder-id="ro1" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Empório Jatobá" neighborhood="Lourdes" schedule="Sex, 19h às 23h · Sáb, 12h às 16h" address="Rua dos Jatobás, 000" ages="De 4 a 12 anos" maps-url="#" placeholder-id="ro2" image-alt="Crianças desenhando numa mesa comprida no quintal"></x-import>
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Quintal Ipê" neighborhood="Sion" schedule="Dom, 12h às 17h" address="Rua do Quintal, 000" ages="De 2 a 8 anos" maps-url="#" placeholder-id="rs2" image-alt="Tapete de atividades com blocos de madeira na varanda"></x-import>
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Rancho Cedro" neighborhood="Pampulha" schedule="Sáb, dom e feriados, 11h às 17h" address="Rua do Cedro, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="ro3" image-alt="Gramado com circuito de cordas entre árvores"></x-import>
+        <x-import component-from-global-scope="TDA.RestaurantCard" name="Trattoria Serra" neighborhood="Buritis" schedule="Sáb e dom, 12h às 17h" address="Rua da Serra, 000" ages="De 3 a 12 anos" maps-url="#" placeholder-id="rs3" image-alt="Monitor conduzindo brincadeira de roda no pátio coberto"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restaurantes/TemUmRestaurante -->
+  <section class="sec" data-section="Restaurantes/TemUmRestaurante">
+    <div class="wrap">
+      <div class="panel panel--earth">
+        <div class="g12" style="gap: 48px;">
+          <div class="span-7" style="display: flex; flex-direction: column; gap: 32px;">
+            <x-import component-from-global-scope="TDA.SectionHeader" overline="Para donos de restaurante" title="Tem um restaurante?" description="Leve a Turma para o seu salão. A gente cuida da recreação do começo ao fim — sua equipe só cuida da cozinha."></x-import>
+            <ul class="feats feats--2">
+              <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="clock" size="{{i24}}"></x-import></span><div><h3 class="h4">Famílias ficam mais tempo</h3><p class="body-sm">Criança entretida é sobremesa pedida e mesa sem pressa.</p></div></li>
+              <li class="feat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="utensils" size="{{i24}}"></x-import></span><div><h3 class="h4">Pais comem com calma</h3><p class="body-sm">Monitores por perto, à vista da mesa, e a refeição volta a ser programa.</p></div></li>
+              <li class="feat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="star" size="{{i24}}"></x-import></span><div><h3 class="h4">Diferencial no fim de semana</h3><p class="body-sm">Um motivo a mais para as famílias escolherem o seu endereço.</p></div></li>
+              <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{i24}}"></x-import></span><div><h3 class="h4">Zero trabalho para a sua equipe</h3><p class="body-sm">Levamos materiais, montamos o espaço e organizamos tudo ao final.</p></div></li>
+            </ul>
+            <div>
+              <x-import component-from-global-scope="TDA.WhatsAppButton" size="lg" message="Olá! Tenho um restaurante e quero recreação para as famílias.">Chamar a Turma para o meu restaurante</x-import>
+            </div>
+          </div>
+          <div class="span-5 story-media">
+            <x-import component-from-global-scope="TDA.Media" ratio="4 / 5" icon="utensils" alt="Monitora brincando com crianças ao lado das mesas de um restaurante" placeholder-id="owner"></x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restaurantes/CTA -->
+  <section class="sec sec--tight" data-section="Restaurantes/CTA">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.CTABanner" title="Quer a Turma no seu evento também?" text="Além dos restaurantes, a gente monta recreação para empresas, escolas e festas." cta-label="Pedir orçamento no WhatsApp" message="Olá! Vim pelo site e quero um orçamento."></x-import>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
+
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Vim pelo site e quero saber mais."></x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, year: 2026, h1: 1, i24: 24,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.'
+    };
+  }
+}
+</script>
+</body>
+</html>

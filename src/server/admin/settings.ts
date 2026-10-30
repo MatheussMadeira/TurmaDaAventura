@@ -14,7 +14,10 @@ export async function getSettingsForm() {
     email: s?.email ?? contatoJson.email,
     city: s?.city ?? contatoJson.cidade,
     hours: s?.hours ?? contatoJson.horario,
-    messages: (s?.messages as Record<string, string> | undefined) ?? contatoJson.mensagens,
+    messages: {
+      ...contatoJson.mensagens,
+      ...((s?.messages as Record<string, string> | undefined) ?? {}),
+    },
   };
 }
 

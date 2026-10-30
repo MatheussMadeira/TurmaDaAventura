@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Editor do site — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="ed" data-route="/admin/editor?pagina=inicio" style="width: 100%; min-height: 1000px; font-family: var(--font-body); color: var(--ink);">
+
+  <!-- Editor/BarraSuperior -->
+  <header class="ed__bar">
+    <a class="ed__icon" href="AdminPainel.dc.html" aria-label="Sair do editor e voltar ao painel">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+    </a>
+    <img src="/_blob/f11104659df2006f9c6db858d89e2b9b" alt="Turma da Aventura" height="32">
+    <span class="ed__sep" aria-hidden="true"></span>
+    <button type="button" class="ed__page" aria-haspopup="listbox">
+      <span style="display: flex; flex-direction: column; align-items: flex-start;"><small>Editando a página</small>Início</span>
+      <x-import component-from-global-scope="TDA.Icon" name="chevron-down" size="{{s18}}"></x-import>
+    </button>
+    <div class="seg" role="group" aria-label="Tamanho da prévia">
+      <button type="button" aria-pressed="true" aria-label="Prévia no computador"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="2"></rect><path d="M8.5 20h7"></path><path d="M12 16.5V20"></path></svg></button>
+      <button type="button" aria-pressed="false" aria-label="Prévia no celular"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"></rect><path d="M11 17.5h2"></path></svg></button>
+    </div>
+    <button type="button" class="ed__icon" aria-label="Desfazer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg></button>
+    <button type="button" class="ed__icon" aria-label="Refazer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"></path><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"></path></svg></button>
+    <span class="ed__status" role="status"><span class="ed__dot" aria-hidden="true"></span>{{statusText}}</span>
+    <x-import component-from-global-scope="TDA.Button" variant="ghost-inverse" size="sm" icon-right="arrow-right" href="Main.dc.html">Ver no site</x-import>
+    <x-import component-from-global-scope="TDA.Button" variant="inverse" size="sm" icon-left="check" disabled="{{isPub}}">Publicar alterações</x-import>
+  </header>
+
+  <div class="ed__body">
+    <!-- Editor/Secoes -->
+    <aside class="ed__left" aria-label="Seções da página">
+      <p class="ed__h">Seções da página</p>
+      <sc-for list="{{layers}}" as="l" hint-placeholder-count="8">
+        <div class="{{l.cls}}">
+          <span class="layer__grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"></circle><circle cx="15" cy="6" r="1.6"></circle><circle cx="9" cy="12" r="1.6"></circle><circle cx="15" cy="12" r="1.6"></circle><circle cx="9" cy="18" r="1.6"></circle><circle cx="15" cy="18" r="1.6"></circle></svg></span>
+          <span class="layer__name">{{l.name}}</span>
+          <button type="button" class="ibtn layer__eye" aria-label="{{l.eyeLabel}}" style="width: 36px; height: 36px;">
+            <sc-if value="{{l.on}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></sc-if>
+            <sc-if value="{{l.off}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16"></path><path d="M10.5 6a9.7 9.7 0 0 1 1.5-.1c6 0 9.5 6.1 9.5 6.1a16 16 0 0 1-2.6 3.4"></path><path d="M6.6 7.6C3.9 9.2 2.5 12 2.5 12S6 18.5 12 18.5c1.6 0 3-.4 4.2-1"></path></svg></sc-if>
+          </button>
+        </div>
+      </sc-for>
+      <div class="alert alert--info" style="margin-top: auto; font-size: 14px; line-height: 20px;">
+        <x-import component-from-global-scope="TDA.Icon" name="compass" size="{{s18}}"></x-import>
+        <p style="color: var(--ink-muted); font-weight: 600;">Arraste para mudar a ordem. O olho esconde a seção sem apagar. Header e rodapé mudam em <a href="AdminContato.dc.html" style="color: var(--brand);">Contato e WhatsApp</a>.</p>
+      </div>
+    </aside>
+
+    <!-- Editor/Previa -->
+    <main class="ed__canvas" aria-label="Prévia da página Início">
+      <sc-if value="{{isPub}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 5;">
+          <div class="toast" role="status"><span class="toast__icon"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import></span>Alterações publicadas. Já estão no site.<a href="Main.dc.html">Ver no site</a></div>
+        </div>
+      </sc-if>
+      <div class="ed__frame" style="transform: scale(0.64);">
+        <div class="page" style="pointer-events: none;">
+          <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/"></x-import>
+          <section class="tda-hero tda-hero--light">
+            <div class="tda-hero__inner">
+              <div class="tda-hero__copy">
+                <p class="overline tda-hero__over">Recreação infantil</p>
+                <div class="{{titleCls}}">
+                  <sc-if value="{{isTexto}}" hint-placeholder-val="{{ true }}">
+                    <span class="ev__tag">Título · 18/40</span>
+                    <span class="ev__tools">
+                      <button type="button" aria-label="Editar no painel ao lado"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg></button>
+                      <button type="button" aria-label="Voltar ao texto publicado"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg></button>
+                    </span>
+                  </sc-if>
+                  <h1 class="display tda-hero__title" style="margin: 0;">Bora pra aventura?<sc-if value="{{isTexto}}" hint-placeholder-val="{{ true }}"><span class="ev__caret" aria-hidden="true"></span></sc-if></h1>
+                </div>
+                <p class="lead tda-hero__lead">A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte.</p>
+                <div class="tda-hero__actions">
+                  <x-import component-from-global-scope="TDA.WhatsAppButton" size="lg">Pedir orçamento no WhatsApp</x-import>
+                  <x-import component-from-global-scope="TDA.Button" size="lg" variant="outline" icon-right="arrow-right">Conhecer as Oficinas</x-import>
+                </div>
+                <ul class="tda-hero__hl">
+                  <li><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import>Monitores treinados</li>
+                  <li><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import>Atividades por faixa etária</li>
+                  <li><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import>Montamos tudo no local</li>
+                </ul>
+              </div>
+              <div class="tda-hero__visual">
+                <div class="{{photoCls}}" style="border-radius: 40px 40px 40px 8px;">
+                  <sc-if value="{{showPhotoTag}}" hint-placeholder-val="{{ true }}"><span class="ev__tag">{{photoTag}}</span></sc-if>
+                  <x-import component-from-global-scope="TDA.Media" ratio="5 / 4" icon="tent" alt="Crianças de costas correndo num gramado ao fim da tarde" placeholder-id="ed-hero"></x-import>
+                  <sc-if value="{{showSwap}}" hint-placeholder-val="{{ false }}">
+                    <div class="ev__swap"><x-import component-from-global-scope="TDA.Button" variant="inverse" size="lg" icon-left="palette">Trocar foto</x-import></div>
+                  </sc-if>
+                </div>
+                <span class="tda-hero__paw"><x-import component-from-global-scope="TDA.Logo" variant="paw" tone="green" height="{{h100}}"></x-import></span>
+              </div>
+            </div>
+          </section>
+          <section class="sec sec--sunken">
+            <div class="wrap">
+              <x-import component-from-global-scope="TDA.SectionHeader" overline="Onde a Turma aparece" title="Quatro jeitos de viver a aventura" description="Escolha o seu ponto de partida. Em todos eles, quem cuida das crianças é a nossa equipe."></x-import>
+              <div class="g4">
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="star" title="Festas e aniversários" description="Aventura temática na festa." href="#" link-label="Ver festas"></x-import>
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="utensils" title="Restaurantes" description="Recreação fixa nos fins de semana." href="#" link-label="Ver restaurantes"></x-import>
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="briefcase" tone="earth" title="Eventos corporativos" description="Espaço kids em confraternizações." href="#" link-label="Ver eventos"></x-import>
+                <x-import component-from-global-scope="TDA.ServiceCard" icon="scissors" title="Oficinas" description="Pipas, mini horta, tintas naturais." href="#" link-label="Conhecer as Oficinas"></x-import>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Editor/PainelDoBloco -->
+    <aside class="ed__right" aria-label="Campos do bloco selecionado">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <p class="ed__h">Bloco selecionado</p>
+        <h2 class="box__title">Topo da página</h2>
+        <p class="box__sub">O que você muda aqui aparece na prévia na hora. Só vai para o site quando você publicar.</p>
+      </div>
+      <div class="ed__panel-scroll">
+        <div>
+          <x-import component-from-global-scope="TDA.TextField" label="Sobretítulo" default-value="Recreação infantil"></x-import>
+          <p class="count"><span>Aparece em caixa alta acima do título.</span><span>18/30</span></p>
+        </div>
+        <div>
+          <x-import component-from-global-scope="TDA.TextField" label="Título" default-value="Bora pra aventura?" class-name="{{titleFieldCls}}"></x-import>
+          <p class="count"><span>Curto e direto: até 5 palavras.</span><span>18/40</span></p>
+        </div>
+        <div>
+          <x-import component-from-global-scope="TDA.TextField" label="Texto de apoio" multiline="{{yes}}" rows="{{r3}}" default-value="A gente leva brincadeiras, oficinas e gincanas para festas, restaurantes, empresas e escolas. Monitores treinados, atividades por idade e muita natureza — você só curte."></x-import>
+          <p class="count"><span></span><span>169/220</span></p>
+        </div>
+        <x-import component-from-global-scope="TDA.TextField" label="Mensagem que chega no WhatsApp" default-value="Olá! Vim pelo site e quero um orçamento." hint="O texto do botão segue a regra da marca e não muda aqui."></x-import>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p class="tda-field__label" style="margin: 0;">Foto</p>
+          <div class="pic">
+            <div class="pic__img"><x-import component-from-global-scope="TDA.Media" ratio="5 / 4" icon="tent" alt="" placeholder-id="ed-thumb"></x-import></div>
+            <x-import component-from-global-scope="TDA.Button" variant="outline" size="sm" icon-left="palette">Trocar foto</x-import>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <sc-if value="{{isFoto}}" hint-placeholder-val="{{ false }}">
+    <!-- Editor/DialogoTrocarFoto -->
+    <div class="overlay" role="dialog" aria-modal="true" aria-labelledby="dlg-foto-title">
+      <div class="dlg dlg--wide">
+        <div class="box__head">
+          <h2 id="dlg-foto-title" class="dlg__title">Trocar foto do topo</h2>
+          <button type="button" class="ibtn" aria-label="Fechar (Esc)"><x-import component-from-global-scope="TDA.Icon" name="close" size="{{s22}}"></x-import></button>
+        </div>
+        <div class="alert alert--warn">
+          <x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s20}}"></x-import>
+          <div class="alert__body"><p><strong>Fotos de crianças só com autorização dos responsáveis.</strong></p><p>Prefira crianças de costas, de perfil ou em grupo, com luz natural. Nada de banco de imagens genérico.</p></div>
+        </div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p class="ed__h" style="margin: 0;">1 · Escolha a foto</p>
+            <div class="drop">
+              <span class="drop__icon"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{s24}}"></x-import></span>
+              <strong>Arraste uma foto ou clique para escolher</strong>
+              <span class="caption">JPG ou PNG, até 10 MB. Mínimo recomendado: 1600 px de largura.</span>
+            </div>
+            <p class="tda-field__label" style="margin: 0;">Ou escolha da biblioteca</p>
+            <div class="lib">
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Pipas no gramado"><x-import component-from-global-scope="TDA.Media" icon="flag" alt="" placeholder-id="lb1"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="true" aria-label="Crianças correndo no gramado, selecionada"><x-import component-from-global-scope="TDA.Media" icon="tent" alt="" placeholder-id="lb2"></x-import><span class="lib__check"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{s18}}"></x-import></span></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Tintas naturais"><x-import component-from-global-scope="TDA.Media" icon="palette" alt="" placeholder-id="lb3"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Mini horta"><x-import component-from-global-scope="TDA.Media" icon="leaf" alt="" placeholder-id="lb4"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Caça ao tesouro"><x-import component-from-global-scope="TDA.Media" icon="compass" alt="" placeholder-id="lb5"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Circuito de cordas"><x-import component-from-global-scope="TDA.Media" icon="tree" alt="" placeholder-id="lb6"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Equipe em roda"><x-import component-from-global-scope="TDA.Media" icon="users" alt="" placeholder-id="lb7"></x-import></button>
+              <button type="button" class="lib__item" aria-pressed="false" aria-label="Restaurante parceiro"><x-import component-from-global-scope="TDA.Media" icon="utensils" alt="" placeholder-id="lb8"></x-import></button>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p class="ed__h" style="margin: 0;">2 · Ajuste o recorte (5:4)</p>
+            <div class="crop">
+              <x-import component-from-global-scope="TDA.Media" ratio="16 / 11" icon="tent" alt="Recorte da foto selecionada" placeholder-id="crop" rounded="{{no}}"></x-import>
+              <div class="crop__frame" aria-hidden="true"></div>
+            </div>
+            <div class="zoom"><span>Zoom</span><div class="zoom__bar" role="slider" aria-label="Zoom" aria-valuemin="100" aria-valuemax="300" aria-valuenow="140" tabindex="0"></div><span>140%</span></div>
+            <div class="alert alert--warn" style="padding: 12px 14px; font-size: 14px; line-height: 20px;">
+              <x-import component-from-global-scope="TDA.Icon" name="flag" size="{{s18}}"></x-import>
+              <p style="color: var(--ink);">Esta foto tem 1200 px de largura. Pode ficar levemente desfocada em telas grandes — você ainda pode usar.</p>
+            </div>
+            <x-import component-from-global-scope="TDA.TextField" label="Descrição da foto" required="{{yes}}" default-value="Crianças de costas correndo num gramado ao fim da tarde" hint="Obrigatório. É o texto lido por quem usa leitor de tela: descreva a cena."></x-import>
+          </div>
+        </div>
+        <div class="dlg__foot">
+          <x-import component-from-global-scope="TDA.Button" variant="outline">Cancelar</x-import>
+          <x-import component-from-global-scope="TDA.Button" icon-left="check">Usar esta foto</x-import>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"modo":{"editor":"enum","options":["texto","foto","publicado"],"default":"texto"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var m = this.props.modo || 'texto';
+    var isTexto = m === 'texto', isFoto = m === 'foto', isPub = m === 'publicado';
+    var names = ['Topo da página', 'Quatro jeitos', 'Brincar / Aprender / Ensinar', 'Como funciona', 'Onde a Turma está', 'Galeria', 'Faixa de CTA'];
+    var layers = names.map(function (n, i) {
+      var off = n === 'Galeria' && !isPub ? false : false;
+      return { name: n, cls: 'layer' + (i === 0 && !isPub ? ' is-active' : ''), on: true, off: false, eyeLabel: 'Esconder ' + n };
+    });
+    layers.push({ name: 'Perguntas frequentes (oculta)', cls: 'layer is-off', on: false, off: true, eyeLabel: 'Mostrar Perguntas frequentes' });
+    return {
+      yes: true, no: false, s18: 18, s20: 20, s22: 22, s24: 24, r3: 3, h100: 100,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      isTexto: isTexto, isFoto: isFoto, isPub: isPub,
+      statusText: isPub ? 'Tudo publicado · agora há pouco' : '2 alterações não publicadas',
+      layers: layers,
+      titleCls: isTexto ? 'ev is-sel' : 'ev',
+      titleFieldCls: isTexto ? 'is-focus' : '',
+      photoCls: isFoto ? 'ev is-sel' : (isTexto ? 'ev is-hover' : 'ev'),
+      showPhotoTag: !isPub,
+      photoTag: isFoto ? 'Foto do topo' : 'Foto · clique para trocar',
+      showSwap: isTexto
+    };
+  }
+}
+</script>
+</body>
+</html>

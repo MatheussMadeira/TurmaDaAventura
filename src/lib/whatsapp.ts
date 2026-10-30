@@ -9,6 +9,7 @@ export const PAGE_MESSAGES: Record<string, string> = {
   '/': 'Olá! Vim pelo site e quero um orçamento.',
   '/oficinas': 'Olá! Quero saber mais sobre as Oficinas.',
   '/festas-e-aniversarios': 'Olá! Quero orçamento para uma festa de aniversário.',
+  '/produtos': 'Olá! Quero saber mais sobre os produtos da Turma.',
   '/restaurantes': 'Olá! Tenho um restaurante e quero recreação para as famílias.',
   '/eventos-corporativos': 'Olá! Quero recreação infantil para um evento corporativo.',
   '/quem-somos': 'Olá! Quero conversar com a Turma da Aventura.',

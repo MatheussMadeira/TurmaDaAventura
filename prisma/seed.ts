@@ -20,6 +20,8 @@ import atividades from '../src/content/atividades.json';
 import equipe from '../src/content/equipe.json';
 import contato from '../src/content/contato.json';
 import temasFesta from '../src/content/temas-festa.json';
+import produtos from '../src/content/produtos.json';
+import { productCategoryFromLabel } from '../src/content/productCategories';
 import { decideForce } from '../src/server/seedGuard';
 import { upgradeV2 } from './upgradeV2';
 
@@ -150,6 +152,37 @@ async function seedThemes() {
   return n;
 }
 
+async function seedProducts() {
+  let n = 0;
+  for (const [i, p] of produtos.produtos.entries()) {
+    const category = productCategoryFromLabel(p.categoria);
+    if (!category) throw new Error(`Produto ${p.slug}: categoria desconhecida (${p.categoria})`);
+    const data = {
+      name: p.name,
+      category,
+      icon: p.icon,
+      description: p.description,
+      minQty: p.minQty,
+      personalizavel: p.personalizavel,
+      nosRestaurantes: p.nosRestaurantes,
+      imageAlt: p.imageAlt,
+      order: i,
+      status: p.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
+    };
+    const exists = await db.product.findUnique({ where: { slug: p.slug } });
+    if (exists && !force) continue;
+    // sem --force, produto novo entra no FIM da lista (não bagunça a ordem que o cliente já definiu)
+    if (!force) data.order = await db.product.count();
+    await db.product.upsert({
+      where: { slug: p.slug },
+      update: data,
+      create: { slug: p.slug, ...data },
+    });
+    n++;
+  }
+  return n;
+}
+
 async function seedTeam() {
   if (!force && (await db.teamMember.count()) > 0) return 0;
   if (force) await db.teamMember.deleteMany();
@@ -244,6 +277,7 @@ async function main() {
   const upgrade = force ? { updated: [], notUpdated: [] } : await upgradeV2(db);
   const acts = await seedActivities();
   const themes = await seedThemes();
+  const products = await seedProducts();
   const team = await seedTeam();
   const settings = await seedSettings();
   await seedAdmin();
@@ -251,7 +285,7 @@ async function main() {
     data: {
       action: 'seed',
       entity: 'site',
-      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${themes} temas de festa, ${team} pessoas${settings ? ', configurações' : ''}`,
+      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${themes} temas de festa, ${products} produtos, ${team} pessoas${settings ? ', configurações' : ''}`,
       published: true,
     },
   });
@@ -267,7 +301,7 @@ NÃO atualizados, porque já foram editados no painel (${upgrade.notUpdated.leng
     console.log('  (confira se o texto atual ainda faz sentido; nada foi sobrescrito)');
   }
   console.log(
-    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${themes} temas de festa · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
+    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${themes} temas de festa · ${products} produtos · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
   );
 }
 

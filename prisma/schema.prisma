@@ -21,6 +21,20 @@ enum PublishStatus {
   PAUSADO
 }
 
+/// Produtos: esgotado continua no site (sem botão de adicionar). Sem preço em nenhum lugar.
+enum ProductStatus {
+  RASCUNHO
+  PUBLICADO
+  ESGOTADO
+}
+
+/// Categorias fixas por enquanto (rótulos em src/content/productCategories.ts).
+enum ProductCategory {
+  LEMBRANCINHA
+  KIT
+  BRINQUEDO_LIVRO
+}
+
 model User {
   id                 String    @id @default(cuid())
   name               String
@@ -114,6 +128,29 @@ model PartyTheme {
   @@index([status, order])
 }
 
+/// Produtos vendidos pelo WhatsApp (lembrancinhas, kits, brinquedos e livros). NENHUM campo de preço.
+model Product {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  name            String
+  category        ProductCategory
+  icon            String
+  description     String
+  imageId         String?
+  image           Media?          @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  /// descrição da foto — obrigatória (acessibilidade)
+  imageAlt        String
+  /// quantidade mínima por pedido (1 = vende por unidade)
+  minQty          Int             @default(1)
+  personalizavel  Boolean         @default(false)
+  nosRestaurantes Boolean         @default(false)
+  order           Int
+  status          ProductStatus   @default(RASCUNHO)
+  updatedAt       DateTime        @updatedAt
+
+  @@index([status, order])
+}
+
 model Activity {
   id          String        @id @default(cuid())
   slug        String        @unique
@@ -165,6 +202,7 @@ model Media {
   restaurants Restaurant[]
   activities  Activity[]
   partyThemes PartyTheme[]
+  products    Product[]
   team        TeamMember[]
 }
 

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ICON_NAMES } from '@/lib/iconNames';
+import { PRODUCT_CATEGORIES } from './productCategories';
 
 /**
  * Schemas dos formulários do painel (restaurantes, atividades, equipe, contato).
@@ -64,6 +65,27 @@ export const themeSchema = z.object({
 });
 export type ThemeInput = z.infer<typeof themeSchema>;
 
+/** Produto: NENHUM campo de preço. Esgotado fica no site, sem botão de adicionar. */
+export const productSchema = z.object({
+  name: req('Nome', 50, 2),
+  category: z.enum(PRODUCT_CATEGORIES, { message: 'Categoria: escolha uma opção.' }),
+  icon: z.enum(ICON_NAMES, { message: 'Ícone: escolha uma opção.' }),
+  description: req('Descrição curta', 120),
+  minQty: z
+    .number({ message: 'Quantidade mínima: informe um número.' })
+    .int('Quantidade mínima: use um número inteiro.')
+    .min(1, 'Quantidade mínima: pelo menos 1.')
+    .max(999, 'Quantidade mínima: no máximo 999.'),
+  personalizavel: z.boolean(),
+  nosRestaurantes: z.boolean(),
+  imageId: mediaRef,
+  imageAlt: req('Descrição da foto', 160),
+  /** "Mostrar no site": ao publicar, liga (PUBLICADO/ESGOTADO) ou deixa em rascunho */
+  visible: z.boolean(),
+  soldOut: z.boolean(),
+});
+export type ProductInput = z.infer<typeof productSchema>;
+
 export const teamSchema = z.object({
   nickname: req('Apelido', 30),
   name: req('Nome', 40, 2),
@@ -79,6 +101,7 @@ export const MESSAGE_KEYS = [
   ['inicio', 'Início'],
   ['oficinas', 'Oficinas'],
   ['festas-e-aniversarios', 'Festas e aniversários'],
+  ['sacola', 'Produtos · início da mensagem da sacola'],
   ['restaurantes', 'Restaurantes'],
   ['eventos-corporativos', 'Eventos corporativos'],
   ['quem-somos', 'Quem somos'],

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Produtos — Painel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="adm" data-route="/admin/produtos" style="width: 100%; min-height: 1100px; font-family: var(--font-body); color: var(--ink);">
+  <div class="adm__side"><dc-import name="AdminSidebar" active="produtos" role="admin" hint-size="248px,1100px"></dc-import></div>
+  <main class="adm__main">
+    <div class="top">
+      <div>
+        <p class="top__crumb">Conteúdo</p>
+        <h1 class="top__title">Produtos</h1>
+      </div>
+      <div class="top__actions">
+        <x-import component-from-global-scope="TDA.Button" icon-left="backpack">Novo produto</x-import>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Filtrar produtos">
+      <button type="button" role="tab" class="tab" aria-selected="true">No site <span class="tab__n">9</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Rascunhos <span class="tab__n">1</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Esgotados <span class="tab__n">0</span></button>
+      <button type="button" role="tab" class="tab" aria-selected="false">Todos <span class="tab__n">10</span></button>
+    </div>
+
+    <div class="cols cols--form">
+      <section class="box box--flush" aria-label="Lista de produtos">
+        <table class="tbl">
+          <thead><tr><th scope="col">Produto</th><th scope="col">Categoria</th><th scope="col">Mínimo</th><th scope="col">Situação</th><th scope="col"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Ações</span></th></tr></thead>
+          <tbody>
+            <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+              <tr class="{{r.cls}}">
+                <td><div class="cell-main"><div class="thumb"><x-import component-from-global-scope="TDA.Media" icon="{{r.icon}}" alt="" placeholder-id="{{r.pid}}"></x-import></div><div><strong>{{r.name}}</strong><span>{{r.extra}}</span></div></div></td>
+                <td>{{r.cat}}</td>
+                <td>{{r.min}}</td>
+                <td><x-import component-from-global-scope="TDA.Tag" tone="{{r.tone}}" icon="{{r.sicon}}">{{r.status}}</x-import></td>
+                <td><div class="row-actions">
+                  <button type="button" class="ibtn" aria-label="Subir {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="M6 11l6-6 6 6"></path></svg></button>
+                  <button type="button" class="ibtn" aria-label="Editar {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg></button>
+                  <button type="button" class="ibtn ibtn--danger" aria-label="Excluir {{r.name}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.5h5V7"></path><path d="M6 7l1 13h10l1-13"></path></svg></button>
+                </div></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </section>
+
+      <form class="box" novalidate="" aria-labelledby="ed-prod" style="gap: 16px; position: sticky; top: 24px;">
+        <div class="box__head"><h2 id="ed-prod" class="box__title">Editar · Kit mini horta</h2><x-import component-from-global-scope="TDA.Tag" tone="brand" icon="check">No site</x-import></div>
+        <div class="pic"><div class="pic__img"><x-import component-from-global-scope="TDA.Media" icon="leaf" alt="" placeholder-id="ap-e"></x-import></div><x-import component-from-global-scope="TDA.Button" variant="outline" size="sm" icon-left="palette">Trocar foto</x-import></div>
+        <x-import component-from-global-scope="TDA.TextField" label="Nome" required="{{yes}}" default-value="Kit mini horta"></x-import>
+        <x-import component-from-global-scope="TDA.Select" label="Categoria" options="{{cats}}" default-value="Lembrancinhas de festa"></x-import>
+        <div>
+          <x-import component-from-global-scope="TDA.TextField" label="Descrição curta" multiline="{{yes}}" rows="{{r2}}" default-value="Vasinho, sementes e plaquinha com o nome do convidado."></x-import>
+          <p class="count"><span>Aparece no card do produto.</span><span>55/120</span></p>
+        </div>
+        <div class="fields">
+          <x-import component-from-global-scope="TDA.TextField" label="Quantidade mínima" type="number" default-value="10" hint="1 = vende por unidade."></x-import>
+          <x-import component-from-global-scope="TDA.TextField" label="Descrição da foto" required="{{yes}}" default-value="Vasinhos de barro com sementes e plaquinhas"></x-import>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <label class="switch is-on"><span class="switch__track" aria-hidden="true"></span><input type="checkbox" checked="" style="position: absolute; opacity: 0; width: 1px; height: 1px;">Personalizável (nome, tema, cores)</label>
+          <label class="switch"><span class="switch__track" aria-hidden="true"></span><input type="checkbox" style="position: absolute; opacity: 0; width: 1px; height: 1px;">Também à venda nos restaurantes</label>
+          <label class="switch is-on"><span class="switch__track" aria-hidden="true"></span><input type="checkbox" checked="" style="position: absolute; opacity: 0; width: 1px; height: 1px;">Mostrar no site</label>
+        </div>
+        <p class="caption" style="margin: 0; color: var(--ink-muted); display: flex; gap: 6px; align-items: center;"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{s16}}"></x-import>Produtos não têm campo de preço: valores são combinados no WhatsApp.</p>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; padding-top: 8px; border-top: 1.5px solid var(--line);">
+          <x-import component-from-global-scope="TDA.Button" variant="ghost">Cancelar</x-import>
+          <x-import component-from-global-scope="TDA.Button" icon-left="check">Salvar e publicar</x-import>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var ok = { status: 'No site', tone: 'brand', sicon: 'check' };
+    var base = [
+      ['Kit mini horta', 'Lembrancinhas de festa', '10 un.', 'Personalizável', 'leaf', ok],
+      ['Saquinho do explorador', 'Lembrancinhas de festa', '10 un.', 'Personalizável', 'compass', ok],
+      ['Pipinha decorada', 'Lembrancinhas de festa', '10 un.', 'Personalizável', 'flag', ok],
+      ['Kit pintura de pedrinhas', 'Lembrancinhas de festa', '10 un.', 'Personalizável', 'scissors', ok],
+      ['Kit tintas naturais', 'Kits de atividade', '1 un.', 'Nos restaurantes', 'palette', ok],
+      ['Massinha natural', 'Kits de atividade', '1 un.', 'Nos restaurantes', 'heart', ok],
+      ['Caça ao tesouro em casa', 'Kits de atividade', '1 un.', 'Nos restaurantes', 'star', ok],
+      ['Cabaninha de tecido', 'Brinquedos e livros', '1 un.', 'Nos restaurantes', 'tent', ok],
+      ['Caderno de expedição', 'Brinquedos e livros', '1 un.', 'Nos restaurantes', 'backpack', ok],
+      ['Nome do produto', 'Categoria', '—', 'Falta a foto', 'backpack', { status: 'Rascunho', tone: 'earth', sicon: 'flag' }]
+    ];
+    return {
+      yes: true, r2: 2, s16: 16,
+      cats: ['Lembrancinhas de festa', 'Kits de atividade', 'Brinquedos e livros'],
+      rows: base.map(function (b, i) { return { name: b[0], cat: b[1], min: b[2], extra: b[3], icon: b[4], status: b[5].status, tone: b[5].tone, sicon: b[5].sicon, pid: 'ap' + i, cls: i === 0 ? 'is-hover' : '' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

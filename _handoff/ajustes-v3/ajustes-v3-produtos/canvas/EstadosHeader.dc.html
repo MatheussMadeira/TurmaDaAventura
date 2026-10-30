@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Header — estados</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="width: 100%; min-height: 1150px; padding: 48px 0; display: flex; flex-direction: column; gap: 48px; background: var(--surface-sunken); font-family: var(--font-body); color: var(--ink);">
+
+  <div style="display: flex; flex-direction: column;">
+    <p class="doc-label" style="padding: 0 48px;">Desktop · normal (topo da página)</p>
+    <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/" message="Olá! Vim pelo site e quero um orçamento."></x-import>
+  </div>
+
+  <div style="display: flex; flex-direction: column;">
+    <p class="doc-label" style="padding: 0 48px;">Desktop · com rolagem (shadow-md após 8px) · item ativo com trilha tracejada</p>
+    <div style="position: relative; background: var(--surface); padding-bottom: 48px;">
+      <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/oficinas" class-name="is-scrolled" message="Olá! Quero saber mais sobre as Oficinas."></x-import>
+      <div style="max-width: 1200px; margin: 40px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; opacity: .45;" aria-hidden="true">
+        <div style="height: 140px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+        <div style="height: 140px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+        <div style="height: 140px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 64px; padding: 0 48px; align-items: flex-start; flex-wrap: wrap;">
+    <div style="width: 390px; display: flex; flex-direction: column;">
+      <p class="doc-label">Mobile · fechado</p>
+      <div style="width: 390px; border-radius: 24px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-md);">
+        <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/"></x-import>
+        <div style="height: 300px; padding: 24px 16px; display: flex; flex-direction: column; gap: 12px;" aria-hidden="true">
+          <div style="height: 14px; width: 40%; border-radius: 4px; background: var(--line);"></div>
+          <div style="height: 40px; width: 90%; border-radius: 6px; background: var(--line);"></div>
+          <div style="height: 40px; width: 70%; border-radius: 6px; background: var(--line);"></div>
+        </div>
+      </div>
+    </div>
+    <div style="width: 390px; display: flex; flex-direction: column;">
+      <p class="doc-label">Mobile · menu aberto (sanfona, z-overlay)</p>
+      <div style="width: 390px; border-radius: 24px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-md);">
+        <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/restaurantes" default-open="{{yes}}" class-name="is-scrolled"></x-import>
+        <div style="height: 40px;"></div>
+      </div>
+    </div>
+    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 16px; padding-top: 32px;">
+      <h2 class="h4" style="margin: 0;">Regras do Header</h2>
+      <ul class="body-sm" style="margin: 0; padding-left: 20px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 8px;">
+        <li>Logo compacto (sem slogan) do grupo Logos, 52px no desktop e 40px no mobile.</li>
+        <li>Botão “Orçamento” sempre visível; abre o WhatsApp com a mensagem da página.</li>
+        <li>Item atual com <code>aria-current="page"</code> e trilha tracejada; no mobile, fundo brand-soft.</li>
+        <li>Com 7 itens, o menu completo só cabe a partir de ~1180px de container; abaixo disso vira sanfona (alvos de 52px no menu aberto). No menu os rótulos são curtos (“Festas”, “Eventos”); no rodapé, completos (“Festas e aniversários”, “Eventos corporativos”).</li>
+        <li>Sombra shadow-md entra após 8px de rolagem.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

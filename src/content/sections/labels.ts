@@ -25,6 +25,11 @@ const LABELS: Record<string, string> = {
 const PER_PAGE: Record<string, Record<string, string>> = {
   'festas-e-aniversarios': { formatos: 'Onde a festa acontece' },
   oficinas: { seguranca: 'Segurança e materiais' },
+  produtos: {
+    intro: 'Abertura',
+    catalogo: 'Lista de produtos',
+    'como-funciona': 'Da sacola ao WhatsApp',
+  },
   'quem-somos': { seguranca: 'Segurança em números' },
 };
 

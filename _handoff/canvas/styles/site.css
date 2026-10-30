@@ -122,3 +122,60 @@ html, body { margin: 0; }
   .wa-pin { right: var(--space-4); top: 760px; }
   .orn { display: none; }
 }
+
+/* ===== Produtos: ProductCard, Stepper, botão da sacola e gaveta (sem preço, pedido vai para o WhatsApp) ===== */
+.product { position: relative; }
+.product .tda-card__body { gap: var(--space-2); }
+.product__foot { margin-top: auto; padding-top: var(--space-3); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.product__in { display: inline-flex; align-items: center; gap: 6px; font: 800 14px/18px var(--font-body); color: var(--brand); }
+.product.is-in { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft), var(--shadow-sm); }
+
+.stepper { display: inline-flex; align-items: center; border: var(--border-thick) solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface-raised); }
+.stepper button { display: grid; place-items: center; width: var(--tap-min); height: var(--tap-min); border: 0; background: transparent; color: var(--brand); font: 800 20px/1 var(--font-body); cursor: pointer; border-radius: var(--radius-md); }
+.stepper button:hover { background: var(--brand-soft); }
+.stepper button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.stepper button[disabled] { color: var(--ink-subtle); cursor: not-allowed; background: transparent; }
+.stepper output { min-width: 40px; text-align: center; font: 800 16px/20px var(--font-body); color: var(--ink); }
+
+.bag-fab { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 64px; padding: 0 22px 0 18px; border: 0; border-radius: var(--radius-pill); background: var(--brand); color: var(--on-brand); box-shadow: var(--shadow-stamp-brand), var(--shadow-md); font: 800 16px/20px var(--font-body); cursor: pointer; }
+.bag-fab:hover { background: var(--brand-hover); }
+.bag-fab:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.bag-fab__n { display: grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border-radius: var(--radius-pill); background: var(--ink-on-forest); color: var(--surface-forest); font: 800 13px/1 var(--font-body); }
+
+.drawer-scrim { position: fixed; inset: 0; z-index: var(--z-overlay); background: var(--scrim); }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: var(--z-overlay); width: min(440px, 100%); display: flex; flex-direction: column; background: var(--surface-raised); box-shadow: var(--shadow-md); font-family: var(--font-body); color: var(--ink); }
+.drawer--inline { position: relative; inset: auto; height: 100%; width: 100%; z-index: auto; }
+.drawer__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-5); border-bottom: var(--border-thin) solid var(--line); }
+.drawer__title { margin: 0; font: 700 26px/32px var(--font-display); font-variation-settings: 'opsz' 36, 'SOFT' 100; }
+.drawer__body { flex: 1; overflow: auto; padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-5); }
+.drawer__foot { padding: var(--space-4) var(--space-5) var(--space-5); border-top: var(--border-thin) solid var(--line); display: flex; flex-direction: column; gap: var(--space-3); background: var(--surface-raised); }
+.drawer__close { display: grid; place-items: center; width: var(--tap-min); height: var(--tap-min); border: 0; border-radius: var(--radius-sm); background: var(--brand-soft); color: var(--brand); cursor: pointer; }
+.drawer__close:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.bag-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.bag-item { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: var(--space-3); align-items: center; padding: var(--space-3); border-radius: var(--radius-md); background: var(--surface-sunken); }
+.bag-item__img { width: 64px; height: 64px; border-radius: var(--radius-sm); overflow: hidden; }
+.bag-item__img .tda-media { height: 100%; aspect-ratio: auto !important; }
+.bag-item__img .tda-media__badge { width: 32px; height: 32px; }
+.bag-item__name { margin: 0; font: 800 15px/20px var(--font-body); }
+.bag-item__meta { margin: 2px 0 0; font: 600 13px/18px var(--font-body); color: var(--ink-muted); }
+.bag-item__row { grid-column: 2; display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.bag-remove { min-height: var(--tap-min); padding: 0 var(--space-2); border: 0; background: none; color: var(--danger); font: 700 14px/18px var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; border-radius: var(--radius-sm); }
+.bag-note { display: flex; gap: var(--space-2); align-items: flex-start; padding: var(--space-3); border-radius: var(--radius-md); background: var(--brand-soft); color: var(--ink); font: 600 14px/20px var(--font-body); }
+.bag-note .tda-icon { color: var(--brand); flex: none; margin-top: 1px; }
+.msg-preview { margin: 0; padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); border: var(--border-thin) dashed var(--line-strong); font: 600 14px/22px var(--font-body); color: var(--ink); white-space: pre-line; }
+.bag-pin { position: absolute; right: var(--space-5); top: 788px; z-index: var(--z-float); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .drawer:not(.drawer--inline) { animation: bag-in var(--dur-medium) var(--ease-enter) both; }
+  .drawer-scrim { animation: mx-fade var(--dur-medium) var(--ease-enter) both; }
+  .bag-fab__n { animation: tda-stamp var(--dur-medium) var(--ease-stamp) both; }
+}
+@keyframes bag-in { from { transform: translateX(var(--move-md)); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes bag-up { from { transform: translateY(var(--move-md)); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes mx-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 767px) {
+  .drawer:not(.drawer--inline) { top: auto; left: 0; width: 100%; max-height: 88vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; animation-name: bag-up; }
+  .bag-pin { right: var(--space-4); top: 760px; }
+  .bag-fab { min-height: 56px; }
+}
