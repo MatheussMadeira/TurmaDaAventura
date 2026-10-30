@@ -45,6 +45,8 @@ npm run db:seed               # cria o que falta; NÃO sobrescreve edições
 npm run db:seed -- --force    # recria o conteúdo das seções (textos do canvas)
 ```
 
+**Atualização de textos (ajustes v2).** O seed normal também atualiza textos antigos que **ainda são os originais** (Oficina→Oficinas, Início com quatro jeitos, cidade e bairros de Belo Horizonte). Campo que o cliente já editou no painel **não é tocado**: no fim, o seed imprime a lista “NÃO atualizados, porque já foram editados” para revisão manual. O que falta (a página de festas, os temas, restaurantes ausentes) é criado no **fim** das listas.
+
 `--force` **recusa rodar** em banco de produção (`VERCEL_ENV=production` ou host em `PRODUCTION_DB_HOSTS`). Só com `ALLOW_DESTRUCTIVE_SEED=1` ele prossegue — e mesmo assim exige digitar o host do banco no terminal.
 
 ## Scripts
