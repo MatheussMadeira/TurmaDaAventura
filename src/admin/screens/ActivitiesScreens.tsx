@@ -119,7 +119,7 @@ export function ActivitiesList({
     <Stack>
       <PageTop
         crumb="Conteúdo"
-        title="Atividades"
+        title="Atividades das Oficinas"
         actions={
           <Button href="/admin/atividades/novo" iconLeft="plus">
             Nova atividade
@@ -146,7 +146,7 @@ export function ActivitiesList({
           </TabsWrap>
           {rows.length ? (
             <DataList
-              caption="Atividades"
+              caption="Atividades das Oficinas"
               rows={rows}
               rowKey={(r) => r.id}
               columns={[

@@ -290,6 +290,165 @@ export const DEFAULT_PAGES: Defaults = {
     }),
   },
 
+  'festas-e-aniversarios': {
+    hero: hero({
+      overline: 'Festas e aniversários',
+      title: 'Aniversário com cara de expedição',
+      lead: 'A Turma leva recreação, brincadeiras e uma aventura temática para a festa do seu filho — em casa, no salão do prédio ou no buffet. Você recebe os convidados; a gente cuida da criançada.',
+      imageId: null,
+      imageAlt:
+        'Crianças de costas numa roda de brincadeira no quintal de uma festa, com bandeirinhas de tecido',
+      ctaLabel: '',
+      secondary: { label: 'Ver os temas', href: '#temas' },
+      highlights: ['Monitores treinados', 'Brincadeiras por idade', 'Montagem e desmontagem'],
+    }),
+    formatos: {
+      type: 'cards',
+      content: {
+        overline: 'Onde a festa acontece',
+        title: 'A gente se encaixa na sua festa',
+        description:
+          'Levamos tudo o que a recreação precisa e combinamos o horário com você ou com o buffet.',
+        cards: [
+          {
+            icon: 'tent',
+            tone: 'default',
+            overline: '',
+            title: 'Em casa ou no condomínio',
+            description:
+              'Quintal, salão do prédio ou até a sala: a gente adapta as brincadeiras ao espaço.',
+            linkLabel: '',
+          },
+          {
+            icon: 'star',
+            tone: 'earth',
+            overline: '',
+            title: 'Salão de festas e buffet',
+            description:
+              'Recreação em parceria com o buffet, no ritmo da festa e no horário combinado.',
+            linkLabel: '',
+          },
+          {
+            icon: 'tree',
+            tone: 'default',
+            overline: '',
+            title: 'Ao ar livre',
+            description:
+              'Parques, sítios e áreas verdes — o lugar favorito da Turma para uma expedição.',
+            linkLabel: '',
+          },
+        ],
+      } satisfies SectionContent<'cards'>,
+    },
+    temas: {
+      type: 'intro',
+      content: {
+        overline: 'Temas',
+        title: 'Escolha a aventura da festa',
+        description:
+          'Cada tema vira um roteiro de brincadeiras com o nome do aniversariante. Dá para misturar e personalizar.',
+      } satisfies SectionContent<'intro'>,
+    },
+    'o-que-inclui': {
+      type: 'features',
+      content: {
+        overline: 'O que a Turma leva',
+        title: 'Você curte a festa, a gente cuida da aventura',
+        description: '',
+        items: [
+          {
+            icon: 'users',
+            tone: 'brand',
+            title: 'Monitores treinados',
+            text: 'Equipe com primeiros socorros e um adulto atento para cada grupo pequeno.',
+          },
+          {
+            icon: 'compass',
+            tone: 'olive',
+            title: 'Roteiro do tema',
+            text: 'Brincadeiras, desafios e uma história que conduz a festa do começo ao fim.',
+          },
+          {
+            icon: 'scissors',
+            tone: 'earth',
+            title: 'Oficina de lembrancinha',
+            text: 'As próprias crianças fazem a lembrancinha que levam para casa.',
+          },
+          {
+            icon: 'star',
+            tone: 'brand',
+            title: 'Momento do aniversariante',
+            text: 'Uma missão especial e um diploma de explorador só para quem faz aniversário.',
+          },
+          {
+            icon: 'backpack',
+            tone: 'olive',
+            title: 'Materiais da recreação',
+            text: 'Tudo o que as brincadeiras pedem. Bolo, comida e decoração ficam com você ou o buffet.',
+          },
+          {
+            icon: 'shield',
+            tone: 'earth',
+            title: 'Montagem e desmontagem',
+            text: 'Chegamos antes, montamos o espaço e deixamos tudo organizado no final.',
+          },
+        ],
+      } satisfies SectionContent<'features'>,
+    },
+    'como-funciona': {
+      type: 'steps',
+      content: {
+        overline: 'Como funciona',
+        title: 'Da ideia ao parabéns em quatro etapas',
+        description: '',
+        steps: [
+          {
+            icon: 'whatsapp',
+            title: 'Chama no WhatsApp',
+            text: 'Conta a data, o local e quantos convidados vêm.',
+          },
+          {
+            icon: 'compass',
+            title: 'Escolhemos o tema',
+            text: 'Montamos o roteiro com o nome e a idade do aniversariante.',
+          },
+          {
+            icon: 'backpack',
+            title: 'Preparamos a expedição',
+            text: 'Separamos materiais e combinamos tudo com você ou o buffet.',
+          },
+          {
+            icon: 'star',
+            title: 'Festa com a Turma',
+            text: 'Chegamos antes, conduzimos a festa e entregamos tudo organizado.',
+          },
+        ],
+      } satisfies SectionContent<'steps'>,
+    },
+    'pre-orcamento': {
+      type: 'pre-quote',
+      content: {
+        overline: 'Pré-orçamento',
+        title: 'Conta como vai ser a festa',
+        description:
+          'Data, local, número de convidados e a idade do aniversariante já ajudam a gente a montar a proposta.',
+        checks: [
+          'Só nome e tipo são obrigatórios',
+          'Reserve com antecedência: fins de semana lotam',
+          'Cada festa é montada sob medida',
+        ],
+        note: '',
+        formTitle: 'Monte a festa',
+        nameLabel: 'Seu nome',
+      } satisfies SectionContent<'pre-quote'>,
+    },
+    cta: cta({
+      title: 'Bora planejar o aniversário?',
+      text: 'Conta a data e a idade do aniversariante. A gente responde rapidinho no WhatsApp.',
+      ctaLabel: 'Pedir orçamento no WhatsApp',
+    }),
+  },
+
   restaurantes: {
     intro: {
       type: 'intro',

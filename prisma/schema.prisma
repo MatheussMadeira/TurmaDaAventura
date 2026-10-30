@@ -96,6 +96,24 @@ model Restaurant {
   @@index([status, order])
 }
 
+/// Temas da página Festas e aniversários (mesma forma de Activity; sem categoria, sem preço).
+model PartyTheme {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  icon        String
+  title       String
+  description String
+  tags        String[]
+  imageId     String?
+  image       Media?        @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  imageAlt    String        @default("")
+  order       Int
+  status      PublishStatus @default(RASCUNHO)
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, order])
+}
+
 model Activity {
   id          String        @id @default(cuid())
   slug        String        @unique
@@ -146,6 +164,7 @@ model Media {
 
   restaurants Restaurant[]
   activities  Activity[]
+  partyThemes PartyTheme[]
   team        TeamMember[]
 }
 

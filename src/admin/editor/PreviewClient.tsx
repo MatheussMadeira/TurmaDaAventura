@@ -6,6 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import type { ImageRef } from '@/content/types';
 import { eventosRenderers } from '@/site/pages/eventos';
 import { inicioRenderers } from '@/site/pages/inicio';
+import { festasRenderers } from '@/site/pages/festas';
 import { oficinasRenderers } from '@/site/pages/oficinas';
 import { quemSomosRenderers } from '@/site/pages/quemSomos';
 import { restaurantesRenderers } from '@/site/pages/restaurantes';
@@ -26,6 +27,7 @@ import {
 const RENDERERS: Record<string, Record<string, Renderer<any>>> = {
   inicio: inicioRenderers,
   oficinas: oficinasRenderers,
+  'festas-e-aniversarios': festasRenderers,
   restaurantes: restaurantesRenderers,
   'eventos-corporativos': eventosRenderers,
   'quem-somos': quemSomosRenderers,

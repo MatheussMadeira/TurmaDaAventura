@@ -19,6 +19,7 @@ import restaurantes from '../src/content/restaurantes.json';
 import atividades from '../src/content/atividades.json';
 import equipe from '../src/content/equipe.json';
 import contato from '../src/content/contato.json';
+import temasFesta from '../src/content/temas-festa.json';
 import { decideForce } from '../src/server/seedGuard';
 
 config({ path: '.env.local' });
@@ -121,6 +122,30 @@ async function seedActivities() {
   return n;
 }
 
+async function seedThemes() {
+  let n = 0;
+  for (const [i, t] of temasFesta.temas.entries()) {
+    const data = {
+      icon: t.icon,
+      title: t.title,
+      description: t.description,
+      tags: t.tags,
+      imageAlt: t.imageAlt,
+      order: i,
+      status: t.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
+    };
+    const exists = await db.partyTheme.findUnique({ where: { slug: t.slug } });
+    if (exists && !force) continue;
+    await db.partyTheme.upsert({
+      where: { slug: t.slug },
+      update: data,
+      create: { slug: t.slug, ...data },
+    });
+    n++;
+  }
+  return n;
+}
+
 async function seedTeam() {
   if (!force && (await db.teamMember.count()) > 0) return 0;
   if (force) await db.teamMember.deleteMany();
@@ -212,6 +237,7 @@ async function main() {
   const sections = await seedPages();
   const rest = await seedRestaurants();
   const acts = await seedActivities();
+  const themes = await seedThemes();
   const team = await seedTeam();
   const settings = await seedSettings();
   await seedAdmin();
@@ -219,12 +245,12 @@ async function main() {
     data: {
       action: 'seed',
       entity: 'site',
-      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${team} pessoas${settings ? ', configurações' : ''}`,
+      summary: `Seed${force ? ' (--force)' : ''}: ${sections} seções, ${rest} restaurantes, ${acts} atividades, ${themes} temas de festa, ${team} pessoas${settings ? ', configurações' : ''}`,
       published: true,
     },
   });
   console.log(
-    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
+    `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${themes} temas de festa · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
   );
 }
 

@@ -7,6 +7,7 @@ import {
   getActivities,
   getActivityCategories,
   getHomeRestaurants,
+  getPartyThemes,
   getRestaurants,
   getTeam,
 } from '../content';
@@ -95,6 +96,8 @@ export async function loadPreviewData(slug: string): Promise<Record<string, unkn
       ]);
       return { activities, categories };
     }
+    case 'festas-e-aniversarios':
+      return { themes: await getPartyThemes() };
     case 'restaurantes':
       return { restaurants: await getRestaurants() };
     case 'quem-somos':

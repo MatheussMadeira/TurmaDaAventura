@@ -14,6 +14,8 @@ const LABELS: Record<string, string> = {
   lista: 'Lista de restaurantes',
   'tem-um-restaurante': 'Tem um restaurante?',
   formatos: 'Formatos de evento',
+  temas: 'Temas de festa',
+  'o-que-inclui': 'O que a Turma leva',
   empresas: 'Empresas atendidas',
   beneficios: 'Benefícios',
   historia: 'Nossa história',
@@ -21,6 +23,7 @@ const LABELS: Record<string, string> = {
 };
 
 const PER_PAGE: Record<string, Record<string, string>> = {
+  'festas-e-aniversarios': { formatos: 'Onde a festa acontece' },
   oficinas: { seguranca: 'Segurança e materiais' },
   'quem-somos': { seguranca: 'Segurança em números' },
 };

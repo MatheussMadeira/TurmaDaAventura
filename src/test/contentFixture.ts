@@ -6,6 +6,7 @@ import { DEFAULT_PAGES } from '@/content/defaults/pages';
 import { PAGES, pageBySlug, sectionName } from '@/content/sections/schemas';
 import type {
   Activity,
+  PartyTheme,
   PublishedPage,
   Restaurant,
   SiteSettings,
@@ -15,6 +16,7 @@ import contato from '@/content/contato.json';
 import atividades from '@/content/atividades.json';
 import equipe from '@/content/equipe.json';
 import restaurantes from '@/content/restaurantes.json';
+import temasFesta from '@/content/temas-festa.json';
 import type { IconName } from '@/lib/iconNames';
 
 export const fixturePage = (slug: string): PublishedPage => {
@@ -45,6 +47,19 @@ export const fixtureRestaurants = (): Restaurant[] =>
       image: null,
       imageAlt: r.imageAlt,
       destaqueHome: r.destaqueHome,
+    }));
+
+export const fixtureThemes = (): PartyTheme[] =>
+  temasFesta.temas
+    .filter((t) => t.publicado)
+    .map((t) => ({
+      slug: t.slug,
+      icon: t.icon as IconName,
+      title: t.title,
+      description: t.description,
+      tags: t.tags,
+      image: null,
+      imageAlt: t.imageAlt,
     }));
 
 export const fixtureActivities = (): Activity[] =>
@@ -89,6 +104,7 @@ export const contentModuleMock = () => ({
     fixtureRestaurants()
       .filter((r) => r.destaqueHome)
       .slice(0, 3),
+  getPartyThemes: async () => fixtureThemes(),
   getActivities: async () => fixtureActivities(),
   getActivityCategories: async () => [...new Set(fixtureActivities().map((a) => a.categoria))],
   getTeam: async () => fixtureTeam(),

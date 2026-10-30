@@ -384,7 +384,7 @@ export function ComponentesView() {
             <Cols $min="280px">
               <RestaurantCard
                 name="Restaurante Exemplo"
-                neighborhood="Zona Sul"
+                neighborhood="Savassi"
                 schedule="Sáb e dom, 12h às 17h"
                 address="Rua Exemplo, 000"
                 ages="De 3 a 12 anos"

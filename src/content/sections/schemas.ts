@@ -225,6 +225,21 @@ export const PAGES: PageDef[] = [
     ],
   },
   {
+    slug: 'festas-e-aniversarios',
+    path: '/festas-e-aniversarios',
+    title: 'Festas e aniversários',
+    area: 'Festas',
+    sections: [
+      { key: 'hero', name: 'Hero', type: 'hero' },
+      { key: 'formatos', name: 'Formatos', type: 'cards' },
+      { key: 'temas', name: 'Temas', type: 'intro' },
+      { key: 'o-que-inclui', name: 'OQueInclui', type: 'features' },
+      { key: 'como-funciona', name: 'ComoFunciona', type: 'steps' },
+      { key: 'pre-orcamento', name: 'PreOrcamento', type: 'pre-quote' },
+      { key: 'cta', name: 'CTA', type: 'cta' },
+    ],
+  },
+  {
     slug: 'restaurantes',
     path: '/restaurantes',
     title: 'Restaurantes',

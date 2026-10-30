@@ -16,13 +16,17 @@ export interface LibraryItem {
 
 /** Biblioteca de fotos com o cálculo de uso (restaurantes, atividades, equipe e seções das páginas). */
 export async function listLibrary(): Promise<LibraryItem[]> {
-  const [media, restaurants, activities, team, sections] = await Promise.all([
+  const [media, restaurants, activities, themes, team, sections] = await Promise.all([
     db.media.findMany({ orderBy: { createdAt: 'desc' } }),
     db.restaurant.findMany({
       where: { imageId: { not: null } },
       select: { name: true, imageId: true },
     }),
     db.activity.findMany({
+      where: { imageId: { not: null } },
+      select: { title: true, imageId: true },
+    }),
+    db.partyTheme.findMany({
       where: { imageId: { not: null } },
       select: { title: true, imageId: true },
     }),
@@ -44,6 +48,7 @@ export async function listLibrary(): Promise<LibraryItem[]> {
     const usedIn: string[] = [];
     for (const r of restaurants) if (r.imageId === m.id) usedIn.push(`Restaurante ${r.name}`);
     for (const a of activities) if (a.imageId === m.id) usedIn.push(`Atividade ${a.title}`);
+    for (const t of themes) if (t.imageId === m.id) usedIn.push(`Tema de festa ${t.title}`);
     for (const t of team) if (t.photoId === m.id) usedIn.push(`Equipe ${t.name}`);
     for (const s of sectionText) if (s.text.includes(`"${m.id}"`)) usedIn.push(s.where);
     return {

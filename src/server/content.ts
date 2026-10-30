@@ -4,6 +4,7 @@ import { DEFAULT_PAGES } from '@/content/defaults/pages';
 import { pageBySlug, parseSection, sectionName } from '@/content/sections/schemas';
 import type {
   Activity,
+  PartyTheme,
   ImageRef,
   PublishedPage,
   PublishedSection,
@@ -139,6 +140,24 @@ export const getActivities = cached('activities', async (): Promise<Activity[]> 
 export const getActivityCategories = cached('activity-categories', async (): Promise<string[]> => {
   const acts = await getActivities();
   return [...new Set(acts.map((a) => a.categoria))];
+});
+
+/** Temas de festa publicados, na ordem do admin. */
+export const getPartyThemes = cached('party-themes', async (): Promise<PartyTheme[]> => {
+  const rows = await db.partyTheme.findMany({
+    where: { status: 'PUBLICADO' },
+    orderBy: { order: 'asc' },
+    include: { image: true },
+  });
+  return rows.map((t) => ({
+    slug: t.slug,
+    icon: t.icon as IconName,
+    title: t.title,
+    description: t.description,
+    tags: t.tags,
+    image: toImage(t.image),
+    imageAlt: t.image?.alt ?? t.imageAlt,
+  }));
 });
 
 export const getTeam = cached('team', async (): Promise<TeamMember[]> => {

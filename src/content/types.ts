@@ -50,6 +50,17 @@ export interface Activity {
   imageAlt: string;
 }
 
+/** Tema da página Festas e aniversários (mesma forma de Activity, sem categoria) */
+export interface PartyTheme {
+  slug: string;
+  icon: IconName;
+  title: string;
+  description: string;
+  tags: string[];
+  image: ImageRef | null;
+  imageAlt: string;
+}
+
 export interface TeamMember {
   nickname: string;
   name: string;

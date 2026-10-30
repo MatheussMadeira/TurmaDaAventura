@@ -6,6 +6,7 @@ import { renderWithProviders } from '@/test/render';
 import { contentModuleMock, fixtureRestaurants } from '@/test/contentFixture';
 import HomePage from './(site)/page';
 import OficinasPage from './(site)/oficinas/page';
+import FestasPage from './(site)/festas-e-aniversarios/page';
 import RestaurantesPage from './(site)/restaurantes/page';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
@@ -35,6 +36,18 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
       'Oficinas/SegurancaMateriais',
       'Oficinas/PreOrcamento',
       'Oficinas/CTA',
+    ],
+  },
+  {
+    name: 'Festas e aniversários',
+    page: FestasPage,
+    sections: [
+      'Festas/Formatos',
+      'Festas/Temas',
+      'Festas/OQueInclui',
+      'Festas/ComoFunciona',
+      'Festas/PreOrcamento',
+      'Festas/CTA',
     ],
   },
   {
@@ -117,6 +130,29 @@ describe('Oficinas — filtro', () => {
   });
 });
 
+describe('Festas e aniversários', () => {
+  it('mostra os 6 temas com etiquetas, foto 16:10 (placeholder) e âncora #temas', async () => {
+    const { container } = renderWithProviders(await FestasPage());
+    const temas = container.querySelector('[data-section="Festas/Temas"]')!;
+    expect(temas.id).toBe('temas');
+    expect(temas.querySelectorAll('article')).toHaveLength(6);
+    expect(temas.textContent).toContain('Expedição na floresta');
+    expect(temas.querySelectorAll('[data-media]')).toHaveLength(6);
+    expect(temas.textContent).toContain('Personalizável');
+  });
+
+  it('o botão secundário do Hero leva para os temas', async () => {
+    renderWithProviders(await FestasPage());
+    expect(screen.getByRole('link', { name: /Ver os temas/ })).toHaveAttribute('href', '#temas');
+  });
+
+  it('o formulário já vem com o tipo "Festa ou aniversário" e título "Monte a festa"', async () => {
+    renderWithProviders(await FestasPage());
+    expect(screen.getByLabelText(/tipo de evento/i)).toHaveValue('Festa ou aniversário');
+    expect(screen.getByText('Monte a festa')).toBeInTheDocument();
+  });
+});
+
 describe('restaurantes — endereço, overline e título', () => {
   it('endereços sem o bairro em todos os registros', () => {
     const list = fixtureRestaurants();
@@ -135,7 +171,7 @@ describe('restaurantes — endereço, overline e título', () => {
     expect(overlines).toEqual(['Belvedere', 'Savassi', 'Pampulha']);
   });
 
-  it('Restaurantes: um título só ("N restaurantes com a Turma"), sem chips de região, grade única', async () => {
+  it('Restaurantes: um título só ("N restaurantes com a Turma"), sem chips de âncora, grade única', async () => {
     const { container } = renderWithProviders(await RestaurantesPage());
     const lista = container.querySelector('[data-section="Restaurantes/Lista"]')!;
     const overlines = [...lista.querySelectorAll('article .overline')].map((el) => el.textContent);

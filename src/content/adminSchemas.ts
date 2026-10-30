@@ -53,6 +53,17 @@ export const activitySchema = z.object({
 });
 export type ActivityInput = z.infer<typeof activitySchema>;
 
+export const themeSchema = z.object({
+  icon: z.enum(ICON_NAMES, { message: 'Ícone: escolha uma opção.' }),
+  title: req('Título', 40, 2),
+  description: req('Descrição', 160),
+  tags: z.array(req('Etiqueta', 24)).max(4, 'Etiquetas: no máximo 4.'),
+  imageId: mediaRef,
+  imageAlt: opt('Descrição da foto', 160),
+  visible: z.boolean(),
+});
+export type ThemeInput = z.infer<typeof themeSchema>;
+
 export const teamSchema = z.object({
   nickname: req('Apelido', 30),
   name: req('Nome', 40, 2),

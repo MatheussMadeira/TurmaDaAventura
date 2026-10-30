@@ -17,6 +17,7 @@ import {
   type SaveMode,
 } from '@/server/admin/restaurants';
 import { saveSettings } from '@/server/admin/settings';
+import { deleteTheme, moveTheme, saveTheme, setThemeStatus } from '@/server/admin/themes';
 import { deleteMember, moveMember, saveMember, setMemberVisible } from '@/server/admin/team';
 import { deleteMedia, updateMediaAlt } from '@/server/media';
 
@@ -131,6 +132,58 @@ export async function moveActivityAction(id: string, dir: 'up' | 'down'): Promis
     if (!isDir(dir)) return { ok: false, error: 'Direção inválida.' };
     await moveActivity(user, id, dir);
     revalidatePath('/admin/atividades');
+    return { ok: true };
+  });
+}
+
+/* ---------------- Temas de festa ---------------- */
+export async function saveThemeAction(
+  id: string | null,
+  input: unknown,
+  mode: SaveMode,
+): Promise<ActionResult<{ id: string }>> {
+  return run<{ id: string }>({ permission: 'activities' }, async (user) => {
+    if (!isMode(mode)) return { ok: false, error: 'Ação inválida.' };
+    const saved = await saveTheme(user, id, input, mode);
+    revalidatePath('/admin/temas');
+    return {
+      ok: true,
+      data: { id: saved.id },
+      message:
+        mode === 'draft'
+          ? 'Rascunho salvo. Ele ainda não aparece no site.'
+          : saved.status === 'PUBLICADO'
+            ? 'Tema salvo e publicado. Ele já aparece em Festas e aniversários.'
+            : 'Tema salvo e pausado.',
+    };
+  });
+}
+
+export async function setThemeStatusAction(
+  id: string,
+  status: PublishStatus,
+): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    if (!isStatus(status)) return { ok: false, error: 'Situação inválida.' };
+    await setThemeStatus(user, id, status);
+    revalidatePath('/admin/temas');
+    return { ok: true, message: status === 'PAUSADO' ? 'Tema pausado.' : 'Situação atualizada.' };
+  });
+}
+
+export async function deleteThemeAction(id: string): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    await deleteTheme(user, id);
+    revalidatePath('/admin/temas');
+    return { ok: true, message: 'Tema excluído.' };
+  });
+}
+
+export async function moveThemeAction(id: string, dir: 'up' | 'down'): Promise<ActionResult> {
+  return run({ permission: 'activities' }, async (user) => {
+    if (!isDir(dir)) return { ok: false, error: 'Direção inválida.' };
+    await moveTheme(user, id, dir);
+    revalidatePath('/admin/temas');
     return { ok: true };
   });
 }
