@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/atoms/Button';
-import { Select } from '@/components/atoms/Select';
 import { TextField } from '@/components/atoms/TextField';
 import { RestaurantCard } from '@/components/molecules/RestaurantCard';
 import { saveRestaurantAction } from '@/app/admin/_actions/content';
@@ -28,7 +27,6 @@ import { MediaPicker, type PickerPhoto } from '../ui/MediaPicker';
 export interface RestaurantFormValues {
   name: string;
   neighborhood: string;
-  regionId: string;
   address: string;
   mapsUrl: string;
   schedule: string;
@@ -42,7 +40,6 @@ export interface RestaurantFormValues {
 export const EMPTY_RESTAURANT: RestaurantFormValues = {
   name: '',
   neighborhood: '',
-  regionId: '',
   address: '',
   mapsUrl: '',
   schedule: '',
@@ -57,13 +54,11 @@ export function RestaurantForm({
   id,
   initial,
   status,
-  regions,
   library,
 }: {
   id: string | null;
   initial: RestaurantFormValues;
   status?: 'RASCUNHO' | 'PUBLICADO' | 'PAUSADO';
-  regions: { id: string; name: string; shortName: string }[];
   library: PickerPhoto[];
 }) {
   const router = useRouter();
@@ -77,7 +72,6 @@ export function RestaurantForm({
       set(k, e.target.value);
 
   const photo = library.find((p) => p.id === v.imageId);
-  const region = regions.find((r) => r.id === v.regionId);
 
   const save = async (mode: SaveMode) => {
     const r = await run(() => saveRestaurantAction(id, v, mode));
@@ -115,33 +109,26 @@ export function RestaurantForm({
                 required
                 value={v.neighborhood}
                 onChange={text('neighborhood')}
+                hint="Aparece em cima do nome, no card."
                 error={fieldError(result, 'neighborhood')}
               />
-              <Select
-                label="Região"
-                required
-                placeholder="Escolha uma região"
-                value={v.regionId}
-                onChange={(e) => set('regionId', e.target.value)}
-                options={regions.map((r) => ({ value: r.id, label: r.name }))}
-                error={fieldError(result, 'regionId')}
-              />
               <TextField
-                label="Link do mapa"
-                value={v.mapsUrl}
-                onChange={text('mapsUrl')}
-                placeholder="https://maps.google.com/…"
-                hint="Opcional. Sem link, “Como chegar” abre a busca do Google Maps pelo endereço."
-                error={fieldError(result, 'mapsUrl')}
+                label="Endereço"
+                required
+                value={v.address}
+                onChange={text('address')}
+                hint="Sem o bairro."
+                placeholder="Rua das Acácias, 000"
+                error={fieldError(result, 'address')}
               />
               <div className="full">
                 <TextField
-                  label="Endereço"
-                  required
-                  value={v.address}
-                  onChange={text('address')}
-                  hint="Sem o bairro. Ex.: “Rua das Acácias, 000”."
-                  error={fieldError(result, 'address')}
+                  label="Link do mapa (opcional)"
+                  value={v.mapsUrl}
+                  onChange={text('mapsUrl')}
+                  placeholder="https://maps.app.goo.gl/…"
+                  hint="Vazio: o botão “Como chegar” busca pelo endereço."
+                  error={fieldError(result, 'mapsUrl')}
                 />
               </div>
             </Fields>
@@ -235,7 +222,7 @@ export function RestaurantForm({
             </BoxSub>
             <RestaurantCard
               name={v.name || 'Nome do restaurante'}
-              neighborhood={v.neighborhood ? `${v.neighborhood}` : 'Bairro'}
+              neighborhood={v.neighborhood || 'Bairro'}
               schedule={v.schedule || 'Dias e horários'}
               address={v.address || 'Endereço'}
               ages={v.ages || 'Faixa etária'}
@@ -244,7 +231,6 @@ export function RestaurantForm({
               mapsUrl="#"
               placeholderId="preview"
             />
-            {region ? <BoxSub>Região: {region.name}</BoxSub> : null}
           </Box>
         </Sticky>
       </Cols>

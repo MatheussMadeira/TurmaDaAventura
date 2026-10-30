@@ -29,7 +29,6 @@ const mediaRef = z.string().min(1).nullable();
 export const restaurantSchema = z.object({
   name: req('Nome', 60, 2),
   neighborhood: req('Bairro', 40),
-  regionId: z.string().min(1, 'Região: escolha uma opção.'),
   address: req('Endereço', 80),
   mapsUrl: optionalUrl,
   schedule: req('Dias e horários', 50),

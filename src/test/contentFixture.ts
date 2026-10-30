@@ -8,7 +8,6 @@ import type {
   Activity,
   PublishedPage,
   Restaurant,
-  RestaurantGroup,
   SiteSettings,
   TeamMember,
 } from '@/content/types';
@@ -32,27 +31,21 @@ export const fixturePage = (slug: string): PublishedPage => {
   };
 };
 
-export const fixtureGroups = (): RestaurantGroup[] =>
-  restaurantes.regioes.map((g) => ({
-    id: g.id,
-    name: g.nome,
-    shortName: g.nomeCurto,
-    restaurants: g.restaurantes
-      .filter((r) => r.publicado)
-      .map((r): Restaurant => ({
-        slug: r.slug,
-        name: r.name,
-        neighborhood: r.neighborhood,
-        schedule: r.schedule,
-        address: r.address,
-        ages: r.ages,
-        mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
-        image: null,
-        imageAlt: r.imageAlt,
-        destaqueHome: r.destaqueHome,
-        regionShortName: g.nomeCurto,
-      })),
-  }));
+export const fixtureRestaurants = (): Restaurant[] =>
+  restaurantes.restaurantes
+    .filter((r) => r.publicado)
+    .map((r): Restaurant => ({
+      slug: r.slug,
+      name: r.name,
+      neighborhood: r.neighborhood,
+      schedule: r.schedule,
+      address: r.address,
+      ages: r.ages,
+      mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.name}, ${r.address}`)}`,
+      image: null,
+      imageAlt: r.imageAlt,
+      destaqueHome: r.destaqueHome,
+    }));
 
 export const fixtureActivities = (): Activity[] =>
   atividades.atividades
@@ -91,10 +84,9 @@ export const fixtureSettings = (): SiteSettings => ({
 
 export const contentModuleMock = () => ({
   getPublishedPage: async (slug: string) => fixturePage(slug),
-  getRestaurantGroups: async () => fixtureGroups(),
+  getRestaurants: async () => fixtureRestaurants(),
   getHomeRestaurants: async () =>
-    fixtureGroups()
-      .flatMap((g) => g.restaurants)
+    fixtureRestaurants()
       .filter((r) => r.destaqueHome)
       .slice(0, 3),
   getActivities: async () => fixtureActivities(),

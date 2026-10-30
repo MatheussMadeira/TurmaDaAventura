@@ -71,35 +71,27 @@ async function seedPages() {
 
 async function seedRestaurants() {
   let n = 0;
-  for (const [ri, g] of restaurantes.regioes.entries()) {
-    const region = await db.region.upsert({
-      where: { slug: g.id },
-      update: force ? { name: g.nome, shortName: g.nomeCurto ?? g.nome, order: ri } : {},
-      create: { slug: g.id, name: g.nome, shortName: g.nomeCurto ?? g.nome, order: ri },
+  for (const [i, r] of restaurantes.restaurantes.entries()) {
+    const data = {
+      name: r.name,
+      neighborhood: r.neighborhood,
+      schedule: r.schedule,
+      address: r.address,
+      ages: r.ages,
+      mapsUrl: r.mapsUrl,
+      order: i,
+      status: r.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
+      destaqueHome: r.destaqueHome,
+      imageAlt: r.imageAlt,
+    };
+    const exists = await db.restaurant.findUnique({ where: { slug: r.slug } });
+    if (exists && !force) continue;
+    await db.restaurant.upsert({
+      where: { slug: r.slug },
+      update: data,
+      create: { slug: r.slug, ...data },
     });
-    for (const [i, r] of g.restaurantes.entries()) {
-      const data = {
-        name: r.name,
-        neighborhood: r.neighborhood,
-        schedule: r.schedule,
-        address: r.address,
-        ages: r.ages,
-        mapsUrl: r.mapsUrl,
-        regionId: region.id,
-        order: i,
-        status: r.publicado ? ('PUBLICADO' as const) : ('RASCUNHO' as const),
-        destaqueHome: r.destaqueHome,
-        imageAlt: r.imageAlt,
-      };
-      const exists = await db.restaurant.findUnique({ where: { slug: r.slug } });
-      if (exists && !force) continue;
-      await db.restaurant.upsert({
-        where: { slug: r.slug },
-        update: data,
-        create: { slug: r.slug, ...data },
-      });
-      n++;
-    }
+    n++;
   }
   return n;
 }

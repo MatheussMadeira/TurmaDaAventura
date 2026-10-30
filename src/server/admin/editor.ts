@@ -7,7 +7,7 @@ import {
   getActivities,
   getActivityCategories,
   getHomeRestaurants,
-  getRestaurantGroups,
+  getRestaurants,
   getTeam,
 } from '../content';
 import { db } from '../db';
@@ -96,7 +96,7 @@ export async function loadPreviewData(slug: string): Promise<Record<string, unkn
       return { activities, categories };
     }
     case 'restaurantes':
-      return { groups: await getRestaurantGroups() };
+      return { restaurants: await getRestaurants() };
     case 'quem-somos':
       return { team: await getTeam() };
     default:

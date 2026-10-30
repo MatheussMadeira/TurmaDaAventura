@@ -10,15 +10,16 @@ export type SaveMode = 'draft' | 'publish';
 
 export async function listRestaurants() {
   const rows = await db.restaurant.findMany({
-    include: { region: true, image: true },
-    orderBy: [{ region: { order: 'asc' } }, { order: 'asc' }],
+    include: { image: true },
+    orderBy: { order: 'asc' },
   });
-  return rows.map((r) => ({
+  return rows.map((r, i) => ({
     id: r.id,
+    /** posição na lista inteira (a tela pode estar filtrada por aba) */
+    first: i === 0,
+    last: i === rows.length - 1,
     name: r.name,
     neighborhood: r.neighborhood,
-    region: r.region.name,
-    regionId: r.regionId,
     schedule: r.schedule,
     ages: r.ages,
     status: r.status,
@@ -27,12 +28,6 @@ export async function listRestaurants() {
   }));
 }
 export type RestaurantRow = Awaited<ReturnType<typeof listRestaurants>>[number];
-
-export const listRegions = () =>
-  db.region.findMany({
-    orderBy: { order: 'asc' },
-    select: { id: true, name: true, shortName: true },
-  });
 
 export async function getRestaurant(id: string) {
   return db.restaurant.findUnique({ where: { id }, include: { image: true } });
@@ -53,8 +48,6 @@ export async function saveRestaurant(
 ) {
   const input = parseInput(restaurantSchema, rawInput);
 
-  const region = await db.region.findUnique({ where: { id: input.regionId } });
-  if (!region) throw new DomainError('Revise 1 campo.', { regionId: 'Região: escolha uma opção.' });
   if (input.imageId && !(await db.media.findUnique({ where: { id: input.imageId } }))) {
     throw new DomainError('Revise 1 campo.', { imageId: 'Foto não encontrada na biblioteca.' });
   }
@@ -69,7 +62,6 @@ export async function saveRestaurant(
     schedule: input.schedule,
     ages: input.ages,
     destaqueHome: input.destaqueHome,
-    regionId: input.regionId,
     imageId: input.imageId,
     imageAlt: input.imageAlt,
     status,
@@ -79,22 +71,13 @@ export async function saveRestaurant(
   if (id) {
     const current = await db.restaurant.findUnique({ where: { id } });
     if (!current) throw new DomainError('Restaurante não encontrado.');
-    const moved = current.regionId !== input.regionId;
-    saved = await db.restaurant.update({
-      where: { id },
-      data: {
-        ...data,
-        ...(moved
-          ? { order: await db.restaurant.count({ where: { regionId: input.regionId } }) }
-          : {}),
-      },
-    });
+    saved = await db.restaurant.update({ where: { id }, data });
   } else {
     saved = await db.restaurant.create({
       data: {
         ...data,
         slug: await uniqueSlug(slugify(input.name)),
-        order: await db.restaurant.count({ where: { regionId: input.regionId } }),
+        order: await db.restaurant.count(), // entra no fim da lista
       },
     });
   }
@@ -140,12 +123,11 @@ export async function deleteRestaurant(actor: SessionUser, id: string) {
   touchSite();
 }
 
-/** Sobe/desce dentro da região: é a ordem em que aparecem no site. */
+/** Sobe/desce na lista: é a ordem em que os restaurantes aparecem no site. */
 export async function moveRestaurant(actor: SessionUser, id: string, dir: 'up' | 'down') {
   const r = await db.restaurant.findUnique({ where: { id } });
   if (!r) throw new DomainError('Restaurante não encontrado.');
   const siblings = await db.restaurant.findMany({
-    where: { regionId: r.regionId },
     orderBy: { order: 'asc' },
     select: { id: true },
   });

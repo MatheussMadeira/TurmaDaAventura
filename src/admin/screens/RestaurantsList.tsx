@@ -29,8 +29,8 @@ export interface RestaurantListRow {
   id: string;
   name: string;
   neighborhood: string;
-  region: string;
-  regionId: string;
+  first: boolean;
+  last: boolean;
   schedule: string;
   ages: string;
   status: 'RASCUNHO' | 'PUBLICADO' | 'PAUSADO';
@@ -57,13 +57,8 @@ export function RestaurantsList({
     return r;
   };
 
-  // pode subir/descer dentro da própria região (a ordem do site é por região)
-  const siblings = (r: RestaurantListRow) => rows.filter((x) => x.regionId === r.regionId);
-  const canMove = (r: RestaurantListRow, dir: 'up' | 'down') => {
-    const s = siblings(r);
-    const i = s.findIndex((x) => x.id === r.id);
-    return dir === 'up' ? i > 0 : i < s.length - 1;
-  };
+  // a ordem é a da lista inteira (a mesma do site), mesmo com a aba filtrada
+  const canMove = (r: RestaurantListRow, dir: 'up' | 'down') => (dir === 'up' ? !r.first : !r.last);
 
   const actions = (r: RestaurantListRow) => (
     <RowActions>
@@ -126,7 +121,7 @@ export function RestaurantsList({
               </Button>
             }
           >
-            Cadastre o primeiro parceiro e ele aparece na página Restaurantes, agrupado pela região.
+            Cadastre o primeiro parceiro e ele aparece na página Restaurantes.
           </EmptyState>
         </Box>
       ) : (
@@ -161,7 +156,6 @@ export function RestaurantsList({
                     </CellMain>
                   ),
                 },
-                { key: 'region', header: 'Região', render: (r) => r.region },
                 { key: 'schedule', header: 'Recreação', render: (r) => r.schedule },
                 { key: 'ages', header: 'Idades', render: (r) => r.ages },
                 {
@@ -201,9 +195,7 @@ export function RestaurantsList({
                       </Thumb>
                       <div>
                         <strong>{r.name}</strong>
-                        <span>
-                          {r.neighborhood} · {r.region}
-                        </span>
+                        <span>{r.neighborhood}</span>
                       </div>
                     </CellMain>
                   </CardRow>
@@ -228,8 +220,7 @@ export function RestaurantsList({
             </EmptyState>
           )}
           <Footnote>
-            A ordem desta lista é a ordem em que os restaurantes aparecem no site, agrupados por
-            região.
+            A ordem desta lista é a ordem em que os restaurantes aparecem no site.
           </Footnote>
         </Box>
       )}

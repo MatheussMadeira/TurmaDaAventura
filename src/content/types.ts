@@ -37,15 +37,6 @@ export interface Restaurant {
   image: ImageRef | null;
   imageAlt: string;
   destaqueHome: boolean;
-  /** nome curto da região ("Zona Oeste") */
-  regionShortName: string;
-}
-
-export interface RestaurantGroup {
-  id: string;
-  name: string;
-  shortName: string;
-  restaurants: Restaurant[];
 }
 
 export interface Activity {

@@ -112,7 +112,7 @@ export const inicioRenderers: Record<string, Renderer<InicioData>> = {
           <RestaurantCard
             key={r.slug}
             name={r.name}
-            neighborhood={`${r.neighborhood} · ${r.regionShortName}`}
+            neighborhood={r.neighborhood}
             schedule={r.schedule}
             address={r.address}
             ages={r.ages}

@@ -73,16 +73,6 @@ model Section {
   @@index([pageId, order])
 }
 
-model Region {
-  id          String       @id @default(cuid())
-  slug        String       @unique
-  name        String
-  /// nome curto para o overline dos cards da Início ("Pinheiros · Zona Oeste")
-  shortName   String
-  order       Int
-  restaurants Restaurant[]
-}
-
 model Restaurant {
   id           String        @id @default(cuid())
   slug         String        @unique
@@ -93,8 +83,7 @@ model Restaurant {
   address      String
   ages         String
   mapsUrl      String        @default("")
-  regionId     String
-  region       Region        @relation(fields: [regionId], references: [id])
+  /// posição na lista do site (única para todos os restaurantes)
   order        Int
   status       PublishStatus @default(RASCUNHO)
   destaqueHome Boolean       @default(false)
@@ -104,8 +93,7 @@ model Restaurant {
   imageAlt     String        @default("")
   updatedAt    DateTime      @updatedAt
 
-  @@index([regionId, order])
-  @@index([status])
+  @@index([status, order])
 }
 
 model Activity {

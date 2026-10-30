@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoA11yViolations } from '@/test/a11y';
 import { renderWithProviders } from '@/test/render';
-import { contentModuleMock, fixtureGroups } from '@/test/contentFixture';
+import { contentModuleMock, fixtureRestaurants } from '@/test/contentFixture';
 import HomePage from './(site)/page';
 import OficinasPage from './(site)/oficinas/page';
 import RestaurantesPage from './(site)/restaurantes/page';
@@ -18,7 +18,7 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
     name: 'Início',
     page: HomePage,
     sections: [
-      'Inicio/TresJeitos',
+      'Inicio/QuatroJeitos',
       'Inicio/Pilares',
       'Inicio/ComoFunciona',
       'Inicio/OndeEsta',
@@ -117,45 +117,33 @@ describe('Oficinas — filtro', () => {
   });
 });
 
-describe('restaurantes — endereço e overline', () => {
+describe('restaurantes — endereço, overline e título', () => {
   it('endereços sem o bairro em todos os registros', () => {
-    const groups = fixtureGroups();
-    expect(groups.length).toBeGreaterThan(0);
-    for (const r of groups.flatMap((g) => g.restaurants)) {
+    const list = fixtureRestaurants();
+    expect(list.length).toBeGreaterThan(0);
+    for (const r of list) {
       expect(r.address).not.toContain('·');
       expect(r.address).not.toContain(r.neighborhood);
     }
   });
 
-  it('Início: overline "{bairro} · {região}" (ex.: Pinheiros · Zona Oeste)', async () => {
+  it('Início: overline do card é só o bairro', async () => {
     const { container } = renderWithProviders(await HomePage());
     const overlines = [
       ...container.querySelectorAll('[data-section="Inicio/OndeEsta"] article .overline'),
     ].map((el) => el.textContent);
-    expect(overlines).toEqual([
-      'Pinheiros · Zona Oeste',
-      'Granja Viana · Zona Oeste',
-      'Moema · Zona Sul',
-    ]);
+    expect(overlines).toEqual(['Belvedere', 'Savassi', 'Pampulha']);
   });
 
-  it('Restaurantes: overline é só o bairro (a região já é o título do grupo)', async () => {
+  it('Restaurantes: um título só ("N restaurantes com a Turma"), sem chips de região, grade única', async () => {
     const { container } = renderWithProviders(await RestaurantesPage());
-    const overlines = [
-      ...container.querySelectorAll('[data-section="Restaurantes/Lista"] article .overline'),
-    ].map((el) => el.textContent);
-    expect(overlines).toEqual([
-      'Pinheiros',
-      'Vila Madalena',
-      'Granja Viana',
-      'Moema',
-      'Campo Belo',
-      'Brooklin',
+    const lista = container.querySelector('[data-section="Restaurantes/Lista"]')!;
+    const overlines = [...lista.querySelectorAll('article .overline')].map((el) => el.textContent);
+    expect(overlines).toEqual(fixtureRestaurants().map((r) => r.neighborhood));
+    expect([...lista.querySelectorAll('h2')].map((h) => h.textContent)).toEqual([
+      `${fixtureRestaurants().length} restaurantes com a Turma`,
     ]);
-    expect(
-      [...container.querySelectorAll('[data-section="Restaurantes/Lista"] h2')].map(
-        (h) => h.textContent,
-      ),
-    ).toEqual(['Zona Oeste e Granja Viana', 'Zona Sul']);
+    // sem chips de âncora na introdução
+    expect(container.querySelectorAll('[data-section="Restaurantes/Intro"] a').length).toBe(0);
   });
 });

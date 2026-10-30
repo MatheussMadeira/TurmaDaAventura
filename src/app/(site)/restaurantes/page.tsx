@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getPublishedPage, getRestaurantGroups } from '@/server/content';
+import { getPublishedPage, getRestaurants } from '@/server/content';
 import { restaurantesRenderers } from '@/site/pages/restaurantes';
 import { findContent, metaDescription, renderSections } from '@/site/render';
 import { pageMetadata } from '@/lib/seo';
@@ -14,9 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RestaurantesPage() {
-  const [page, groups] = await Promise.all([
+  const [page, restaurants] = await Promise.all([
     getPublishedPage('restaurantes'),
-    getRestaurantGroups(),
+    getRestaurants(),
   ]);
-  return <>{renderSections(page, restaurantesRenderers, { groups })}</>;
+  return <>{renderSections(page, restaurantesRenderers, { restaurants })}</>;
 }
