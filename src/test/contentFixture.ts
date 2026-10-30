@@ -7,6 +7,7 @@ import { PAGES, pageBySlug, sectionName } from '@/content/sections/schemas';
 import type {
   Activity,
   PartyTheme,
+  Product,
   PublishedPage,
   Restaurant,
   SiteSettings,
@@ -17,6 +18,8 @@ import atividades from '@/content/atividades.json';
 import equipe from '@/content/equipe.json';
 import restaurantes from '@/content/restaurantes.json';
 import temasFesta from '@/content/temas-festa.json';
+import produtos from '@/content/produtos.json';
+import { PRODUCT_CATEGORY_LABEL, productCategoryFromLabel } from '@/content/productCategories';
 import type { IconName } from '@/lib/iconNames';
 
 export const fixturePage = (slug: string): PublishedPage => {
@@ -62,6 +65,27 @@ export const fixtureThemes = (): PartyTheme[] =>
       imageAlt: t.imageAlt,
     }));
 
+export const fixtureProducts = (): Product[] =>
+  produtos.produtos
+    .filter((p) => p.publicado)
+    .map((p) => {
+      const category = productCategoryFromLabel(p.categoria)!;
+      return {
+        slug: p.slug,
+        name: p.name,
+        category,
+        categoryLabel: PRODUCT_CATEGORY_LABEL[category],
+        icon: p.icon as IconName,
+        description: p.description,
+        minQty: p.minQty,
+        personalizavel: p.personalizavel,
+        nosRestaurantes: p.nosRestaurantes,
+        soldOut: false,
+        image: null,
+        imageAlt: p.imageAlt,
+      };
+    });
+
 export const fixtureActivities = (): Activity[] =>
   atividades.atividades
     .filter((a) => a.publicado)
@@ -105,6 +129,7 @@ export const contentModuleMock = () => ({
       .filter((r) => r.destaqueHome)
       .slice(0, 3),
   getPartyThemes: async () => fixtureThemes(),
+  getProducts: async () => fixtureProducts(),
   getActivities: async () => fixtureActivities(),
   getActivityCategories: async () => [...new Set(fixtureActivities().map((a) => a.categoria))],
   getTeam: async () => fixtureTeam(),

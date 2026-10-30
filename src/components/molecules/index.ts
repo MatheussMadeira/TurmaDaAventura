@@ -12,3 +12,4 @@ export * from './TextLink';
 export * from './CheckList';
 export * from './BenefitPanel';
 export * from './StoryMedia';
+export * from './ProductCard';

@@ -10,6 +10,7 @@ import FestasPage from './(site)/festas-e-aniversarios/page';
 import RestaurantesPage from './(site)/restaurantes/page';
 import EventosPage from './(site)/eventos-corporativos/page';
 import QuemSomosPage from './(site)/quem-somos/page';
+import ProdutosPage from './(site)/produtos/page';
 
 vi.mock('@/server/content', () => contentModuleMock());
 
@@ -71,6 +72,11 @@ const pages: { name: string; page: () => Promise<ReactElement>; sections: string
       'EventosCorporativos/PreOrcamento',
       'EventosCorporativos/CTA',
     ],
+  },
+  {
+    name: 'Produtos',
+    page: ProdutosPage,
+    sections: ['Produtos/Intro', 'Produtos/Catalogo', 'Produtos/ComoFunciona', 'Produtos/CTA'],
   },
   {
     name: 'Quem somos',

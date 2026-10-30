@@ -9,3 +9,4 @@ export * from './TextField';
 export * from './Select';
 export * from './Panel';
 export * from './VisuallyHidden';
+export * from './Stepper';
