@@ -1,0 +1,84 @@
+{
+  "_nota": "Belo Horizonte, sem regiões. Dados fictícios; endereços '000' são placeholders. Ordem = ordem no site.",
+  "cidade": "Belo Horizonte · MG",
+  "restaurantes": [
+    {
+      "slug": "brasa-e-lenha",
+      "name": "Brasa & Lenha",
+      "neighborhood": "Belvedere",
+      "schedule": "Sáb e dom, 12h às 16h",
+      "address": "Alameda dos Ipês, 000",
+      "ages": "De 3 a 12 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Crianças em roda no jardim do restaurante",
+      "destaqueHome": true,
+      "publicado": true
+    },
+    {
+      "slug": "cantina-do-bosque",
+      "name": "Cantina do Bosque",
+      "neighborhood": "Savassi",
+      "schedule": "Sáb e dom, 12h às 17h",
+      "address": "Rua das Acácias, 000",
+      "ages": "De 3 a 10 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Área kids do restaurante com mesas baixas e cabana de tecido",
+      "destaqueHome": true,
+      "publicado": true
+    },
+    {
+      "slug": "emporio-jatoba",
+      "name": "Empório Jatobá",
+      "neighborhood": "Lourdes",
+      "schedule": "Sex, 19h às 23h · Sáb, 12h às 16h",
+      "address": "Rua dos Jatobás, 000",
+      "ages": "De 4 a 12 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Crianças desenhando numa mesa comprida no quintal",
+      "destaqueHome": false,
+      "publicado": true
+    },
+    {
+      "slug": "quintal-ipe",
+      "name": "Quintal Ipê",
+      "neighborhood": "Sion",
+      "schedule": "Dom, 12h às 17h",
+      "address": "Rua do Quintal, 000",
+      "ages": "De 2 a 8 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Tapete de atividades com blocos de madeira na varanda",
+      "destaqueHome": false,
+      "publicado": true
+    },
+    {
+      "slug": "rancho-cedro",
+      "name": "Rancho Cedro",
+      "neighborhood": "Pampulha",
+      "schedule": "Sáb, dom e feriados, 11h às 17h",
+      "address": "Rua do Cedro, 000",
+      "ages": "De 3 a 12 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Gramado com circuito de cordas entre árvores",
+      "destaqueHome": true,
+      "publicado": true
+    },
+    {
+      "slug": "trattoria-serra",
+      "name": "Trattoria Serra",
+      "neighborhood": "Buritis",
+      "schedule": "Sáb e dom, 12h às 17h",
+      "address": "Rua da Serra, 000",
+      "ages": "De 3 a 12 anos",
+      "mapsUrl": "",
+      "image": null,
+      "imageAlt": "Monitor conduzindo brincadeira de roda no pátio coberto",
+      "destaqueHome": false,
+      "publicado": true
+    }
+  ]
+}

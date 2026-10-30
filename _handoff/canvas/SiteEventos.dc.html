@@ -18,7 +18,7 @@
 </helmet>
 <div class="page" data-page="EventosCorporativos" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
 
-  <x-import component-from-global-scope="TDA.Header" current="/eventos-corporativos" message="Olá! Quero recreação infantil para um evento corporativo."></x-import>
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/eventos-corporativos" message="Olá! Quero recreação infantil para um evento corporativo."></x-import>
 
   <!-- EventosCorporativos/Hero (forest) -->
   <x-import component-from-global-scope="TDA.Hero" variant="forest" overline="Eventos corporativos" title="Espaço kids para o seu evento" lead="Os pais participam do evento enquanto as crianças ficam com monitores treinados, em atividades por faixa etária. Montagem, operação e desmontagem por nossa conta." image-alt="Espaço kids montado num salão de eventos, com crianças em atividade de pintura" cta-label="Pedir proposta no WhatsApp" message="Olá! Quero recreação infantil para um evento corporativo." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
@@ -111,7 +111,7 @@
     </div>
   </section>
 
-  <x-import component-from-global-scope="TDA.Footer" instagram="@turmadaaventura" city="São Paulo · SP" year="{{year}}"></x-import>
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
 
   <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero recreação infantil para um evento corporativo."></x-import></div>
 </div>
@@ -121,6 +121,15 @@ class Component extends DCLogic {
   renderVals() {
     return {
       yes: true, year: 2026, i24: 24, i20: 20,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
       secondary: { label: 'Ver formatos', href: '#formatos' },
       highlights: ['Monitores treinados', 'Seguro para cada criança', 'Montagem e desmontagem inclusas'],
       steps: [

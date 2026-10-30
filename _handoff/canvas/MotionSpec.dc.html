@@ -119,7 +119,7 @@ class Component extends DCLogic {
           ['20% visível (once)', 'faixa: fade + scale 0.96→1', 'dur-slow', 'ease-enter', '—', 'Fade 150ms'],
           ['Camuflagem viva', 'padrão translate (0,0)→(−20px,12px), ida e volta', 'dur-ambient 20s, loop', 'ease-standard', 'pausa fora da tela (useInView)', 'Parada']
         ]),
-        c('Filtro da Oficina e troca de página', 'Oficina · app/template.tsx', FM, [
+        c('Filtro das Oficinas e troca de página', 'Oficinas · app/template.tsx', FM, [
           ['Trocar filtro', 'cards saem (fade + 0.94) e entram (fade + 0.94→1) com layout animado; chip ativo desliza (layoutId="filtro-ativo")', 'dur-medium', 'saída ease-exit · entrada ease-enter', 'AnimatePresence mode="popLayout"', 'Troca direta, sem layout animado'],
           ['Trocar de página', 'conteúdo y move-sm→0 + fade; header e rodapé fixos', 'dur-medium', 'ease-enter', '—', 'Fade 150ms']
         ])

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Motion — especificação por componente</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/admin.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="width: 100%; min-height: 3900px; padding: 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px; font-family: var(--font-body); color: var(--ink);">
+  <header style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="overline" style="margin: 0; color: var(--earth-strong);">Pronto para implementar</p>
+      <h1 class="h1" style="margin: 0;">Especificação de movimento por componente</h1>
+      <p class="lead" style="margin: 0; color: var(--ink-muted);">Todos os valores são tokens. CSS (styled-components) cuida de hover, press, foco, loops e header; Framer Motion cuida de entradas ao rolar, stagger, layout animado e troca de página.</p>
+    </div>
+    <pre style="margin: 0; padding: 20px 24px; border-radius: var(--radius-lg); background: var(--surface-forest); color: var(--ink-on-forest); font: 600 13px/20px ui-monospace, Menlo, monospace; overflow: auto; white-space: pre;">// src/motion/tokens.ts (gerado do tokens.json)
+export const dur = { instant: .10, fast: .16, medium: .28,
+  slow: .50, trail: 1.2, ambient: 20, stagger: .08 };
+export const ease = {
+  enter:    [0.22, 1, 0.36, 1],
+  exit:     [0.4, 0, 1, 1],
+  standard: [0.4, 0, 0.2, 1],
+  stamp:    [0.34, 1.56, 0.64, 1],
+} as const;
+export const move = { xs: 4, sm: 12, md: 24 };
+export const reveal = { amount: 0.2, once: true, maxStagger: 6 };</pre>
+  </header>
+
+  <sc-for list="{{comps}}" as="c" hint-placeholder-count="12">
+    <section class="box box--flush" style="box-shadow: none;">
+      <div class="box__head" style="padding: 20px 24px; border-bottom: 1.5px solid var(--line);">
+        <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;"><h2 class="box__title" style="font-size: 24px; line-height: 30px;">{{c.name}}</h2><span class="caption" style="color: var(--ink-muted);">{{c.where}}</span></div>
+        <x-import component-from-global-scope="TDA.Tag" tone="{{c.tone}}">{{c.impl}}</x-import>
+      </div>
+      <table class="tbl">
+        <thead><tr><th scope="col" style="width: 14%;">Estado / gatilho</th><th scope="col" style="width: 26%;">O que muda</th><th scope="col">Duração</th><th scope="col">Curva</th><th scope="col">Atraso</th><th scope="col" style="width: 20%;">prefers-reduced-motion</th></tr></thead>
+        <tbody>
+          <sc-for list="{{c.rows}}" as="r" hint-placeholder-count="3">
+            <tr><td><strong>{{r.0}}</strong></td><td>{{r.1}}</td><td><code>{{r.2}}</code></td><td><code>{{r.3}}</code></td><td>{{r.4}}</td><td>{{r.5}}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </section>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var CSS = 'CSS', FM = 'Framer Motion', MIX = 'CSS + Framer Motion';
+    function c(name, where, impl, rows) { return { name: name, where: where, impl: impl, tone: impl === CSS ? 'olive' : (impl === FM ? 'brand' : 'earth'), rows: rows }; }
+    return {
+      comps: [
+        c('Button', 'atoms/Button · WhatsAppButton', CSS, [
+          ['Hover', 'translateY(−1px), fundo --_bg-h', 'dur-fast', 'transform: ease-stamp · cor: ease-standard', '—', 'Só a cor muda'],
+          ['Pressionado (:active)', 'translateY(move-xs) e sombra de carimbo some', '60ms', 'ease-standard', '—', 'Só a cor muda'],
+          ['Soltar', 'volta ao lugar com leve overshoot', 'dur-fast', 'ease-stamp', '—', 'Sem overshoot'],
+          ['Foco (teclado)', 'outline 3px focus, offset 3px (sem animação)', '—', '—', '—', 'Igual'],
+          ['Carregando (form)', 'ícone vira 3 pegadas (tda-steps), rótulo “Abrindo o WhatsApp…”', '900ms loop', 'ease-standard', 'pegadas 0/150/300ms', 'Texto estático, sem pegadas']
+        ]),
+        c('Cards', 'ServiceCard · RestaurantCard · TeamCard', MIX, [
+          ['Entrada ao rolar', 'opacidade 0→1, y move-md→0', 'dur-slow', 'ease-enter', 'i × stagger (máx. 6)', 'Fade 150ms ou nada'],
+          ['Hover / foco (com link)', 'y −4px, shadow-sm→shadow-md, foto scale 1→1.04, seta +move-xs', 'dur-medium · seta dur-fast', 'ease-enter', '—', 'Só a sombra muda'],
+          ['Pressionado', 'y −1px, borda brand', 'dur-fast', 'ease-standard', '—', 'Só a borda muda']
+        ]),
+        c('Header', 'organisms/Header · hook useScrollDirection', CSS, [
+          ['Rolou > 8px', 'altura 76→64px, logo 52→44px, shadow-md', 'dur-medium', 'ease-standard', '—', 'Só a sombra'],
+          ['Descendo > 240px', 'translateY(−100%)', 'dur-medium', 'ease-exit', 'limiar de 6px entre eventos (rAF)', 'Não esconde'],
+          ['Subindo', 'translateY(0)', 'dur-medium', 'ease-enter', '—', '—'],
+          ['Hover no menu', 'sublinhado tracejado desliza até o link (layoutId="nav-underline")', 'dur-medium', 'ease-enter', '—', 'Troca sem deslizar'],
+          ['Item ativo ao carregar', 'traço desenha da esquerda (scaleX 0→1)', 'dur-slow', 'ease-enter', '—', 'Já desenhado']
+        ]),
+        c('Menu mobile', 'Header < 1024px', CSS, [
+          ['Abrir', 'hambúrguer → X; lista desce; links y −move-sm→0 com fade', 'dur-medium', 'ease-enter', 'link i × 50ms', 'Abre sem deslocar'],
+          ['Fechar', 'X → hambúrguer; lista some', 'dur-fast', 'ease-exit', '—', 'Fecha direto']
+        ]),
+        c('Hero', 'organisms/Hero (acima da dobra: só CSS)', CSS, [
+          ['Carregar', 'overline → título → texto → botões → destaques: opacidade 0→1, y move-md→0', 'dur-slow', 'ease-enter', '0 · 80 · 160 · 240 · 320ms', 'Aparece direto'],
+          ['Foto', 'opacidade 0→1, scale 0.96→1', 'dur-slow', 'ease-enter', '120ms', 'Aparece direto'],
+          ['Moldura deslocada', 'translate (0,0)→(12px,12px)', 'dur-slow', 'ease-enter', '220ms', 'Já no lugar'],
+          ['Pata do logo', 'scale 0.6→1, rotação −2°→18°, fade', 'dur-slow', 'ease-stamp', '480ms (400ms após o título)', 'Já no lugar']
+        ]),
+        c('SectionHeader + Reveal', 'atoms/Reveal (padrão de todo o site)', FM, [
+          ['20% visível (once)', 'overline: traço desenha (scaleX 0→1); depois título e descrição sobem', 'dur-slow', 'ease-enter', 'traço 120ms · título +80ms · descrição +160ms', 'Fade 150ms'],
+          ['Imagens', 'opacidade 0→1, scale 0.98→1', 'dur-slow', 'ease-enter', 'stagger se em grade', 'Fade 150ms']
+        ]),
+        c('Trail', 'organisms/Trail — Como funciona', MIX, [
+          ['35% visível (once)', 'linha tracejada: pathLength 0→1 (clip-path no CSS); vertical no mobile', 'dur-trail 1200ms', 'ease-standard', '—', 'Linha já desenhada'],
+          ['Marcador i', 'scale 0.8→1 + fade, quando a linha chega', 'dur-slow', 'ease-stamp', 'i × 1200 / (n−1) ms', 'Já no lugar'],
+          ['Texto da etapa', 'y 12px→0 + fade', 'dur-slow', 'ease-enter', 'marcador + 120ms', 'Fade 150ms']
+        ]),
+        c('ValuePillar', 'molecules/ValuePillar (index 0, 1, 2)', CSS, [
+          ['20% visível (once)', 'selo scale 0.7→1 + fade', 'dur-slow', 'ease-stamp', 'index × 160ms', 'Aparece direto'],
+          ['Anel', 'box-shadow 0→22px e opacidade 0.5→0 (pegada na lama)', '900ms', 'ease-exit', 'index × 160 + 200ms', 'Sem anel']
+        ]),
+        c('QuoteForm', 'organisms/QuoteForm + TextField/Select', MIX, [
+          ['Foco no campo', 'anel brand-soft + focus aparece', 'dur-medium', 'ease-enter', '—', 'Anel sem transição'],
+          ['Erro ao enviar', 'campo chacoalha 3× ±move-xs; mensagem y −6px→0 + fade; aviso “Revise 2 campos” no topo', 'chacoalho 300ms · msg dur-medium', 'ease-standard · ease-enter', 'juntos', 'Sem chacoalho, mensagem aparece'],
+          ['Envio válido', 'botão: pegadas + “Abrindo o WhatsApp…” → check (scale 0.6→1) → abre wa.me', '700ms + check dur-medium', 'check ease-stamp', 'check em 700ms', 'Redireciona na hora']
+        ]),
+        c('WhatsAppFloat', 'organisms/WhatsAppFloat (todas as páginas)', CSS, [
+          ['1,5s ou 30% de rolagem', 'y move-md→0 + fade', 'dur-slow', 'ease-enter', '1500ms', 'Fade 150ms'],
+          ['20s sem interação', 'anel pulsa 0→18px e some', '1,2s a cada 20s', 'ease-exit', '2s após aparecer', 'Sem pulso'],
+          ['Rolando no mobile', 'pulso pausado', '—', '—', '—', '—'],
+          ['QuoteForm visível (25%)', 'some: y move-md + fade, não focável', 'dur-medium', 'ease-exit', '—', 'Some sem deslocar']
+        ]),
+        c('CTABanner', 'organisms/CTABanner + Hero floresta', MIX, [
+          ['20% visível (once)', 'faixa: fade + scale 0.96→1', 'dur-slow', 'ease-enter', '—', 'Fade 150ms'],
+          ['Camuflagem viva', 'padrão translate (0,0)→(−20px,12px), ida e volta', 'dur-ambient 20s, loop', 'ease-standard', 'pausa fora da tela (useInView)', 'Parada']
+        ]),
+        c('Filtro das Oficinas e troca de página', 'Oficinas · app/template.tsx', FM, [
+          ['Trocar filtro', 'cards saem (fade + 0.94) e entram (fade + 0.94→1) com layout animado; chip ativo desliza (layoutId="filtro-ativo")', 'dur-medium', 'saída ease-exit · entrada ease-enter', 'AnimatePresence mode="popLayout"', 'Troca direta, sem layout animado'],
+          ['Trocar de página', 'conteúdo y move-sm→0 + fade; header e rodapé fixos', 'dur-medium', 'ease-enter', '—', 'Fade 150ms']
+        ])
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

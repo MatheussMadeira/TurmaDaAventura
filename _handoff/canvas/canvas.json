@@ -10,13 +10,15 @@
   ],
   "boards": {
     "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 5700, "title": "Início · desktop", "page": "site", "expand": "fill"},
-    "SiteOficina.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 5500, "title": "Oficina · desktop", "page": "site", "expand": "fill", "is_interactive": true},
+    "SiteOficina.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 5500, "title": "Oficinas · desktop", "page": "site", "expand": "fill", "is_interactive": true},
+    "SiteFestas.dc.html": {"x": 7600, "y": 0, "w": 1440, "h": 5300, "title": "Festas e aniversários · desktop", "page": "site", "expand": "fill"},
     "SiteRestaurantes.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 4100, "title": "Restaurantes · desktop", "page": "site", "expand": "fill"},
     "SiteEventos.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 5100, "title": "Eventos corporativos · desktop", "page": "site", "expand": "fill"},
     "SiteQuemSomos.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 4600, "title": "Quem somos · desktop", "page": "site", "expand": "fill"},
 
     "MobileInicio.dc.html": {"x": 0, "y": 6020, "w": 390, "h": 9800, "title": "Início · mobile", "page": "site"},
-    "MobileOficina.dc.html": {"x": 470, "y": 6020, "w": 390, "h": 9800, "title": "Oficina · mobile", "page": "site", "is_interactive": true},
+    "MobileOficina.dc.html": {"x": 470, "y": 6020, "w": 390, "h": 9800, "title": "Oficinas · mobile", "page": "site", "is_interactive": true},
+    "MobileFestas.dc.html": {"x": 2350, "y": 6020, "w": 390, "h": 9600, "title": "Festas e aniversários · mobile", "page": "site"},
     "MobileRestaurantes.dc.html": {"x": 940, "y": 6020, "w": 390, "h": 7800, "title": "Restaurantes · mobile", "page": "site"},
     "MobileEventos.dc.html": {"x": 1410, "y": 6020, "w": 390, "h": 9200, "title": "Eventos corporativos · mobile", "page": "site"},
     "MobileQuemSomos.dc.html": {"x": 1880, "y": 6020, "w": 390, "h": 8800, "title": "Quem somos · mobile", "page": "site"},
@@ -58,7 +60,8 @@
   },
   "order": [
     "Main.dc.html", "SiteOficina.dc.html", "SiteRestaurantes.dc.html", "SiteEventos.dc.html", "SiteQuemSomos.dc.html",
-    "MobileInicio.dc.html", "MobileOficina.dc.html", "MobileRestaurantes.dc.html", "MobileEventos.dc.html", "MobileQuemSomos.dc.html",
+    "SiteFestas.dc.html",
+    "MobileInicio.dc.html", "MobileOficina.dc.html", "MobileRestaurantes.dc.html", "MobileEventos.dc.html", "MobileQuemSomos.dc.html", "MobileFestas.dc.html",
     "EstadosHeader.dc.html", "EstadosInteracao.dc.html", "EstadosFormulario.dc.html", "QuoteFormBlock.dc.html",
     "AdminLogin.dc.html", "AdminLoginErro.dc.html", "AdminLoginMobile.dc.html",
     "AdminEditor.dc.html", "AdminEditorFoto.dc.html", "AdminEditorPublicado.dc.html", "AdminEditorMobile.dc.html",
@@ -68,8 +71,8 @@
     "PrototipoInicio.dc.html", "PrototipoInicioMobile.dc.html", "Motion.dc.html", "MotionSpec.dc.html"
   ],
   "notes": {
-    "t_site_desk": {"x": 0, "y": -300, "text": "Site · desktop 1440", "kind": "title1", "maxW": 7520, "page": "site"},
-    "t_site_mob": {"x": 0, "y": 5720, "text": "Site · mobile 390", "kind": "title1", "maxW": 2270, "page": "site"},
+    "t_site_desk": {"x": 0, "y": -300, "text": "Site · desktop 1440", "kind": "title1", "maxW": 9040, "page": "site"},
+    "t_site_mob": {"x": 0, "y": 5720, "text": "Site · mobile 390", "kind": "title1", "maxW": 2740, "page": "site"},
     "t_site_states": {"x": 0, "y": 15940, "text": "Componentes e estados", "kind": "title1", "maxW": 5200, "page": "site"},
     "t_adm_acesso": {"x": 0, "y": -300, "text": "Acesso · /admin", "kind": "title1", "maxW": 3430, "page": "admin"},
     "t_adm_editor": {"x": 0, "y": 1020, "text": "Editor visual do site", "kind": "title1", "maxW": 4950, "page": "admin"},

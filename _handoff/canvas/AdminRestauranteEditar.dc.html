@@ -33,10 +33,9 @@
           <legend class="box__title" style="padding: 0; margin-bottom: 16px;">1 · Restaurante</legend>
           <div class="fields">
             <x-import component-from-global-scope="TDA.TextField" label="Nome" required="{{yes}}" default-value="Cantina do Bosque"></x-import>
-            <x-import component-from-global-scope="TDA.TextField" label="Bairro" required="{{yes}}" default-value="Pinheiros"></x-import>
-            <x-import component-from-global-scope="TDA.Select" label="Região" options="{{regioes}}" default-value="Zona Oeste e Granja Viana" hint="Define o grupo em que ele aparece no site."></x-import>
-            <x-import component-from-global-scope="TDA.TextField" label="Link do mapa" type="url" default-value="https://maps.app.goo.gl/…" hint="Usado no botão “Como chegar”."></x-import>
-            <x-import component-from-global-scope="TDA.TextField" label="Endereço" default-value="Rua das Acácias, 000 · Pinheiros" class-name="full"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Bairro" required="{{yes}}" default-value="Savassi" hint="Aparece em cima do nome, no card."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Endereço" default-value="Rua das Acácias, 000" hint="Sem o bairro."></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Link do mapa (opcional)" type="url" default-value="" placeholder="https://maps.app.goo.gl/…" hint="Vazio: o botão “Como chegar” busca pelo endereço." class-name="full"></x-import>
           </div>
         </fieldset>
 
@@ -81,7 +80,7 @@
         </div>
         <p class="box__sub">Exatamente como o card aparece em Restaurantes e na Início. Atualiza enquanto você digita.</p>
         <div style="max-width: 380px; width: 100%; align-self: center;">
-          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Pinheiros" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000 · Pinheiros" ages="De 3 a 10 anos" maps-url="#" placeholder-id="prev-r" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
+          <x-import component-from-global-scope="TDA.RestaurantCard" name="Cantina do Bosque" neighborhood="Savassi" schedule="Sáb e dom, 12h às 17h" address="Rua das Acácias, 000" ages="De 3 a 10 anos" maps-url="#" placeholder-id="prev-r" image-alt="Área kids do restaurante com mesas baixas e cabana de tecido"></x-import>
         </div>
       </aside>
     </div>
@@ -91,7 +90,7 @@
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
 class Component extends DCLogic {
   renderVals() {
-    return { yes: true, s20: 20, regioes: ['Zona Oeste e Granja Viana', 'Zona Sul'] };
+    return { yes: true, s20: 20 };
   }
 }
 </script>
