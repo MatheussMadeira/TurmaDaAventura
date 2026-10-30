@@ -21,6 +21,7 @@ import equipe from '../src/content/equipe.json';
 import contato from '../src/content/contato.json';
 import temasFesta from '../src/content/temas-festa.json';
 import { decideForce } from '../src/server/seedGuard';
+import { upgradeV2 } from './upgradeV2';
 
 config({ path: '.env.local' });
 config();
@@ -87,6 +88,8 @@ async function seedRestaurants() {
     };
     const exists = await db.restaurant.findUnique({ where: { slug: r.slug } });
     if (exists && !force) continue;
+    // o que falta entra no FIM da lista (não bate com a ordem que o cliente já definiu)
+    if (!force) data.order = await db.restaurant.count();
     await db.restaurant.upsert({
       where: { slug: r.slug },
       update: data,
@@ -136,6 +139,7 @@ async function seedThemes() {
     };
     const exists = await db.partyTheme.findUnique({ where: { slug: t.slug } });
     if (exists && !force) continue;
+    if (!force) data.order = await db.partyTheme.count();
     await db.partyTheme.upsert({
       where: { slug: t.slug },
       update: data,
@@ -236,6 +240,8 @@ async function main() {
   await guardForce();
   const sections = await seedPages();
   const rest = await seedRestaurants();
+  // ajustes v2: atualiza textos antigos que o cliente ainda não editou (com --force já vem tudo novo)
+  const upgrade = force ? { updated: [], notUpdated: [] } : await upgradeV2(db);
   const acts = await seedActivities();
   const themes = await seedThemes();
   const team = await seedTeam();
@@ -249,6 +255,17 @@ async function main() {
       published: true,
     },
   });
+  if (upgrade.updated.length) {
+    console.log(`
+Atualizados para a versão 2 (${upgrade.updated.length}):`);
+    for (const l of upgrade.updated) console.log(`  ✓ ${l}`);
+  }
+  if (upgrade.notUpdated.length) {
+    console.log(`
+NÃO atualizados, porque já foram editados no painel (${upgrade.notUpdated.length}):`);
+    for (const l of upgrade.notUpdated) console.log(`  • ${l}`);
+    console.log('  (confira se o texto atual ainda faz sentido; nada foi sobrescrito)');
+  }
   console.log(
     `Seed ok${force ? ' (--force)' : ''}: ${sections} seções · ${rest} restaurantes · ${acts} atividades · ${themes} temas de festa · ${team} equipe · configurações ${settings ? 'criadas' : 'mantidas'}`,
   );

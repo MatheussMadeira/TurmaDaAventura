@@ -456,7 +456,7 @@ export const DEFAULT_PAGES: Defaults = {
         overline: 'Fim de semana com a Turma',
         title: 'Onde a Turma está',
         description:
-          'Restaurantes parceiros com recreação fixa e monitores treinados. Você escolhe a mesa, as crianças escolhem a aventura — e todo mundo come em paz.',
+          'Restaurantes parceiros em Belo Horizonte com recreação fixa e monitores treinados. Você escolhe a mesa, as crianças escolhem a aventura — e todo mundo come em paz.',
       } satisfies SectionContent<'intro'>,
     },
     lista: { type: 'data-backed', content: {} },
@@ -658,7 +658,7 @@ export const DEFAULT_PAGES: Defaults = {
         overline: 'Quem somos',
         title: 'A turma por trás da aventura',
         lead: 'A Turma nasceu de um quintal: amigos educadores que levavam as próprias crianças para brincar ao ar livre todo fim de semana — e, de repente, os filhos dos vizinhos também queriam ir.',
-        body: 'Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para restaurantes, empresas e escolas. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.',
+        body: 'Hoje somos uma equipe de monitores, pedagogos e arte-educadores que leva essa mesma expedição para festas, restaurantes, empresas e escolas de Belo Horizonte. Mudou o tamanho, não o jeito: brincadeira de verdade, natureza sempre que dá e um adulto atento para cada grupo pequeno.',
         tagline: 'Brincar / Aprender / Ensinar',
         imageId: null,
         imageAlt: 'Equipe de monitores sentada em roda com as crianças no gramado',
