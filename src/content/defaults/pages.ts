@@ -449,6 +449,56 @@ export const DEFAULT_PAGES: Defaults = {
     }),
   },
 
+  produtos: {
+    intro: {
+      type: 'products-intro',
+      content: {
+        overline: 'Produtos',
+        title: 'Lembrancinhas e kits da Turma',
+        description:
+          'Lembrancinhas para festas e os kits que fazem sucesso nos restaurantes parceiros. Monte a sua sacola e envie o pedido pelo WhatsApp — a gente confirma valores, prazo e personalização por lá.',
+        notice:
+          'Nenhum pagamento é feito no site. Você só envia a lista e combina tudo com a gente na conversa.',
+      } satisfies SectionContent<'products-intro'>,
+    },
+    catalogo: {
+      type: 'products-catalog',
+      content: {
+        note: 'Lembrancinhas a partir da quantidade mínima indicada em cada produto. Fotos ilustrativas.',
+      } satisfies SectionContent<'products-catalog'>,
+    },
+    'como-funciona': {
+      type: 'steps',
+      content: {
+        overline: 'Como funciona',
+        title: 'Da sacola ao WhatsApp em três etapas',
+        description: '',
+        steps: [
+          {
+            icon: 'backpack',
+            title: 'Monte a sacola',
+            text: 'Escolha os produtos e as quantidades. Nada é cobrado no site.',
+          },
+          {
+            icon: 'whatsapp',
+            title: 'Envie no WhatsApp',
+            text: 'A lista vai pronta na mensagem, com nome e observações.',
+          },
+          {
+            icon: 'check',
+            title: 'A gente confirma',
+            text: 'Valores, prazo, personalização e entrega ou retirada.',
+          },
+        ],
+      } satisfies SectionContent<'steps'>,
+    },
+    cta: cta({
+      title: 'Quer algo personalizado para a festa?',
+      text: 'Nome da criança, tema e cores: conta pra gente e a Turma monta as lembrancinhas sob medida.',
+      ctaLabel: 'Chamar no WhatsApp',
+    }),
+  },
+
   restaurantes: {
     intro: {
       type: 'intro',

@@ -156,6 +156,17 @@ const stats = z.object({
     .length(3),
 });
 
+/** Abertura de Produtos: título (H1), texto e o aviso de que não há pagamento no site. */
+const productsIntro = z.object({
+  ...header,
+  notice: text('Aviso', 160, { multiline: true }),
+});
+
+/** Catálogo de Produtos: a lista vem da tabela; aqui só a nota abaixo da grade. */
+const productsCatalog = z.object({
+  note: text('Nota abaixo da lista', 160, { optional: true, multiline: true }),
+});
+
 /** Seções sem texto editável (conteúdo vem das tabelas) — ainda podem ser reordenadas/ocultadas. */
 const dataBacked = z.object({});
 
@@ -175,6 +186,8 @@ export const sectionSchemas = {
   benefits,
   history,
   stats,
+  'products-intro': productsIntro,
+  'products-catalog': productsCatalog,
   'data-backed': dataBacked,
 } as const;
 
@@ -263,6 +276,18 @@ export const PAGES: PageDef[] = [
       { key: 'como-funciona', name: 'ComoFunciona', type: 'steps' },
       { key: 'beneficios', name: 'Beneficios', type: 'benefits' },
       { key: 'pre-orcamento', name: 'PreOrcamento', type: 'pre-quote' },
+      { key: 'cta', name: 'CTA', type: 'cta' },
+    ],
+  },
+  {
+    slug: 'produtos',
+    path: '/produtos',
+    title: 'Produtos',
+    area: 'Produtos',
+    sections: [
+      { key: 'intro', name: 'Intro', type: 'products-intro' },
+      { key: 'catalogo', name: 'Catalogo', type: 'products-catalog' },
+      { key: 'como-funciona', name: 'ComoFunciona', type: 'steps' },
       { key: 'cta', name: 'CTA', type: 'cta' },
     ],
   },

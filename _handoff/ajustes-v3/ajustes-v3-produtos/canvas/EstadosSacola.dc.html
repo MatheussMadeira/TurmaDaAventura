@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Produtos e sacola — estados</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="width: 100%; min-height: 1500px; padding: 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px; font-family: var(--font-body); color: var(--ink);">
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <h1 class="h2" style="margin: 0;">Produtos e sacola · estados</h1>
+    <p class="body-sm muted">Sem preço e sem checkout: a sacola só monta a lista e abre o WhatsApp com a mensagem pronta. Nada é salvo nem cobrado no site.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 320px 420px 420px; gap: 48px; align-items: start;">
+    <!-- ProductCard -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      <div>
+        <p class="doc-label">ProductCard · repouso</p>
+        <article class="tda-card product">
+          <x-import component-from-global-scope="TDA.Media" ratio="4 / 3" icon="compass" alt="" placeholder-id="es1"></x-import>
+          <div class="tda-card__body">
+            <p class="overline tda-card__over">Lembrancinhas de festa</p>
+            <h3 class="h4 tda-card__title">Saquinho do explorador</h3>
+            <div class="tda-tags"><x-import component-from-global-scope="TDA.Tag" tone="olive" icon="users">Mín. 10 un.</x-import><x-import component-from-global-scope="TDA.Tag" tone="brand" icon="star">Personalizável</x-import></div>
+            <div class="product__foot"><x-import component-from-global-scope="TDA.Button" variant="outline" size="sm" icon-left="backpack">Adicionar à sacola</x-import></div>
+          </div>
+        </article>
+      </div>
+      <div>
+        <p class="doc-label">ProductCard · na sacola</p>
+        <article class="tda-card product is-in">
+          <x-import component-from-global-scope="TDA.Media" ratio="4 / 3" icon="leaf" alt="" placeholder-id="es2"></x-import>
+          <div class="tda-card__body">
+            <p class="overline tda-card__over">Lembrancinhas de festa</p>
+            <h3 class="h4 tda-card__title">Kit mini horta</h3>
+            <div class="product__foot">
+              <span class="product__in"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i18}}"></x-import>Na sacola</span>
+              <div class="stepper" role="group" aria-label="Quantidade"><button type="button" aria-label="Diminuir">−</button><output>20</output><button type="button" aria-label="Aumentar">+</button></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Sacola vazia -->
+    <div>
+      <p class="doc-label">Sacola · vazia</p>
+      <div style="height: 760px; border-radius: var(--radius-lg); overflow: hidden; border: 1.5px solid var(--line); box-shadow: var(--shadow-md);">
+        <aside class="drawer drawer--inline" aria-label="Sacola vazia">
+          <div class="drawer__head"><div><p class="overline" style="margin: 0; color: var(--earth-strong);">0 produtos</p><h2 class="drawer__title">Sua sacola</h2></div><button type="button" class="drawer__close" aria-label="Fechar"><x-import component-from-global-scope="TDA.Icon" name="close" size="{{i22}}"></x-import></button></div>
+          <div class="drawer__body"><div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 48px 8px;"><img src="/_blob/b836b8a3c664bb8d1ab72382e2ad9119" alt="" aria-hidden="true" style="width: 80px;"><h3 class="h4" style="margin: 0;">Sua sacola está vazia</h3><p class="body-sm" style="margin: 0; color: var(--ink-muted);">Escolha lembrancinhas e kits. A gente confirma tudo pelo WhatsApp.</p></div></div>
+          <div class="drawer__foot"><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" size="lg" full-width="{{yes}}" disabled="{{yes}}">Enviar pedido no WhatsApp</x-import><x-import component-from-global-scope="TDA.Button" variant="ghost" full-width="{{yes}}">Ver produtos</x-import></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Sacola com itens -->
+    <div>
+      <p class="doc-label">Sacola · com itens</p>
+      <div style="height: 760px; border-radius: var(--radius-lg); overflow: hidden; border: 1.5px solid var(--line); box-shadow: var(--shadow-md);">
+        <aside class="drawer drawer--inline" aria-label="Sacola com itens">
+          <div class="drawer__head"><div><p class="overline" style="margin: 0; color: var(--earth-strong);">2 produtos</p><h2 class="drawer__title">Sua sacola</h2></div><button type="button" class="drawer__close" aria-label="Fechar"><x-import component-from-global-scope="TDA.Icon" name="close" size="{{i22}}"></x-import></button></div>
+          <div class="drawer__body">
+            <ul class="bag-list">
+              <li class="bag-item"><div class="bag-item__img"><x-import component-from-global-scope="TDA.Media" icon="leaf" alt="" placeholder-id="es3" rounded="{{no}}"></x-import></div><div><p class="bag-item__name">Kit mini horta</p><p class="bag-item__meta">Mínimo de 10 unidades · personalizável</p></div><div class="bag-item__row"><div class="stepper"><button type="button" aria-label="Diminuir">−</button><output>20</output><button type="button" aria-label="Aumentar">+</button></div><button type="button" class="bag-remove">Remover</button></div></li>
+              <li class="bag-item"><div class="bag-item__img"><x-import component-from-global-scope="TDA.Media" icon="heart" alt="" placeholder-id="es4" rounded="{{no}}"></x-import></div><div><p class="bag-item__name">Massinha natural</p><p class="bag-item__meta">Kits de atividade</p></div><div class="bag-item__row"><div class="stepper"><button type="button" aria-label="Diminuir">−</button><output>2</output><button type="button" aria-label="Aumentar">+</button></div><button type="button" class="bag-remove">Remover</button></div></li>
+            </ul>
+            <x-import component-from-global-scope="TDA.TextField" label="Seu nome" default-value="Mariana"></x-import>
+            <x-import component-from-global-scope="TDA.TextField" label="Personalização e observações" multiline="{{yes}}" rows="{{r2}}" default-value="Nome da Laura nas plaquinhas. Festa com tema floresta."></x-import>
+          </div>
+          <div class="drawer__foot"><x-import component-from-global-scope="TDA.Button" icon-left="whatsapp" size="lg" full-width="{{yes}}">Enviar pedido no WhatsApp</x-import><p class="caption" style="margin: 0; text-align: center; color: var(--ink-muted);">Sem pagamento no site.</p></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Mensagem e botão -->
+    <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; align-items: start;">
+      <div>
+        <p class="doc-label">Mensagem que abre no WhatsApp</p>
+        <p class="msg-preview">Olá, Turma da Aventura! Quero fazer um pedido pelo site:
+
+• 20 × Kit mini horta
+• 2 × Massinha natural
+
+Nome: Mariana
+Para quando: 12/12/2026
+Observações: Nome da Laura nas plaquinhas. Festa com tema floresta.</p>
+      </div>
+      <div>
+        <p class="doc-label">Botão da sacola (substitui o WhatsApp flutuante)</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+          <button type="button" class="bag-fab"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{i22}}"></x-import>Ver sacola <span class="bag-fab__n">2</span></button>
+          <x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente"></x-import>
+        </div>
+        <p class="caption" style="margin: 8px 0 0; color: var(--ink-muted);">Sacola vazia → WhatsApp flutuante. Com itens → “Ver sacola”, com o número carimbando a cada produto novo.</p>
+      </div>
+      <div>
+        <p class="doc-label">Regras</p>
+        <ul class="body-sm" style="margin: 0; padding-left: 20px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 6px;">
+          <li>Sem preço, total, frete ou pagamento. A mensagem começa com o texto definido no admin (Contato e WhatsApp).</li>
+          <li>Ao adicionar, a quantidade começa no mínimo do produto; diminuir abaixo do mínimo tira da sacola.</li>
+          <li>A sacola fica guardada no navegador (localStorage) por 7 dias; esvazia depois do envio, com opção de desfazer.</li>
+          <li>Gaveta lateral no desktop (440px) e folha inferior no celular; Esc fecha, foco preso, foco volta ao botão.</li>
+          <li>Evento <code>whatsapp_click</code> com <code>placement: "bag"</code> e o número de itens.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, no: false, i18: 18, i22: 22, r2: 2 }; }
+}
+</script>
+</body>
+</html>

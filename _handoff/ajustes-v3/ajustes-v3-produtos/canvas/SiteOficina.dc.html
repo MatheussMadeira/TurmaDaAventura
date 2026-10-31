@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Oficinas — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="Oficinas" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <!-- Oficinas/Header -->
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/oficinas" message="Olá! Quero saber mais sobre as Oficinas."></x-import>
+
+  <!-- Oficinas/Hero -->
+  <x-import component-from-global-scope="TDA.Hero" overline="Oficinas" title="Mão na massa, pé na grama" lead="Brincadeiras, oficinas manuais, gincanas e atividades de natureza. A gente leva os materiais, monta no seu espaço e adapta tudo à idade da turma." image-alt="Crianças sentadas no chão do pátio montando pipas com papel de seda e varetas" message="Olá! Quero saber mais sobre as Oficinas." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+
+  <!-- Oficina/Catalogo -->
+  <section class="sec sec--sunken" id="catalogo" data-section="Oficinas/Catalogo">
+    <div class="wrap">
+      <div class="head-row">
+        <x-import component-from-global-scope="TDA.SectionHeader" overline="Catálogo de atividades" title="Escolha o roteiro da expedição" description="Misture atividades à vontade: a gente monta a sequência certa para o tempo e o espaço que você tem."></x-import>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar atividades por categoria">
+        <sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+          <button type="button" class="chip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}} <span class="chip__n">{{c.n}}</span></button>
+        </sc-for>
+      </div>
+      <div class="g3">
+        <sc-for list="{{acts}}" as="a" hint-placeholder-count="9">
+          <x-import component-from-global-scope="TDA.ServiceCard" image="{{a.img}}" image-alt="{{a.alt}}" icon="{{a.icon}}" overline="{{a.cat}}" title="{{a.title}}" description="{{a.text}}" tags="{{a.tags}}" placeholder-id="{{a.id}}"></x-import>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- Oficina/ComoMontamos -->
+  <section class="sec" data-section="Oficinas/ComoMontamos">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Passo a passo" title="Como montamos uma oficina"></x-import>
+      <div style="background: var(--surface-sunken); border-radius: var(--radius-xl); padding: 48px 40px;">
+        <x-import component-from-global-scope="TDA.Trail" steps="{{steps}}"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- Oficina/Seguranca -->
+  <section class="sec sec--earth" data-section="Oficinas/SegurancaMateriais">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Segurança e materiais" title="Tudo pensado antes da primeira tesoura" description="Pais e escolas perguntam — e a gente gosta de mostrar."></x-import>
+      <ul class="feats">
+        <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="shield" size="{{i26}}"></x-import></span><div><h3 class="h4">Materiais atóxicos</h3><p class="body-sm">Tintas naturais, colas à base d’água e tesouras sem ponta para os menores.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="leaf" size="{{i26}}"></x-import></span><div><h3 class="h4">Natureza e reaproveitamento</h3><p class="body-sm">Sementes, folhas, papel reciclado e sucata limpa viram brinquedo.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="users" size="{{i26}}"></x-import></span><div><h3 class="h4">Grupos por faixa etária</h3><p class="body-sm">Atividades separadas por idade, com um monitor para cada grupo pequeno.</p></div></li>
+        <li class="feat"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="heart" size="{{i26}}"></x-import></span><div><h3 class="h4">Primeiros socorros</h3><p class="body-sm">Equipe treinada e kit de primeiros socorros em toda oficina.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--olive"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{i26}}"></x-import></span><div><h3 class="h4">A gente leva tudo</h3><p class="body-sm">Materiais, forros, mesas baixas e o que mais a atividade pedir.</p></div></li>
+        <li class="feat"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i26}}"></x-import></span><div><h3 class="h4">Espaço conferido</h3><p class="body-sm">Antes de começar, checamos o local, as saídas e os pontos de atenção.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Oficina/PreOrcamento -->
+  <section class="sec" data-section="Oficinas/PreOrcamento">
+    <div class="wrap">
+      <div class="g12" style="align-items: start;">
+        <div class="span-5" style="display: flex; flex-direction: column; gap: 24px; padding-top: 16px;">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Pré-orçamento" title="Monte a sua oficina" description="Conta o básico e a conversa já abre no WhatsApp com tudo preenchido."></x-import>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Só nome e tipo são obrigatórios</li>
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Resposta em horário comercial</li>
+            <li style="display: flex; gap: 10px; align-items: center; font: 700 16px/22px var(--font-body); color: var(--ink);"><span style="color: var(--brand); display: inline-flex;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span>Cada oficina é montada sob medida</li>
+          </ul>
+        </div>
+        <div class="span-7">
+          <dc-import name="QuoteFormBlock" tipo="Oficinas" nome-label="Seu nome" estado="vazio" title="Monte seu orçamento" hint-size="100%,900px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Oficina/CTA -->
+  <section class="sec sec--tight" data-section="Oficinas/CTA">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.CTABanner" title="Bora colocar a mão na massa?" text="Escolha as atividades ou deixe com a gente. Respondemos rapidinho no WhatsApp." cta-label="Chamar no WhatsApp" message="Olá! Quero saber mais sobre as Oficinas."></x-import>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
+
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero saber mais sobre as Oficinas."></x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var all = [
+      { id: 'a1', cat: 'Oficinas manuais', icon: 'flag', title: 'Oficina de pipas', text: 'Cada criança monta e decora a própria pipa — e depois a gente leva todo mundo pro gramado.', tags: ['6 a 12 anos', '90 min'], alt: 'Crianças de costas segurando pipas coloridas no gramado' },
+      { id: 'a2', cat: 'Gincanas', icon: 'compass', title: 'Caça ao tesouro', text: 'Mapa, pistas e enigmas espalhados pelo espaço. Termina com o baú encontrado em equipe.', tags: ['5 a 12 anos', '60 min'], alt: 'Grupo de crianças olhando um mapa desenhado à mão' },
+      { id: 'a3', cat: 'Oficinas manuais', icon: 'palette', title: 'Pintura com tintas naturais', text: 'Tintas de urucum, açafrão e terra feitas na hora. Arte que sai da natureza.', tags: ['3 a 10 anos', '60 min'], alt: 'Mãos pequenas pintando papel com tinta de urucum' },
+      { id: 'a4', cat: 'Natureza', icon: 'leaf', title: 'Mini horta', text: 'Plantio de temperos em vasinhos que cada criança leva pra casa e cuida.', tags: ['3 a 10 anos', '60 min'], alt: 'Crianças colocando terra em vasinhos com mudas' },
+      { id: 'a5', cat: 'Brincadeiras', icon: 'tree', title: 'Circuito de aventura', text: 'Cordas, túneis e equilíbrio montados com segurança no espaço disponível.', tags: ['4 a 12 anos', '45 min'], alt: 'Criança atravessando ponte de cordas baixa entre árvores' },
+      { id: 'a6', cat: 'Brincadeiras', icon: 'tent', title: 'Acampamento de cabanas', text: 'Tecidos, prendedores e imaginação: cada grupo monta o seu acampamento.', tags: ['3 a 8 anos', '60 min'], alt: 'Cabanas de tecido montadas no gramado com crianças dentro' },
+      { id: 'a7', cat: 'Natureza', icon: 'compass', title: 'Trilha dos sentidos', text: 'Percurso de olhos vendados para sentir texturas, cheiros e sons da natureza.', tags: ['3 a 8 anos', '45 min'], alt: 'Criança de olhos vendados tocando folhas guiada por monitora' },
+      { id: 'a8', cat: 'Gincanas', icon: 'star', title: 'Gincana das equipes', text: 'Provas de cooperação, corrida e criatividade. Todo mundo ganha medalha de expedição.', tags: ['6 a 12 anos', '90 min'], alt: 'Equipes com lenços coloridos correndo em revezamento' },
+      { id: 'a9', cat: 'Oficinas manuais', icon: 'scissors', title: 'Brinquedos de sucata', text: 'Garrafas, tampinhas e caixas viram carrinhos, bilboquês e chocalhos.', tags: ['5 a 12 anos', '75 min'], alt: 'Mesa com carrinhos feitos de garrafa e tampinhas' }
+    ];
+    var self = this, cat = (this.state && this.state.cat) || 'Todas';
+    var cats = ['Todas', 'Brincadeiras', 'Oficinas manuais', 'Gincanas', 'Natureza'];
+    var chips = cats.map(function (c) {
+      return { label: c, n: c === 'Todas' ? all.length : all.filter(function (a) { return a.cat === c; }).length, pressed: c === cat ? 'true' : 'false', pick: function () { self.setState({ cat: c }); } };
+    });
+    var acts = all.filter(function (a) { return cat === 'Todas' || a.cat === cat; }).map(function (a) { return Object.assign({ img: null }, a); });
+    return {
+      yes: true, year: 2026, i26: 26, i20: 20,
+      chips: chips, acts: acts,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
+      secondary: { label: 'Ver atividades', href: '#catalogo' },
+      highlights: ['Materiais seguros e naturais', 'Atividades de 45 a 90 min', 'Para grupos de 8 a 40 crianças'],
+      steps: [
+        { icon: 'whatsapp', title: 'Chama no WhatsApp', text: 'Conta a data, o espaço e quantas crianças vêm.' },
+        { icon: 'compass', title: 'Escolhemos o roteiro', text: 'Montamos a sequência de atividades por idade e tempo.' },
+        { icon: 'backpack', title: 'Preparamos os materiais', text: 'Separamos tudo e conferimos o espaço antes do dia.' },
+        { icon: 'tent', title: 'Oficina no seu espaço', text: 'Chegamos antes, conduzimos e deixamos tudo limpo.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

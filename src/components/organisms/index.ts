@@ -7,3 +7,5 @@ export * from './Footer';
 export * from './WhatsAppFloat';
 export * from './Gallery';
 export * from './ActivityCatalog';
+export * from './Bag';
+export * from './ProductCatalog';

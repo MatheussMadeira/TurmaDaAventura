@@ -1,0 +1,127 @@
+{
+  "_nota": "Produtos fictícios do design. SEM campo de preço. minQty=1 vende por unidade.",
+  "categorias": [
+    "Lembrancinhas de festa",
+    "Kits de atividade",
+    "Brinquedos e livros"
+  ],
+  "produtos": [
+    {
+      "slug": "kit-mini-horta",
+      "categoria": "Lembrancinhas de festa",
+      "icon": "leaf",
+      "name": "Kit mini horta",
+      "description": "Vasinho, sementes e plaquinha com o nome do convidado.",
+      "minQty": 10,
+      "personalizavel": true,
+      "nosRestaurantes": false,
+      "image": null,
+      "imageAlt": "Vasinhos de barro com sementes e plaquinhas de madeira",
+      "publicado": true
+    },
+    {
+      "slug": "saquinho-do-explorador",
+      "categoria": "Lembrancinhas de festa",
+      "icon": "compass",
+      "name": "Saquinho do explorador",
+      "description": "Lupa, bússola de papel e um mapa para continuar a aventura em casa.",
+      "minQty": 10,
+      "personalizavel": true,
+      "nosRestaurantes": false,
+      "image": null,
+      "imageAlt": "Saquinho de tecido cru com lupa e mapa dobrado",
+      "publicado": true
+    },
+    {
+      "slug": "pipinha-decorada",
+      "categoria": "Lembrancinhas de festa",
+      "icon": "flag",
+      "name": "Pipinha decorada",
+      "description": "Pipa pequena de papel de seda, pronta para voar no quintal.",
+      "minQty": 10,
+      "personalizavel": true,
+      "nosRestaurantes": false,
+      "image": null,
+      "imageAlt": "Pipas pequenas coloridas penduradas num varal",
+      "publicado": true
+    },
+    {
+      "slug": "kit-pintura-de-pedrinhas",
+      "categoria": "Lembrancinhas de festa",
+      "icon": "scissors",
+      "name": "Kit pintura de pedrinhas",
+      "description": "Pedrinhas, tinta e pincel para cada convidado levar a sua obra.",
+      "minQty": 10,
+      "personalizavel": true,
+      "nosRestaurantes": false,
+      "image": null,
+      "imageAlt": "Pedras de rio pintadas com bichinhos",
+      "publicado": true
+    },
+    {
+      "slug": "kit-tintas-naturais",
+      "categoria": "Kits de atividade",
+      "icon": "palette",
+      "name": "Kit tintas naturais",
+      "description": "Tintas de urucum, açafrão e terra com pincel e papel reciclado.",
+      "minQty": 1,
+      "personalizavel": false,
+      "nosRestaurantes": true,
+      "image": null,
+      "imageAlt": "Potinhos de tinta natural ao lado de pincéis e papel",
+      "publicado": true
+    },
+    {
+      "slug": "massinha-natural",
+      "categoria": "Kits de atividade",
+      "icon": "heart",
+      "name": "Massinha natural",
+      "description": "Pote com três cores feitas com ingredientes de cozinha.",
+      "minQty": 1,
+      "personalizavel": false,
+      "nosRestaurantes": true,
+      "image": null,
+      "imageAlt": "Três potes de massinha em tons de verde, ocre e terra",
+      "publicado": true
+    },
+    {
+      "slug": "caca-ao-tesouro-em-casa",
+      "categoria": "Kits de atividade",
+      "icon": "star",
+      "name": "Caça ao tesouro em casa",
+      "description": "Pistas, enigmas e mapa para montar uma caça ao tesouro na sala.",
+      "minQty": 1,
+      "personalizavel": false,
+      "nosRestaurantes": true,
+      "image": null,
+      "imageAlt": "Envelope com pistas e um mapa desenhado à mão",
+      "publicado": true
+    },
+    {
+      "slug": "cabaninha-de-tecido",
+      "categoria": "Brinquedos e livros",
+      "icon": "tent",
+      "name": "Cabaninha de tecido",
+      "description": "Cabana dobrável para acampar no quarto ou na varanda.",
+      "minQty": 1,
+      "personalizavel": false,
+      "nosRestaurantes": true,
+      "image": null,
+      "imageAlt": "Cabana pequena de tecido cru montada numa sala",
+      "publicado": true
+    },
+    {
+      "slug": "caderno-de-expedicao",
+      "categoria": "Brinquedos e livros",
+      "icon": "backpack",
+      "name": "Caderno de expedição",
+      "description": "Para colorir, anotar descobertas e colar os adesivos da Turma.",
+      "minQty": 1,
+      "personalizavel": false,
+      "nosRestaurantes": true,
+      "image": null,
+      "imageAlt": "Caderno de capa kraft com adesivos de pegadas",
+      "publicado": true
+    }
+  ]
+}

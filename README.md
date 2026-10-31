@@ -83,6 +83,13 @@ O site público só lê o conteúdo **publicado**; rascunhos vivem em `Section.d
 - O rascunho salva sozinho (~1 s) e **não vai ao ar** até “Publicar alterações”. Ordem e visibilidade das seções também são rascunho.
 - **Uma pessoa por vez em cada página:** a reserva fica no banco (`PageLock`, 90 s, renovada a cada ~25 s e solta ao sair). Quem chega depois não entra; gravar, publicar e descartar exigem a reserva **no servidor**. Se a aba some, a reserva expira sozinha.
 
+## Produtos e sacola (sem checkout)
+
+- `/produtos`: catálogo (Lembrancinhas, Kits, Brinquedos e livros) com filtro. **Nenhum preço, total, frete ou pagamento** — não existe campo de preço no banco nem no JSON-LD (`ItemList`/`Product` sem `offers`).
+- A **sacola** monta a lista e abre o WhatsApp com a mensagem pronta (`lib/bag.ts`). Fica no `localStorage` por 7 dias (`lib/bagStore.ts`), vale em todas as páginas e o botão “Ver sacola” substitui o WhatsApp flutuante enquanto houver itens. Depois do envio ela esvazia, com “Desfazer”.
+- Admin: **Produtos** (permissão de Atividades): abas No site / Rascunhos / Esgotados / Todos, formulário ao lado. Esgotado aparece no site sem o botão de adicionar. O início da mensagem da sacola é editado em **Contato e WhatsApp**.
+- Seed: `npm run db:seed` cria a página e os 9 produtos de `src/content/produtos.json` sem sobrescrever edições. Produção: `npm run db:deploy` (migration `product`) antes do seed.
+
 ## Perfis e segurança
 
 - **Administração:** tudo. **Equipe:** site, fotos, restaurantes, atividades e equipe — sem Usuários e Contato. Checado no servidor (proxy, páginas e Server Actions), não só no menu.

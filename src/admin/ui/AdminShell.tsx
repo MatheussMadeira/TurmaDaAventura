@@ -19,7 +19,7 @@ interface NavItem {
   permission?: Permission;
   /** em breve (parte 5B): aparece desabilitado */
   soon?: boolean;
-  countKey?: 'restaurants' | 'activities' | 'themes' | 'team' | 'photos';
+  countKey?: 'restaurants' | 'activities' | 'themes' | 'products' | 'team' | 'photos';
 }
 
 const GROUPS: { title: string; items: NavItem[] }[] = [
@@ -67,6 +67,13 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
         countKey: 'themes',
       },
       {
+        href: '/admin/produtos',
+        label: 'Produtos',
+        icon: 'backpack',
+        permission: 'activities',
+        countKey: 'products',
+      },
+      {
         href: '/admin/equipe',
         label: 'Equipe',
         icon: 'users',
@@ -111,7 +118,9 @@ export function AdminShell({
 }: {
   user: ShellUser;
   initialTheme: 'dia' | 'noite';
-  counts?: Partial<Record<'restaurants' | 'activities' | 'themes' | 'team' | 'photos', number>>;
+  counts?: Partial<
+    Record<'restaurants' | 'activities' | 'themes' | 'products' | 'team' | 'photos', number>
+  >;
   children: ReactNode;
 }) {
   const pathname = usePathname();

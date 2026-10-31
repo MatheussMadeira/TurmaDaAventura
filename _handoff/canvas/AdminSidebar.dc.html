@@ -53,7 +53,7 @@
   </div>
 </aside>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["painel","editor","midia","restaurantes","atividades","temas","equipe","usuarios","contato"],"default":"painel"},"role":{"editor":"enum","options":["admin","equipe"],"default":"admin"},"$preview":{"width":248,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["painel","editor","midia","restaurantes","atividades","temas","produtos","equipe","usuarios","contato"],"default":"painel"},"role":{"editor":"enum","options":["admin","equipe"],"default":"admin"},"$preview":{"width":248,"height":900}}'>
 class Component extends DCLogic {
   renderVals() {
     var a = this.props.active || 'painel';
@@ -72,6 +72,7 @@ class Component extends DCLogic {
         mk('restaurantes', 'Restaurantes', 'utensils', 'AdminRestaurantes.dc.html'),
         mk('atividades', 'Atividades das Oficinas', 'scissors', 'AdminRestaurantes.dc.html'),
         mk('temas', 'Temas de festa', 'star', 'AdminRestaurantes.dc.html'),
+        mk('produtos', 'Produtos', 'backpack', 'AdminProdutos.dc.html'),
         mk('equipe', 'Equipe', 'users', 'AdminRestaurantes.dc.html')
       ],
       admin: [

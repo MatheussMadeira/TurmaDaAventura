@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Eventos corporativos — Turma da Aventura</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" data-page="EventosCorporativos" style="font-family: var(--font-body); color: var(--ink); width: 100%;">
+
+  <x-import component-from-global-scope="TDA.Header" items="{{nav}}" current="/eventos-corporativos" message="Olá! Quero recreação infantil para um evento corporativo."></x-import>
+
+  <!-- EventosCorporativos/Hero (forest) -->
+  <x-import component-from-global-scope="TDA.Hero" variant="forest" overline="Eventos corporativos" title="Espaço kids para o seu evento" lead="Os pais participam do evento enquanto as crianças ficam com monitores treinados, em atividades por faixa etária. Montagem, operação e desmontagem por nossa conta." image-alt="Espaço kids montado num salão de eventos, com crianças em atividade de pintura" cta-label="Pedir proposta no WhatsApp" message="Olá! Quero recreação infantil para um evento corporativo." secondary="{{secondary}}" highlights="{{highlights}}"></x-import>
+
+  <!-- EventosCorporativos/Formatos -->
+  <section class="sec" id="formatos" data-section="EventosCorporativos/Formatos">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Formatos" title="Para cada tipo de encontro" description="Do almoço de fim de ano à convenção de três dias: a estrutura acompanha o tamanho do evento."></x-import>
+      <div class="g4">
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="star" title="Confraternização de fim de ano" description="Espaço kids durante a festa, com atividades para todas as idades e horário estendido."></x-import>
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="heart" tone="earth" title="Dia da Família" description="Gincanas, oficinas e circuitos que aproximam as famílias da empresa."></x-import>
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="briefcase" title="Convenções e feiras" description="Espaço kids em estandes e congressos, com controle de entrada e saída."></x-import>
+        <x-import component-from-global-scope="TDA.ServiceCard" icon="calendar" tone="earth" title="Férias na empresa" description="Programação para os filhos de colaboradores durante as férias escolares."></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- EventosCorporativos/Logos -->
+  <section class="sec sec--sunken" style="padding-top: 64px; padding-bottom: 64px;" data-section="EventosCorporativos/EmpresasAtendidas">
+    <div class="wrap" style="gap: 24px;">
+      <p class="overline" style="margin: 0; color: var(--earth-strong); text-align: center;">Empresas que já levaram a Turma</p>
+      <div class="logos">
+        <div class="logo-ph">Logo da empresa</div>
+        <div class="logo-ph">Logo da empresa</div>
+        <div class="logo-ph">Logo da empresa</div>
+        <div class="logo-ph">Logo da empresa</div>
+        <div class="logo-ph">Logo da empresa</div>
+        <div class="logo-ph">Logo da empresa</div>
+      </div>
+      <p class="caption" style="margin: 0; color: var(--ink-muted); text-align: center;">Logos exibidos com autorização de cada empresa.</p>
+    </div>
+  </section>
+
+  <!-- EventosCorporativos/ComoFunciona -->
+  <section class="sec" data-section="EventosCorporativos/ComoFunciona">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Como funciona" title="Do briefing à operação em quatro etapas"></x-import>
+      <div style="background: var(--surface-sunken); border-radius: var(--radius-xl); padding: 48px 40px;">
+        <x-import component-from-global-scope="TDA.Trail" steps="{{steps}}"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- EventosCorporativos/Beneficios -->
+  <section class="sec sec--earth" data-section="EventosCorporativos/Beneficios">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.SectionHeader" overline="Benefícios" title="Bom para o RH, tranquilo para os pais"></x-import>
+      <div class="g2">
+        <div class="panel" style="padding: 40px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; align-items: center; gap: 16px;"><span class="feat__icon"><x-import component-from-global-scope="TDA.Icon" name="briefcase" size="{{i24}}"></x-import></span><h3 class="h3" style="margin: 0;">Para o RH</h3></div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Mais adesão: colaboradores com filhos conseguem participar do evento.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Um único fornecedor para montagem, equipe, materiais e seguro.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Proposta formal, contrato e nota fiscal para o seu processo de compras.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Relatório pós-evento com número de crianças atendidas.</p></li>
+          </ul>
+        </div>
+        <div class="panel" style="padding: 40px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; align-items: center; gap: 16px;"><span class="feat__icon feat__icon--earth"><x-import component-from-global-scope="TDA.Icon" name="users" size="{{i24}}"></x-import></span><h3 class="h3" style="margin: 0;">Para os pais</h3></div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Check-in com pulseira de identificação e retirada só pelo responsável.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Monitores treinados em primeiros socorros, com proporção por idade.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Atividades separadas por faixa etária, dos 3 aos 12 anos.</p></li>
+            <li class="feat"><span style="color: var(--brand); display: inline-flex; margin-top: 2px;"><x-import component-from-global-scope="TDA.Icon" name="check" size="{{i20}}"></x-import></span><p class="body">Espaço à vista, perto do evento — sem perder o filho de vista.</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EventosCorporativos/PreOrcamento -->
+  <section class="sec" data-section="EventosCorporativos/PreOrcamento">
+    <div class="wrap">
+      <div class="g12" style="align-items: start;">
+        <div class="span-5" style="display: flex; flex-direction: column; gap: 24px; padding-top: 16px;">
+          <x-import component-from-global-scope="TDA.SectionHeader" overline="Proposta" title="Conte sobre o seu evento" description="Com data, local e número estimado de crianças, a gente devolve uma proposta sob medida."></x-import>
+          <p class="body-sm" style="margin: 0; color: var(--ink-muted);">Prefere e-mail? Peça no WhatsApp e enviamos a proposta em PDF para o seu time de compras.</p>
+        </div>
+        <div class="span-7">
+          <dc-import name="QuoteFormBlock" tipo="Evento corporativo" nome-label="Seu nome e empresa" estado="vazio" title="Pedir proposta" hint-size="100%,900px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EventosCorporativos/CTA -->
+  <section class="sec sec--tight" data-section="EventosCorporativos/CTA">
+    <div class="wrap">
+      <x-import component-from-global-scope="TDA.CTABanner" title="Seu próximo evento com espaço kids" text="Fale com a gente e receba uma proposta para o seu formato e o seu público." cta-label="Pedir proposta no WhatsApp" message="Olá! Quero recreação infantil para um evento corporativo."></x-import>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
+
+  <div class="wa-pin"><x-import component-from-global-scope="TDA.WhatsAppFloat" inline="{{yes}}" label="Fale com a gente" message="Olá! Quero recreação infantil para um evento corporativo."></x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, year: 2026, i24: 24, i20: 20,
+      nav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.',
+      secondary: { label: 'Ver formatos', href: '#formatos' },
+      highlights: ['Monitores treinados', 'Seguro para cada criança', 'Montagem e desmontagem inclusas'],
+      steps: [
+        { icon: 'whatsapp', title: 'Briefing', text: 'Data, local, público e número estimado de crianças.' },
+        { icon: 'mail', title: 'Proposta', text: 'Formato, equipe e cronograma em PDF para aprovação.' },
+        { icon: 'tent', title: 'Montagem', text: 'Chegamos antes e entregamos o espaço pronto.' },
+        { icon: 'shield', title: 'Operação', text: 'Check-in, atividades e entrega segura para os pais.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

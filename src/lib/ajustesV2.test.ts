@@ -21,16 +21,18 @@ describe('ajustes v2', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('menu: 6 itens, "Festas"; rodapé: "Festas e aniversários"', () => {
+  it('menu: 7 itens com rótulos curtos; rodapé com nomes completos', () => {
     expect(NAV_ITEMS.map((i) => i.label)).toEqual([
       'Início',
       'Oficinas',
       'Festas',
       'Restaurantes',
-      'Eventos corporativos',
+      'Eventos',
+      'Produtos',
       'Quem somos',
     ]);
     expect(FOOTER_ITEMS.map((i) => i.label)[2]).toBe('Festas e aniversários');
+    expect(FOOTER_ITEMS.map((i) => i.label)[4]).toBe('Eventos corporativos');
     expect(FOOTER_ITEMS.map((i) => i.href)).toEqual(NAV_ITEMS.map((i) => i.href));
   });
 

@@ -1,4 +1,5 @@
 import type { IconName } from '@/lib/iconNames';
+import type { ProductCategory } from './productCategories';
 import type { SectionType } from './sections/schemas';
 
 /** Tipos do que o SITE consome (já resolvido a partir do banco). Nenhum campo de preço. */
@@ -57,6 +58,23 @@ export interface PartyTheme {
   title: string;
   description: string;
   tags: string[];
+  image: ImageRef | null;
+  imageAlt: string;
+}
+
+/** Produto do catálogo (sem preço): pedido montado na sacola e enviado pelo WhatsApp. */
+export interface Product {
+  slug: string;
+  name: string;
+  category: ProductCategory;
+  /** rótulo da categoria, ex.: "Kits de atividade" */
+  categoryLabel: string;
+  icon: IconName;
+  description: string;
+  minQty: number;
+  personalizavel: boolean;
+  nosRestaurantes: boolean;
+  soldOut: boolean;
   image: ImageRef | null;
   imageAlt: string;
 }

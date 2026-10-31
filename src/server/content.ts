@@ -5,6 +5,7 @@ import { pageBySlug, parseSection, sectionName } from '@/content/sections/schema
 import type {
   Activity,
   PartyTheme,
+  Product,
   ImageRef,
   PublishedPage,
   PublishedSection,
@@ -13,6 +14,7 @@ import type {
   TeamMember,
 } from '@/content/types';
 import contatoJson from '@/content/contato.json';
+import { PRODUCT_CATEGORY_LABEL } from '@/content/productCategories';
 import type { IconName } from '@/lib/iconNames';
 import type { Media } from '@/generated/prisma/client';
 import { db } from './db';
@@ -142,6 +144,29 @@ export const getActivityCategories = cached('activity-categories', async (): Pro
   return [...new Set(acts.map((a) => a.categoria))];
 });
 
+/** Produtos no site (publicados e esgotados), na ordem do admin. Nenhum campo de preço. */
+export const getProducts = cached('products', async (): Promise<Product[]> => {
+  const rows = await db.product.findMany({
+    where: { status: { in: ['PUBLICADO', 'ESGOTADO'] } },
+    orderBy: { order: 'asc' },
+    include: { image: true },
+  });
+  return rows.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    category: p.category,
+    categoryLabel: PRODUCT_CATEGORY_LABEL[p.category],
+    icon: p.icon as IconName,
+    description: p.description,
+    minQty: p.minQty,
+    personalizavel: p.personalizavel,
+    nosRestaurantes: p.nosRestaurantes,
+    soldOut: p.status === 'ESGOTADO',
+    image: toImage(p.image),
+    imageAlt: p.imageAlt,
+  }));
+});
+
 /** Temas de festa publicados, na ordem do admin. */
 export const getPartyThemes = cached('party-themes', async (): Promise<PartyTheme[]> => {
   const rows = await db.partyTheme.findMany({
@@ -194,6 +219,7 @@ export const getSettings = cached('settings', async (): Promise<SiteSettings> =>
     email: s.email,
     city: s.city,
     hours: s.hours,
-    messages: s.messages as Record<string, string>,
+    // chaves novas (ex.: "sacola") caem no texto padrão até alguém salvar Contato e WhatsApp
+    messages: { ...contatoJson.mensagens, ...(s.messages as Record<string, string>) },
   };
 });

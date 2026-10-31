@@ -74,3 +74,36 @@ export function localBusinessJsonLd(contact: SiteSettings) {
     ],
   };
 }
+
+/**
+ * JSON-LD da lista de produtos (ItemList → Product). SEM `offers`/preço: o pedido é combinado
+ * pelo WhatsApp e o site não vende nada.
+ */
+export function productsJsonLd(
+  products: {
+    name: string;
+    description: string;
+    categoryLabel: string;
+    image: { src: string } | null;
+  }[],
+) {
+  const abs = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE_URL}${src}`);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Produtos da Turma da Aventura',
+    itemListElement: products.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: p.name,
+        description: p.description,
+        category: p.categoryLabel,
+        url: `${SITE_URL}/produtos`,
+        ...(p.image ? { image: abs(p.image.src) } : {}),
+        brand: { '@type': 'Brand', name: SITE_NAME },
+      },
+    })),
+  };
+}
