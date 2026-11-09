@@ -1,0 +1,74 @@
+/* CreatorCredit — assinatura de quem criou o site, no rodapé. Só tokens do design system. */
+
+/* Faixa da assinatura (última linha do rodapé, sobre surface-forest) */
+.credit-strip { background: var(--surface-forest); border-top: 1px dashed rgba(230, 218, 181, .25); }
+.credit-strip__inner { max-width: var(--container); margin: 0 auto; padding: var(--space-3) var(--space-5); display: flex; justify-content: center; }
+
+/* Gatilho: “Trilha aberta por Matheus Madeira” + pegadas que caminham no hover */
+.credit-trigger { position: relative; display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap-min); padding: 0 var(--space-3); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--ink-on-forest-muted); font: 600 14px/20px var(--font-body); cursor: pointer; transition: background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); }
+.credit-trigger strong { color: var(--ink-on-forest); font-weight: 800; text-decoration: underline dashed; text-decoration-color: var(--caqui-200); text-underline-offset: 4px; }
+.credit-trigger:hover { background: rgba(255, 255, 255, .06); color: var(--ink-on-forest); }
+.credit-trigger:focus-visible { outline: 3px solid var(--focus-on-forest); outline-offset: 2px; }
+.credit-steps { display: inline-flex; gap: 3px; color: var(--caqui-200); }
+.credit-steps i { display: block; width: 5px; height: 8px; border-radius: 3px; background: currentColor; opacity: .35; }
+.credit-steps i:nth-child(odd) { transform: translateY(-2px); }
+.credit-trigger:hover .credit-steps i, .credit-trigger:focus-visible .credit-steps i { animation: credit-step 900ms var(--ease-standard) both; }
+.credit-trigger:hover .credit-steps i:nth-child(2), .credit-trigger:focus-visible .credit-steps i:nth-child(2) { animation-delay: 120ms; }
+.credit-trigger:hover .credit-steps i:nth-child(3), .credit-trigger:focus-visible .credit-steps i:nth-child(3) { animation-delay: 240ms; }
+.credit-trigger:hover .credit-steps i:nth-child(4), .credit-trigger:focus-visible .credit-steps i:nth-child(4) { animation-delay: 360ms; }
+@keyframes credit-step { 0% { opacity: .35; } 40% { opacity: 1; } 100% { opacity: 1; } }
+
+/* Diálogo: “Ficha do guia” */
+.credit-overlay { position: absolute; inset: 0; z-index: var(--z-overlay); display: grid; place-items: center; padding: var(--space-5); background: var(--scrim); animation: credit-fade var(--dur-medium) var(--ease-enter) both; }
+.credit-card { position: relative; width: 100%; max-width: 560px; overflow: hidden; border-radius: var(--radius-lg); background: var(--surface-raised); color: var(--ink); box-shadow: var(--shadow-md), var(--shadow-stamp-card); font-family: var(--font-body); animation: credit-in var(--dur-slow) var(--ease-stamp) both; }
+.credit-card__band { position: relative; height: 112px; background: var(--surface-forest); overflow: hidden; }
+.credit-card__band > .credit-camo { position: absolute; inset: -24px; animation: tda-drift var(--dur-ambient) var(--ease-standard) infinite alternate; }
+.credit-card__band > .credit-camo svg { width: 100%; height: 100%; }
+.credit-card__symbol { position: absolute; right: var(--space-5); top: 22px; width: 76px; transform: rotate(-12deg); opacity: .95; }
+.credit-card__kicker { position: absolute; left: var(--space-6); top: var(--space-5); margin: 0; color: var(--caqui-200); }
+.credit-card__close { position: absolute; top: var(--space-3); right: var(--space-3); z-index: 2; display: grid; place-items: center; width: var(--tap-min); height: var(--tap-min); border: 0; border-radius: var(--radius-sm); background: rgba(255, 255, 255, .1); color: var(--ink-on-forest); cursor: pointer; }
+.credit-card__close:focus-visible { outline: 3px solid var(--focus-on-forest); outline-offset: 2px; }
+.credit-card__body { position: relative; padding: 0 var(--space-6) var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* Selo circular (carimbo) com as iniciais */
+.credit-seal { position: relative; width: 112px; height: 112px; margin-top: -56px; border-radius: 50%; background: var(--surface-raised); box-shadow: 0 0 0 6px var(--surface-raised), var(--shadow-md); display: grid; place-items: center; animation: credit-seal var(--dur-slow) var(--ease-stamp) 160ms both; }
+.credit-seal svg.credit-seal__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: credit-spin 24s linear infinite; }
+.credit-seal__ini { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; background: var(--brand); color: var(--on-brand); font: 800 24px/1 var(--font-display); font-variation-settings: 'opsz' 36, 'SOFT' 100; letter-spacing: .02em; }
+.credit-head { display: flex; align-items: flex-end; gap: var(--space-4); flex-wrap: wrap; }
+.credit-name { margin: 0; font: 700 28px/34px var(--font-display); font-variation-settings: 'opsz' 36, 'SOFT' 100; }
+.credit-role { margin: 2px 0 0; font: 800 13px/16px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--earth-strong); }
+.credit-text { margin: 0; color: var(--ink-muted); font: 400 16px/25px var(--font-body); }
+
+/* Mini-trilha: as etapas do projeto */
+.credit-trail { list-style: none; margin: 0; padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); position: relative; }
+.credit-trail::before { content: ""; position: absolute; left: 36px; right: 36px; top: 30px; border-top: 2px dashed var(--earth); opacity: .6; transform-origin: left; animation: credit-draw var(--dur-trail) var(--ease-standard) 300ms both; }
+.credit-trail li { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; font: 700 13px/17px var(--font-body); color: var(--ink); }
+.credit-trail__dot { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--surface-raised); border: 2px solid var(--brand); color: var(--brand); animation: credit-seal var(--dur-slow) var(--ease-stamp) both; }
+.credit-trail li:nth-child(1) .credit-trail__dot { animation-delay: 300ms; }
+.credit-trail li:nth-child(2) .credit-trail__dot { animation-delay: 900ms; }
+.credit-trail li:nth-child(3) .credit-trail__dot { animation-delay: 1500ms; }
+.credit-trail small { font: 600 12px/16px var(--font-body); color: var(--ink-muted); }
+
+.credit-links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.credit-links .tda-btn { flex: 1 1 180px; }
+.credit-foot { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding-top: var(--space-3); border-top: 1px dashed var(--line); font: 600 13px/18px var(--font-body); color: var(--ink-muted); }
+
+@keyframes credit-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes credit-in { from { opacity: 0; transform: translateY(var(--move-md)) scale(.96) rotate(-1.5deg); } to { opacity: 1; transform: none; } }
+@keyframes credit-seal { from { opacity: 0; transform: scale(.6) rotate(-20deg); } to { opacity: 1; transform: none; } }
+@keyframes credit-spin { to { transform: rotate(360deg); } }
+@keyframes credit-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (max-width: 599px) {
+  .credit-overlay { place-items: end center; padding: 0; }
+  .credit-card { max-width: none; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .credit-card__body { padding: 0 var(--space-5) var(--space-5); }
+  .credit-name { font-size: 24px; line-height: 30px; }
+  .credit-trail { grid-template-columns: 1fr; }
+  .credit-trail::before { display: none; }
+  .credit-trail li { flex-direction: row; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .credit-overlay, .credit-card, .credit-seal, .credit-trail__dot, .credit-trail::before { animation: credit-fade 150ms linear both !important; }
+  .credit-seal svg.credit-seal__ring, .credit-card__band > .credit-camo, .credit-steps i { animation: none !important; }
+}
