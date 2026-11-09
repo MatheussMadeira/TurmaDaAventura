@@ -56,7 +56,7 @@ describe('CreatorCredit', () => {
     expect(dialog).not.toHaveAttribute('open');
   });
 
-  it('links externos seguros para LinkedIn e GitHub, com analytics', async () => {
+  it('links externos seguros para WhatsApp, LinkedIn e GitHub, com analytics', async () => {
     const user = userEvent.setup();
     const push = vi.fn();
     (window as unknown as { dataLayer: unknown[] }).dataLayer = { push } as unknown as unknown[];
@@ -66,9 +66,14 @@ describe('CreatorCredit', () => {
     const dialog = document.querySelector('dialog')!;
     const linkedin = within(dialog).getByRole('link', { name: 'Ver LinkedIn', hidden: true });
     const github = within(dialog).getByRole('link', { name: 'Ver GitHub', hidden: true });
+    const whatsapp = within(dialog).getByRole('link', {
+      name: 'Chamar no WhatsApp',
+      hidden: true,
+    });
+    expect(whatsapp.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/5531996193940\?text=/);
     expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/matheus-madeira22/');
     expect(github).toHaveAttribute('href', 'https://github.com/MatheussMadeira');
-    for (const a of [linkedin, github]) {
+    for (const a of [whatsapp, linkedin, github]) {
       expect(a).toHaveAttribute('target', '_blank');
       expect(a).toHaveAttribute('rel', expect.stringContaining('noopener'));
     }
@@ -76,10 +81,13 @@ describe('CreatorCredit', () => {
 
     linkedin.addEventListener('click', (e) => e.preventDefault());
     github.addEventListener('click', (e) => e.preventDefault());
+    whatsapp.addEventListener('click', (e) => e.preventDefault());
+    await user.click(whatsapp);
     await user.click(linkedin);
     await user.click(github);
     expect(push).toHaveBeenCalledWith({ event: 'creator_credit_click', network: 'linkedin' });
     expect(push).toHaveBeenCalledWith({ event: 'creator_credit_click', network: 'github' });
+    expect(push).toHaveBeenCalledWith({ event: 'creator_credit_click', network: 'whatsapp' });
     delete (window as unknown as { dataLayer?: unknown }).dataLayer;
   });
 

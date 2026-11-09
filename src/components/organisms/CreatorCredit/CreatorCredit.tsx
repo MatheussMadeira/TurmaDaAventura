@@ -15,6 +15,9 @@ import * as S from './CreatorCredit.styles';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/matheus-madeira22/';
 const GITHUB_URL = 'https://github.com/MatheussMadeira';
+const WHATSAPP_URL = `https://wa.me/5531996193940?text=${encodeURIComponent(
+  'Olá, Matheus! Vi o site da Turma da Aventura e queria conversar.',
+)}`;
 
 export interface CreatorCreditProps {
   name?: string;
@@ -142,6 +145,16 @@ export function CreatorCredit({
 
             <S.Links>
               <Button
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                iconLeft="whatsapp"
+                onClick={() => trackCreatorCredit('creator_credit_click', { network: 'whatsapp' })}
+              >
+                Chamar no WhatsApp
+              </Button>
+              <Button
+                variant="outline"
                 href={LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"

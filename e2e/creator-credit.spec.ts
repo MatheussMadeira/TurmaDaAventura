@@ -23,6 +23,9 @@ test.describe('assinatura do criador', () => {
       'https://github.com/MatheussMadeira',
     );
 
+    const wa = await dialog.getByRole('link', { name: 'Chamar no WhatsApp' }).getAttribute('href');
+    expect(wa).toMatch(/^https:\/\/wa\.me\/5531996193940\?text=/);
+
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
     await expect(t).toHaveAttribute('aria-expanded', 'false');
