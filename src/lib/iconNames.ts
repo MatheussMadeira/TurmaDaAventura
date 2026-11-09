@@ -57,3 +57,8 @@ export const ADMIN_ICON_NAMES = [
 ] as const;
 
 export type AdminIconName = (typeof ADMIN_ICON_NAMES)[number];
+
+/** Marcas externas (links de contato do criador). Fora de ICON_NAMES: não aparecem nos seletores do painel. */
+export const SOCIAL_ICON_NAMES = ['linkedin', 'github'] as const;
+
+export type SocialIconName = (typeof SOCIAL_ICON_NAMES)[number];

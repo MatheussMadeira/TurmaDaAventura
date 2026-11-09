@@ -20,3 +20,15 @@ export function trackWhatsappClick(params: {
   w.gtag?.('event', 'whatsapp_click', params);
   w.fbq?.('trackCustom', 'whatsapp_click', params);
 }
+
+/** Eventos da assinatura do criador no rodapé: `creator_credit_open` e `creator_credit_click`. */
+export function trackCreatorCredit(
+  event: 'creator_credit_open' | 'creator_credit_click',
+  params: { network?: 'linkedin' | 'github' | 'whatsapp' } = {},
+) {
+  if (typeof window === 'undefined') return;
+  const w = window as AnalyticsWindow;
+  w.dataLayer?.push({ event, ...params });
+  w.gtag?.('event', event, params);
+  w.fbq?.('trackCustom', event, params);
+}

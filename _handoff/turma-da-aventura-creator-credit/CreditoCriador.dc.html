@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Crédito do criador — rodapé</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="ds/tda/components/bundle.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/credit.css">
+<script src="ds/tda/components/bundle.js"></script>
+<script src="styles/tda-assets.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="page" style="position: relative; width: 100%; min-height: 1000px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; font-family: var(--font-body); color: var(--ink);">
+
+  <!-- Página ao fundo (só contexto) -->
+  <div aria-hidden="true" style="flex: 1; padding: 64px 120px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-content: start; opacity: .5;">
+    <div style="grid-column: 1 / -1; height: 18px; width: 220px; border-radius: 6px; background: var(--line);"></div>
+    <div style="height: 200px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+    <div style="height: 200px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+    <div style="height: 200px; border-radius: 24px; background: var(--surface-raised); border: 1.5px solid var(--line);"></div>
+  </div>
+
+  <x-import component-from-global-scope="TDA.Footer" items="{{footNav}}" about="{{about}}" instagram="@turmadaaventura" city="Belo Horizonte · MG" year="{{year}}"></x-import>
+
+  <!-- CreatorCredit: última linha do rodapé -->
+  <div class="credit-strip">
+    <div class="credit-strip__inner">
+      <button type="button" class="credit-trigger" aria-haspopup="dialog" aria-expanded="{{expanded}}" onClick="{{openCredit}}">
+        <span class="credit-steps" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        Trilha aberta por <strong>Matheus Madeira</strong>
+      </button>
+    </div>
+  </div>
+
+  <!-- Ficha do guia (diálogo) -->
+  <sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+    <div class="credit-overlay" onClick="{{closeCredit}}">
+      <section class="credit-card" role="dialog" aria-modal="true" aria-labelledby="credit-name" onClick="{{stop}}">
+        <div class="credit-card__band">
+          <div class="credit-camo" aria-hidden="true"><x-import component-from-global-scope="TDA.CamoPattern" tone="forest" id="credit"></x-import></div>
+          <p class="overline credit-card__kicker">Ficha do guia</p>
+          <img class="credit-card__symbol" src="/_blob/52c1d09b525f9f1070fb00132a39dee3" alt="" aria-hidden="true">
+          <button type="button" class="credit-card__close" aria-label="Fechar (Esc)" onClick="{{closeCredit}}"><x-import component-from-global-scope="TDA.Icon" name="close" size="{{s22}}"></x-import></button>
+        </div>
+        <div class="credit-card__body">
+          <div class="credit-head">
+            <div class="credit-seal" aria-hidden="true">
+              <svg class="credit-seal__ring" viewBox="0 0 112 112"><defs><path id="credit-circle" d="M56 56 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"></path></defs><text style="font: 800 9.5px var(--font-body); letter-spacing: 2.6px; fill: var(--earth-strong);"><textPath href="#credit-circle">GUIA DA TRILHA · TURMA DA AVENTURA · 2026 ·</textPath></text></svg>
+              <span class="credit-seal__ini">MM</span>
+            </div>
+            <div style="padding-bottom: 6px;">
+              <h2 id="credit-name" class="credit-name">Matheus Madeira</h2>
+              <p class="credit-role">Design e desenvolvimento</p>
+            </div>
+          </div>
+          <p class="credit-text">Desenhei e construí este site, do primeiro rascunho do mapa ao último carimbo. Se você gostou da trilha, vamos conversar.</p>
+          <ol class="credit-trail" aria-label="Etapas do projeto">
+            <li><span class="credit-trail__dot"><x-import component-from-global-scope="TDA.Icon" name="compass" size="{{s16}}"></x-import></span><span>Mapa<br><small>Identidade e design</small></span></li>
+            <li><span class="credit-trail__dot"><x-import component-from-global-scope="TDA.Icon" name="backpack" size="{{s16}}"></x-import></span><span>Trilha<br><small>Desenvolvimento</small></span></li>
+            <li><span class="credit-trail__dot"><x-import component-from-global-scope="TDA.Icon" name="tent" size="{{s16}}"></x-import></span><span>Acampamento<br><small>Site no ar</small></span></li>
+          </ol>
+          <div class="credit-links">
+            <a class="tda-btn tda-btn--md" href="https://www.linkedin.com/in/SEU-USUARIO" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              <span>Ver LinkedIn</span>
+            </a>
+            <a class="tda-btn tda-btn--outline tda-btn--md" href="https://github.com/SEU-USUARIO" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              <span>Ver GitHub</span>
+            </a>
+          </div>
+          <div class="credit-foot"><span>Expedição concluída em 2026</span><span>Abre em nova aba</span></div>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var open = !(this.state && this.state.closed);
+    return {
+      year: 2026, s16: 16, s22: 22,
+      open: open, expanded: open ? 'true' : 'false',
+      openCredit: function () { self.setState({ closed: false }); },
+      closeCredit: function () { self.setState({ closed: true }); },
+      stop: function (e) { if (e && e.stopPropagation) e.stopPropagation(); },
+      footNav: [
+        { label: 'Início', href: '/' }, { label: 'Oficinas', href: '/oficinas' }, { label: 'Festas e aniversários', href: '/festas-e-aniversarios' },
+        { label: 'Restaurantes', href: '/restaurantes' }, { label: 'Eventos corporativos', href: '/eventos-corporativos' }, { label: 'Produtos', href: '/produtos' }, { label: 'Quem somos', href: '/quem-somos' }
+      ],
+      about: 'Recreação infantil para festas, restaurantes, eventos corporativos e oficinas em Belo Horizonte. Monitores treinados, brincadeiras ao ar livre e muita imaginação.'
+    };
+  }
+}
+</script>
+</body>
+</html>

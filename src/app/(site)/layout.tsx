@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { SiteSettingsProvider } from '@/components/SiteSettings';
 import { SkipLink } from '@/components/atoms/SkipLink';
+import { CreatorCredit } from '@/components/organisms/CreatorCredit';
 import { Footer } from '@/components/organisms/Footer';
 import { Header } from '@/components/organisms/Header';
 import { BagProvider, SiteFloat } from '@/components/organisms/Bag';
@@ -24,6 +25,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
           email={settings.email || undefined}
           city={settings.city}
         />
+        <CreatorCredit />
         <SiteFloat />
       </BagProvider>
     </SiteSettingsProvider>

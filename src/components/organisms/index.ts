@@ -4,6 +4,7 @@ export * from './Trail';
 export * from './CTABanner';
 export * from './QuoteForm';
 export * from './Footer';
+export * from './CreatorCredit';
 export * from './WhatsAppFloat';
 export * from './Gallery';
 export * from './ActivityCatalog';
