@@ -2,7 +2,7 @@ import type { IconName } from '@/lib/iconNames';
 import type { ProductCategory } from './productCategories';
 import type { SectionType } from './sections/schemas';
 
-/** Tipos do que o SITE consome (já resolvido a partir do banco). Nenhum campo de preço. */
+/** Tipos do que o SITE consome (já resolvido a partir do banco). Só produtos têm preço. */
 
 export interface ImageRef {
   src: string;
@@ -58,11 +58,13 @@ export interface PartyTheme {
   title: string;
   description: string;
   tags: string[];
+  /** texto longo do modal "Ver detalhes" (parágrafos separados por linha em branco); vazio = card sem modal */
+  details: string;
   image: ImageRef | null;
   imageAlt: string;
 }
 
-/** Produto do catálogo (sem preço): pedido montado na sacola e enviado pelo WhatsApp. */
+/** Produto do catálogo: pedido montado na sacola e enviado pelo WhatsApp. O preço é opcional. */
 export interface Product {
   slug: string;
   name: string;
@@ -72,6 +74,8 @@ export interface Product {
   icon: IconName;
   description: string;
   minQty: number;
+  /** preço unitário em centavos; null = valor combinado no WhatsApp */
+  priceCents: number | null;
   personalizavel: boolean;
   nosRestaurantes: boolean;
   soldOut: boolean;

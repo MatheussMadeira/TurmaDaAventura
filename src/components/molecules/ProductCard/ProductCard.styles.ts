@@ -47,3 +47,14 @@ export const InBag = styled.span`
   font: 800 14px/18px var(--font-body);
   color: var(--brand);
 `;
+
+export const Price = styled.p`
+  margin: 0;
+  font: 800 20px/26px var(--font-body);
+  color: var(--ink);
+
+  small {
+    font: 600 13px/18px var(--font-body);
+    color: var(--ink-muted);
+  }
+`;

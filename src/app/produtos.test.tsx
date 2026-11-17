@@ -5,10 +5,12 @@ import { BagProvider, SiteFloat } from '@/components/organisms/Bag';
 import { SiteSettingsProvider } from '@/components/SiteSettings';
 import { BAG_STORAGE_KEY } from '@/lib/bag';
 import { resetBagStore } from '@/lib/bagStore';
+import type { Product } from '@/content/types';
 import { productsJsonLd } from '@/lib/seo';
 import { expectNoA11yViolations } from '@/test/a11y';
 import { contentModuleMock, fixtureProducts } from '@/test/contentFixture';
 import { renderWithProviders } from '@/test/render';
+import { ProductCard as ProductCardLazy } from '@/components/molecules/ProductCard';
 import ProdutosPage from './(site)/produtos/page';
 
 vi.mock('@/server/content', () => contentModuleMock());
@@ -212,11 +214,104 @@ describe('produto esgotado e JSON-LD', () => {
     expect(screen.queryByRole('button', { name: /Adicionar/ })).toBeNull();
   });
 
-  it('JSON-LD: ItemList/Product sem offers nem preço', () => {
+  it('JSON-LD: ItemList/Product, sem offers quando não há preço cadastrado', () => {
     const ld = productsJsonLd(fixtureProducts());
     expect(ld['@type']).toBe('ItemList');
     expect(ld.itemListElement).toHaveLength(9);
     const text = JSON.stringify(ld);
     expect(text).not.toMatch(/offers|price|priceCurrency|"Offer"/i);
+  });
+});
+
+describe('preço (só quando o admin cadastrou)', () => {
+  const nb = (s: string | null) => (s ?? '').replace(/ /g, ' ');
+  const [a, b] = fixtureProducts();
+  const horta: Product = {
+    ...a!,
+    name: 'Kit mini horta',
+    slug: 'kit-mini-horta',
+    minQty: 10,
+    priceCents: 1290,
+  };
+  const massinha: Product = {
+    ...b!,
+    name: 'Massinha natural',
+    slug: 'massinha-natural',
+    minQty: 1,
+    priceCents: 850,
+  };
+
+  const renderPriced = (products: Product[]) =>
+    renderWithProviders(
+      <SiteSettingsProvider value={{ phone: PHONE, messages: { sacola: START } }}>
+        <BagProvider>
+          {products.map((p) => (
+            <ProductCardLazy key={p.slug} product={p} />
+          ))}
+          <SiteFloat />
+        </BagProvider>
+      </SiteSettingsProvider>,
+    );
+
+  it('o card mostra o preço unitário; sem preço, nada de R$', async () => {
+    const { container } = renderPriced([horta, { ...massinha, priceCents: null }]);
+    expect(
+      nb(
+        within(screen.getByRole('article', { name: 'Kit mini horta' })).getByText(/R\$/)
+          .textContent,
+      ),
+    ).toContain('R$ 12,90');
+    expect(
+      within(screen.getByRole('article', { name: 'Massinha natural' })).queryByText(/R\$/),
+    ).toBeNull();
+    await expectNoA11yViolations(container);
+  });
+
+  it('a sacola mostra o valor de cada linha e o total estimado; a mensagem leva os valores', async () => {
+    const user = userEvent.setup();
+    renderPriced([horta, massinha]);
+    await user.click(addButton('Kit mini horta')); // 10 × 12,90 = 129,00
+    await user.click(addButton('Massinha natural')); // 1 × 8,50
+    await user.click(screen.getByRole('button', { name: /Ver sacola/ }));
+    const dialog = await screen.findByRole('dialog', { name: 'Sua sacola' });
+    expect(nb(dialog.textContent)).toContain('R$ 12,90 × 10 = R$ 129,00');
+    expect(nb(within(dialog).getByText('Total estimado').parentElement!.textContent)).toContain(
+      'R$ 137,50',
+    );
+    expect(nb(dialog.textContent)).toContain('O total é uma estimativa');
+    await expectNoA11yViolations(dialog);
+
+    await user.click(within(dialog).getByRole('button', { name: 'Enviar pedido no WhatsApp' }));
+    const text = nb(new URL(tab.location.href).searchParams.get('text'));
+    expect(text).toContain('• 10 × Kit mini horta — R$ 129,00');
+    expect(text).toContain('• 1 × Massinha natural — R$ 8,50');
+    expect(text).toContain('Total estimado: R$ 137,50');
+  });
+
+  it('com um produto sem preço na sacola não aparece total', async () => {
+    const user = userEvent.setup();
+    renderPriced([horta, { ...massinha, priceCents: null }]);
+    await user.click(addButton('Kit mini horta'));
+    await user.click(addButton('Massinha natural'));
+    await user.click(screen.getByRole('button', { name: /Ver sacola/ }));
+    const dialog = await screen.findByRole('dialog', { name: 'Sua sacola' });
+    expect(within(dialog).queryByText('Total estimado')).toBeNull();
+  });
+
+  it('JSON-LD: offers (BRL) só nos produtos com preço', () => {
+    const ld = productsJsonLd([
+      { ...fixtureProducts()[0]!, priceCents: 1290, soldOut: false },
+      { ...fixtureProducts()[1]!, priceCents: 850, soldOut: true },
+      fixtureProducts()[2]!,
+    ]);
+    const items = ld.itemListElement.map((e) => e.item as Record<string, unknown>);
+    expect(items[0]!.offers).toMatchObject({
+      '@type': 'Offer',
+      price: '12.90',
+      priceCurrency: 'BRL',
+      availability: 'https://schema.org/InStock',
+    });
+    expect(items[1]!.offers).toMatchObject({ availability: 'https://schema.org/OutOfStock' });
+    expect(items[2]).not.toHaveProperty('offers');
   });
 });

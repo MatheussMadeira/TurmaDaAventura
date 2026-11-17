@@ -10,3 +10,4 @@ export * from './Gallery';
 export * from './ActivityCatalog';
 export * from './Bag';
 export * from './ProductCatalog';
+export * from './ThemeCatalog';

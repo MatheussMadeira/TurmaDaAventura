@@ -8,7 +8,7 @@ import { db } from '../db';
 import { audit, parseInput, reorder, slugify, touchSite } from './shared';
 import type { SaveMode } from './restaurants';
 
-/** Produtos do painel. NENHUM campo de preço: valores são combinados no WhatsApp. */
+/** Produtos do painel. Preço opcional: sem preço, o valor é combinado no WhatsApp. */
 export async function listProducts() {
   const rows = await db.product.findMany({
     include: { image: true },
@@ -20,6 +20,7 @@ export async function listProducts() {
     icon: p.icon,
     categoryLabel: PRODUCT_CATEGORY_LABEL[p.category],
     minQty: p.minQty,
+    priceCents: p.priceCents,
     personalizavel: p.personalizavel,
     nosRestaurantes: p.nosRestaurantes,
     status: p.status,
@@ -57,6 +58,7 @@ export async function saveProduct(
     icon: input.icon,
     description: input.description,
     minQty: input.minQty,
+    priceCents: input.priceCents,
     personalizavel: input.personalizavel,
     nosRestaurantes: input.nosRestaurantes,
     imageId: input.imageId,

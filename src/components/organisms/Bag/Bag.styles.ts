@@ -345,3 +345,25 @@ export const ToastBubble = styled.div`
     animation: none;
   }
 `;
+
+/* ---------- valores (só quando o admin cadastrou preço) ---------- */
+export const ItemPrice = styled.p`
+  margin: 2px 0 0;
+  font: 700 13px/18px var(--font-body);
+  color: var(--ink);
+`;
+
+export const TotalRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  font: 700 15px/20px var(--font-body);
+
+  strong {
+    font: 800 20px/26px var(--font-body);
+  }
+`;

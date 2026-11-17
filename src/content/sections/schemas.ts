@@ -3,7 +3,7 @@ import { header, href, icon, mediaId, text, tone } from './fields';
 
 /**
  * Um schema zod por TIPO de seção. O tipo é gravado em Section.type; o conteúdo (draft/published)
- * é validado por ele ao salvar e ao publicar. Nenhum campo de preço.
+ * é validado por ele ao salvar e ao publicar. Nenhum campo de preço (o preço de produto não é seção: fica em Produtos).
  */
 
 const hero = z.object({

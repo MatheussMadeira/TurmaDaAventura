@@ -1,6 +1,7 @@
 'use client';
 
 import { bagMeta } from '@/lib/bag';
+import { formatBRL } from '@/lib/money';
 import type { Product } from '@/content/types';
 import { Button } from '../../atoms/Button';
 import { Icon } from '../../atoms/Icon';
@@ -9,7 +10,7 @@ import { Stepper } from '../../atoms/Stepper';
 import { Tag, TagList } from '../../atoms/Tag';
 import { VisuallyHidden } from '../../atoms/VisuallyHidden';
 import { useBag } from '../../organisms/Bag/BagContext';
-import { Article, Body, Foot, InBag, Overline, Text, Title } from './ProductCard.styles';
+import { Article, Body, Foot, InBag, Overline, Price, Text, Title } from './ProductCard.styles';
 
 export interface ProductCardProps {
   product: Product;
@@ -20,7 +21,8 @@ export interface ProductCardProps {
 
 /**
  * Card de produto: foto 4:3, categoria, nome, descrição, etiquetas e "Adicionar à sacola".
- * Na sacola ganha borda brand, "Na sacola" e o Stepper. Sem preço. Esgotado: etiqueta e sem botão.
+ * Na sacola ganha borda brand, "Na sacola" e o Stepper. Preço só aparece quando o admin cadastrou.
+ * Esgotado: etiqueta e sem botão.
  */
 export function ProductCard({ product: p, qty: forcedQty, className }: ProductCardProps) {
   const bag = useBag();
@@ -34,6 +36,7 @@ export function ProductCard({ product: p, qty: forcedQty, className }: ProductCa
       icon: p.icon,
       meta: bagMeta(p),
       minQty: p.minQty,
+      priceCents: p.priceCents,
       image: p.image?.src ?? null,
     });
 
@@ -51,6 +54,12 @@ export function ProductCard({ product: p, qty: forcedQty, className }: ProductCa
         <Overline className="overline">{p.categoryLabel}</Overline>
         <Title className="h4">{p.name}</Title>
         <Text className="body-sm">{p.description}</Text>
+        {p.priceCents ? (
+          <Price>
+            {formatBRL(p.priceCents)}
+            <small>{p.minQty > 1 ? ' por unidade' : ' a unidade'}</small>
+          </Price>
+        ) : null}
         <TagList>
           {p.soldOut ? (
             <Tag tone="neutral" icon="flag">

@@ -12,7 +12,7 @@ Site institucional de recreação infantil (restaurantes, eventos corporativos, 
 
 1. **Só o design system.** Nada de cor, fonte, raio, sombra ou duração fora de `tokens.json`. Componentes novos usam os mesmos tokens e padrões (carimbo, trilha tracejada, camuflagem pontual).
 2. **Logos**: usar os arquivos de `design-system/brand/` sem alterar (cor, proporção, sombra).
-3. **Nenhum preço** no site nem no modelo de dados. Todo orçamento vai para o WhatsApp (`lib/whatsapp.ts`: `whatsappUrl(message, phone)` é a única função de link; mensagem contextual por página, evento `whatsapp_click`; CTAs com animação antes de abrir usam `lib/openWhatsapp.ts`).
+3. **Preço só em produtos.** Festas, oficinas, eventos e restaurantes não têm preço nem “a partir de” (nem no site nem no modelo de dados). Em **Produtos** o admin pode cadastrar um preço unitário opcional (`Product.priceCents`, em centavos; `lib/money.ts`); sem preço, o valor é combinado no WhatsApp. O site nunca cobra: não há checkout, frete nem pagamento. Todo orçamento vai para o WhatsApp (`lib/whatsapp.ts`: `whatsappUrl(message, phone)` é a única função de link; mensagem contextual por página, evento `whatsapp_click`; CTAs com animação antes de abrir usam `lib/openWhatsapp.ts`).
 4. **Um CTA primário (verde) por dobra.** Header com “Orçamento” e WhatsAppFloat em todas as páginas.
 5. **pt-BR**, “você” / “a gente, a Turma”, botões começam com verbo, caixa de frase (caixa alta só em overline). Sem emoji na interface.
 6. **Acessibilidade AA**: alvos ≥ 44px, foco visível, um H1 por página, status sempre ícone + palavra, `prefers-reduced-motion` respeitado.

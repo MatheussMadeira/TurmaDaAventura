@@ -144,7 +144,7 @@ export const getActivityCategories = cached('activity-categories', async (): Pro
   return [...new Set(acts.map((a) => a.categoria))];
 });
 
-/** Produtos no site (publicados e esgotados), na ordem do admin. Nenhum campo de preço. */
+/** Produtos no site (publicados e esgotados), na ordem do admin. */
 export const getProducts = cached('products', async (): Promise<Product[]> => {
   const rows = await db.product.findMany({
     where: { status: { in: ['PUBLICADO', 'ESGOTADO'] } },
@@ -159,6 +159,7 @@ export const getProducts = cached('products', async (): Promise<Product[]> => {
     icon: p.icon as IconName,
     description: p.description,
     minQty: p.minQty,
+    priceCents: p.priceCents,
     personalizavel: p.personalizavel,
     nosRestaurantes: p.nosRestaurantes,
     soldOut: p.status === 'ESGOTADO',
@@ -180,6 +181,7 @@ export const getPartyThemes = cached('party-themes', async (): Promise<PartyThem
     title: t.title,
     description: t.description,
     tags: t.tags,
+    details: t.details,
     image: toImage(t.image),
     imageAlt: t.image?.alt ?? t.imageAlt,
   }));

@@ -2,7 +2,8 @@
 
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { countLabel } from '@/lib/bag';
+import { countLabel, lineCents, totalCents } from '@/lib/bag';
+import { formatBRL } from '@/lib/money';
 import { Button } from '../../atoms/Button';
 import { Icon, type IconName } from '../../atoms/Icon';
 import { Media } from '../../atoms/Media';
@@ -22,6 +23,7 @@ import {
   ItemImg,
   ItemMeta,
   ItemName,
+  ItemPrice,
   ItemRow,
   List,
   Note,
@@ -29,6 +31,7 @@ import {
   Remove,
   Scrim,
   Title,
+  TotalRow,
 } from './Bag.styles';
 
 const FOCUSABLE =
@@ -42,6 +45,7 @@ export function BagDrawer() {
   const { items, count, setQty, remove, form, setForm, send, close } = useBag();
   const ref = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const total = totalCents(items);
   const closeRef = useRef(close);
   useEffect(() => {
     closeRef.current = close;
@@ -145,6 +149,11 @@ export function BagDrawer() {
                     <div>
                       <ItemName>{i.name}</ItemName>
                       <ItemMeta>{i.meta}</ItemMeta>
+                      {i.priceCents != null ? (
+                        <ItemPrice>
+                          {formatBRL(i.priceCents)} × {i.qty} = {formatBRL(lineCents(i)!)}
+                        </ItemPrice>
+                      ) : null}
                     </div>
                     <ItemRow>
                       <Stepper
@@ -161,6 +170,12 @@ export function BagDrawer() {
                   </Item>
                 ))}
               </List>
+              {total != null ? (
+                <TotalRow>
+                  <span>Total estimado</span>
+                  <strong>{formatBRL(total)}</strong>
+                </TotalRow>
+              ) : null}
               <Fields>
                 <TextField
                   label="Seu nome"
@@ -186,8 +201,9 @@ export function BagDrawer() {
                 <Note>
                   <Icon name="shield" size={18} />
                   <span>
-                    Sem pagamento no site. Valores, disponibilidade e entrega são combinados no
-                    WhatsApp.
+                    Sem pagamento no site.{' '}
+                    {total != null ? 'O total é uma estimativa; v' : 'V'}alores, disponibilidade e
+                    entrega são confirmados no WhatsApp.
                   </span>
                 </Note>
               </Fields>

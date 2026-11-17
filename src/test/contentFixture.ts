@@ -61,6 +61,7 @@ export const fixtureThemes = (): PartyTheme[] =>
       title: t.title,
       description: t.description,
       tags: t.tags,
+      details: '',
       image: null,
       imageAlt: t.imageAlt,
     }));
@@ -78,6 +79,7 @@ export const fixtureProducts = (): Product[] =>
         icon: p.icon as IconName,
         description: p.description,
         minQty: p.minQty,
+        priceCents: null,
         personalizavel: p.personalizavel,
         nosRestaurantes: p.nosRestaurantes,
         soldOut: false,

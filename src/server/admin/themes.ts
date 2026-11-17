@@ -49,6 +49,7 @@ export async function saveTheme(
     title: input.title,
     description: input.description,
     tags: input.tags,
+    details: input.details,
     imageId: input.imageId,
     imageAlt: input.imageAlt,
     status,
