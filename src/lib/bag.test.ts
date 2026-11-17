@@ -12,6 +12,8 @@ import {
   removeItem,
   saveBag,
   setQty,
+  lineCents,
+  totalCents,
   totalUnits,
   type BagProduct,
 } from './bag';
@@ -22,6 +24,7 @@ const horta: BagProduct = {
   icon: 'leaf',
   meta: 'Mínimo de 10 unidades · personalizável',
   minQty: 10,
+  priceCents: null,
   image: null,
 };
 const massinha: BagProduct = {
@@ -104,7 +107,7 @@ describe('sacola · mensagem do WhatsApp', () => {
       `${DEFAULT_BAG_START}\n\n• 20 × Kit mini horta\n• 2 × Massinha natural`,
     );
   });
-  it('nunca fala de preço, total ou pagamento', () => {
+  it('sem preço cadastrado, a mensagem não fala de valores, frete ou pagamento', () => {
     const m = buildBagMessage(two, { name: 'A', when: '2026-01-02', notes: 'b' });
     expect(m).not.toMatch(/R\$|total|frete|pagamento|preço/i);
   });
@@ -150,5 +153,67 @@ describe('sacola · localStorage por 7 dias', () => {
     } finally {
       Object.defineProperty(window, 'localStorage', { configurable: true, value: real });
     }
+  });
+});
+
+const nb = (s: string) => s.replace(/ /g, ' ');
+
+describe('sacola · preço (só quando o admin cadastrou)', () => {
+  const hortaP: BagProduct = { ...horta, priceCents: 1290 };
+  const massinhaP: BagProduct = { ...massinha, priceCents: 850 };
+
+  it('valor da linha e total estimado', () => {
+    let items = addItem(addItem([], hortaP), massinhaP); // 10 × 12,90 + 1 × 8,50
+    expect(lineCents(items[0]!)).toBe(12900);
+    expect(totalCents(items)).toBe(12900 + 850);
+    items = setQty(items, 'massinha-natural', 3);
+    expect(totalCents(items)).toBe(12900 + 2550);
+  });
+
+  it('sem total quando falta preço em algum produto (ou a sacola está vazia)', () => {
+    expect(totalCents(addItem(addItem([], hortaP), massinha))).toBeNull();
+    expect(lineCents(addItem([], massinha)[0]!)).toBeNull();
+    expect(totalCents([])).toBeNull();
+  });
+
+  it('a mensagem leva o valor de cada linha e o total estimado', () => {
+    const items = addItem(addItem([], hortaP), massinhaP);
+    expect(nb(buildBagMessage(items, { name: 'Mariana' }))).toBe(
+      [
+        DEFAULT_BAG_START,
+        '',
+        '• 10 × Kit mini horta — R$ 129,00',
+        '• 1 × Massinha natural — R$ 8,50',
+        '',
+        'Total estimado: R$ 137,50',
+        '',
+        'Nome: Mariana',
+      ].join('\n'),
+    );
+  });
+
+  it('mistura com e sem preço: linhas com valor, sem total', () => {
+    const m = nb(buildBagMessage(addItem(addItem([], hortaP), massinha)));
+    expect(m).toContain('• 10 × Kit mini horta — R$ 129,00');
+    expect(m).toContain('• 1 × Massinha natural');
+    expect(m).not.toContain('Total estimado');
+  });
+
+  it('sacola guardada antes do preço existir volta como "a combinar"', () => {
+    const antiga = {
+      slug: 'x',
+      name: 'X',
+      icon: 'leaf',
+      meta: 'm',
+      minQty: 1,
+      qty: 2,
+      image: null,
+    };
+    window.localStorage.setItem(
+      BAG_STORAGE_KEY,
+      JSON.stringify({ savedAt: 1000, items: [antiga] }),
+    );
+    const [i] = loadBag(2000);
+    expect(i?.priceCents).toBeNull();
   });
 });

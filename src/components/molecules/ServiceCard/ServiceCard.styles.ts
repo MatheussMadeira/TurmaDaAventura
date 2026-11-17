@@ -59,3 +59,28 @@ export const Text = styled.p`
 export const More = styled.span`
   ${cardMore}
 `;
+
+/** "Ver detalhes": mesmo visual do "Saiba mais", mas é um botão que abre o modal. */
+export const MoreButton = styled.button`
+  ${cardMore}
+  align-self: flex-start;
+  min-height: var(--tap-min);
+  margin-inline: calc(-1 * var(--space-2));
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover svg {
+    transform: translateX(2px);
+  }
+  svg {
+    transition: transform var(--dur-fast) var(--ease-standard);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+`;

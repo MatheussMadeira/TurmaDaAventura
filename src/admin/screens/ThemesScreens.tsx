@@ -292,6 +292,7 @@ export interface ThemeFormValues {
   title: string;
   description: string;
   tags: string;
+  details: string;
   imageId: string | null;
   imageAlt: string;
   visible: boolean;
@@ -302,6 +303,7 @@ export const EMPTY_THEME: ThemeFormValues = {
   title: '',
   description: '',
   tags: '',
+  details: '',
   imageId: null,
   imageAlt: '',
   visible: true,
@@ -392,6 +394,18 @@ export function ThemeForm({
                   error={fieldError(result, 'tags')}
                 />
               </div>
+              <div className="full">
+                <TextField
+                  label="Detalhes da festa"
+                  multiline
+                  rows={8}
+                  value={v.details}
+                  onChange={(e) => set('details', e.target.value)}
+                  hint="Opcional. Abre numa janela quando a pessoa clica em “Ver detalhes” no card. Separe os parágrafos com uma linha em branco. Em branco, o card não abre nada."
+                  error={fieldError(result, 'details')}
+                />
+                <Count value={v.details} max={1500} />
+              </div>
             </Fields>
             <Row>
               <Switch
@@ -448,6 +462,8 @@ export function ThemeForm({
               description={v.description || 'Descrição curta do tema.'}
               tags={tags}
               placeholderId="preview"
+              onAction={v.details.trim() ? () => undefined : undefined}
+              actionLabel="Ver detalhes"
             />
           </Box>
         </Sticky>

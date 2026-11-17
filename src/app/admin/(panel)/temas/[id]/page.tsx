@@ -38,6 +38,7 @@ export default async function ThemeEditPage({ params }: { params: Promise<{ id: 
         title: a.title,
         description: a.description,
         tags: a.tags.join(', '),
+        details: a.details,
         imageId: a.imageId,
         imageAlt: a.imageAlt,
         visible: a.status !== 'PAUSADO',

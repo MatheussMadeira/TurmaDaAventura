@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { EMPTY_PRODUCT, ProductsScreen } from '@/admin/screens/ProductsScreens';
 import { NoPermission } from '@/admin/ui/states';
 import type { IconName } from '@/lib/iconNames';
+import { priceToInput } from '@/lib/money';
 import { listLibrary } from '@/server/admin/library';
 import { getProduct, listProducts } from '@/server/admin/products';
 import { requirePageUser } from '@/server/auth/session';
@@ -65,6 +66,7 @@ export default async function ProductEditPage({ params }: { params: Promise<{ id
           icon: p.icon as IconName,
           description: p.description,
           minQty: String(p.minQty),
+          price: priceToInput(p.priceCents),
           personalizavel: p.personalizavel,
           nosRestaurantes: p.nosRestaurantes,
           imageId: p.imageId,

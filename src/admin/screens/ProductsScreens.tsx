@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { formatBRL, parsePriceInput } from '@/lib/money';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/atoms/Button';
@@ -41,6 +42,7 @@ export interface ProductListRow {
   icon: string;
   categoryLabel: string;
   minQty: number;
+  priceCents: number | null;
   personalizavel: boolean;
   nosRestaurantes: boolean;
   status: Status;
@@ -157,6 +159,11 @@ export function ProductsScreen({
             { key: 'cat', header: 'Categoria', render: (r) => r.categoryLabel },
             { key: 'min', header: 'Mínimo', render: (r) => `${r.minQty} un.` },
             {
+              key: 'price',
+              header: 'Preço',
+              render: (r) => (r.priceCents ? formatBRL(r.priceCents) : '—'),
+            },
+            {
               key: 'status',
               header: 'Situação',
               render: (r) => <StatusBadge status={r.status} />,
@@ -183,6 +190,7 @@ export function ProductsScreen({
               <CardMeta>
                 <span>
                   {r.categoryLabel} · mínimo {r.minQty} un.
+                  {r.priceCents ? ` · ${formatBRL(r.priceCents)}` : ''}
                 </span>
               </CardMeta>
               <CardRow>
@@ -297,6 +305,8 @@ export interface ProductFormValues {
   icon: IconName;
   description: string;
   minQty: string;
+  /** texto do campo, ex.: "12,90"; vazio = sem preço */
+  price: string;
   personalizavel: boolean;
   nosRestaurantes: boolean;
   imageId: string | null;
@@ -311,6 +321,7 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   icon: 'backpack',
   description: '',
   minQty: '1',
+  price: '',
   personalizavel: false,
   nosRestaurantes: false,
   imageId: null,
@@ -335,7 +346,9 @@ export function ProductForm({ id, initial, status, library }: ProductFormProps) 
 
   const save = async (mode: SaveMode) => {
     const minQty = v.minQty.trim() === '' ? Number.NaN : Number(v.minQty);
-    const r = await run(() => saveProductAction(id, { ...v, minQty }, mode));
+    const { price, ...rest } = v;
+    const priceCents = parsePriceInput(price);
+    const r = await run(() => saveProductAction(id, { ...rest, minQty, priceCents }, mode));
     if (r.ok && r.data) {
       if (!id) router.replace(`/admin/produtos/${r.data.id}`);
       else router.refresh();
@@ -423,6 +436,17 @@ export function ProductForm({ id, initial, status, library }: ProductFormProps) 
               error={fieldError(result, 'minQty')}
             />
           </div>
+          <div className="full">
+            <TextField
+              label="Preço unitário (R$)"
+              inputMode="decimal"
+              placeholder="12,90"
+              value={v.price}
+              onChange={(e) => set('price', e.target.value)}
+              hint="Opcional. Em branco, o valor é combinado no WhatsApp."
+              error={fieldError(result, 'priceCents')}
+            />
+          </div>
         </Fields>
 
         <Switches>
@@ -445,8 +469,8 @@ export function ProductForm({ id, initial, status, library }: ProductFormProps) 
         </Switches>
 
         <BoxSub style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-          <Icon name="shield" size={16} />
-          Produtos não têm campo de preço: valores são combinados no WhatsApp.
+          <Icon name="shield" size={16} />O site não cobra: o pedido é sempre fechado no WhatsApp,
+          com ou sem preço cadastrado.
         </BoxSub>
 
         <Buttons>

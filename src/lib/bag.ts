@@ -1,7 +1,9 @@
 /**
- * Sacola de produtos: só monta a lista e a mensagem do WhatsApp. Sem preço, total, frete ou
- * pagamento. Módulo puro (sem React) + persistência em localStorage por 7 dias, sempre com try/catch.
+ * Sacola de produtos: monta a lista e a mensagem do WhatsApp. Quando todos os produtos têm preço
+ * mostra um total estimado; nunca há frete nem pagamento no site. Módulo puro (sem React) + persistência em localStorage por 7 dias, sempre com try/catch.
  */
+import { formatBRL } from './money';
+
 export interface BagItem {
   slug: string;
   name: string;
@@ -10,6 +12,8 @@ export interface BagItem {
   meta: string;
   minQty: number;
   qty: number;
+  /** preço unitário (centavos) na hora em que o produto entrou na sacola; null = a combinar */
+  priceCents: number | null;
   image: string | null;
 }
 
@@ -48,6 +52,15 @@ export const removeItem = (items: BagItem[], slug: string) => items.filter((i) =
 
 export const totalUnits = (items: BagItem[]) => items.reduce((n, i) => n + i.qty, 0);
 
+/** Valor da linha (preço × quantidade); null se o produto não tem preço. */
+export const lineCents = (i: BagItem) => (i.priceCents == null ? null : i.priceCents * i.qty);
+
+/** Total estimado: só existe quando TODOS os produtos da sacola têm preço (senão, null). */
+export function totalCents(items: BagItem[]): number | null {
+  if (!items.length || items.some((i) => i.priceCents == null)) return null;
+  return items.reduce((n, i) => n + i.priceCents! * i.qty, 0);
+}
+
 export const countLabel = (n: number) => (n === 1 ? '1 produto' : `${n} produtos`);
 
 /** "2026-12-12" (campo date) → "12/12/2026"; qualquer outra coisa volta como veio. */
@@ -65,7 +78,16 @@ export interface BagForm {
 /** Mensagem do pedido. Linhas vazias não entram; o início vem do admin (Contato e WhatsApp). */
 export function buildBagMessage(items: BagItem[], form: BagForm = {}, start?: string) {
   const head = start?.trim() || DEFAULT_BAG_START;
-  const lines = [head, '', ...items.map((i) => `• ${i.qty} × ${i.name}`)];
+  const lines = [
+    head,
+    '',
+    ...items.map((i) => {
+      const line = lineCents(i);
+      return `• ${i.qty} × ${i.name}${line == null ? '' : ` — ${formatBRL(line)}`}`;
+    }),
+  ];
+  const total = totalCents(items);
+  if (total != null) lines.push('', `Total estimado: ${formatBRL(total)}`);
   const extra = [
     form.name?.trim() && `Nome: ${form.name.trim()}`,
     form.when?.trim() && `Para quando: ${formatDate(form.when)}`,
@@ -92,6 +114,7 @@ const isItem = (v: unknown): v is BagItem => {
     typeof i.minQty === 'number' &&
     typeof i.qty === 'number' &&
     i.qty >= 1 &&
+    (i.priceCents === undefined || i.priceCents === null || typeof i.priceCents === 'number') &&
     (i.image === null || typeof i.image === 'string')
   );
 };
@@ -106,7 +129,10 @@ export function loadBag(now = Date.now()): BagItem[] {
       window.localStorage.removeItem(BAG_STORAGE_KEY);
       return [];
     }
-    return Array.isArray(data.items) ? data.items.filter(isItem) : [];
+    // sacolas guardadas antes do preço existir não têm `priceCents`: valem como "a combinar"
+    return Array.isArray(data.items)
+      ? data.items.filter(isItem).map((i) => ({ ...i, priceCents: i.priceCents ?? null }))
+      : [];
   } catch {
     return [];
   }

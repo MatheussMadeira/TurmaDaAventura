@@ -3,12 +3,14 @@
 import { Icon, type IconName } from '../../atoms/Icon';
 import { Media } from '../../atoms/Media';
 import { Tag, TagList } from '../../atoms/Tag';
+import { VisuallyHidden } from '../../atoms/VisuallyHidden';
 import {
   Article,
   Body,
   CardLink,
   IconBadge,
   More,
+  MoreButton,
   Overline,
   Text,
   Title,
@@ -25,6 +27,9 @@ export interface ServiceCardProps {
   tags?: string[];
   href?: string;
   linkLabel?: string;
+  /** card que abre um modal: mostra o botão "Ver detalhes" (não vale junto com href) */
+  onAction?: (trigger: HTMLButtonElement) => void;
+  actionLabel?: string;
   tone?: 'default' | 'earth';
   placeholderId?: string;
   className?: string;
@@ -42,6 +47,8 @@ export function ServiceCard({
   tags,
   href,
   linkLabel,
+  onAction,
+  actionLabel,
   tone = 'default',
   placeholderId,
   className,
@@ -80,6 +87,17 @@ export function ServiceCard({
             {linkLabel ?? 'Saiba mais'}
             <Icon name="arrow-right" size={18} />
           </More>
+        ) : null}
+        {!href && onAction ? (
+          <MoreButton
+            type="button"
+            aria-haspopup="dialog"
+            onClick={(e) => onAction(e.currentTarget)}
+          >
+            {actionLabel ?? 'Ver detalhes'}
+            <VisuallyHidden>: {title}</VisuallyHidden>
+            <Icon name="arrow-right" size={18} />
+          </MoreButton>
         ) : null}
       </Body>
     </>

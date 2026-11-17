@@ -29,7 +29,7 @@ const UNDO_MS = 8000;
 
 /**
  * Sacola do site: guarda a lista (localStorage, 7 dias), abre/fecha a gaveta e envia o pedido
- * pelo WhatsApp. Sem preço, total ou pagamento. Envolve todas as páginas do site.
+ * pelo WhatsApp. Sem pagamento no site (o total é só uma estimativa). Envolve todas as páginas do site.
  */
 export function BagProvider({ children }: { children: ReactNode }) {
   const items = useBagItems();

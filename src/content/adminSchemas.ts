@@ -59,13 +59,15 @@ export const themeSchema = z.object({
   title: req('Título', 40, 2),
   description: req('Descrição', 160),
   tags: z.array(req('Etiqueta', 24)).max(4, 'Etiquetas: no máximo 4.'),
+  /** opcional: abre no modal "Ver detalhes" do card; vazio = card sem modal */
+  details: opt('Detalhes', 1500),
   imageId: mediaRef,
   imageAlt: opt('Descrição da foto', 160),
   visible: z.boolean(),
 });
 export type ThemeInput = z.infer<typeof themeSchema>;
 
-/** Produto: NENHUM campo de preço. Esgotado fica no site, sem botão de adicionar. */
+/** Produto. Preço opcional (centavos; null = valor combinado no WhatsApp). Esgotado fica no site, sem botão de adicionar. */
 export const productSchema = z.object({
   name: req('Nome', 50, 2),
   category: z.enum(PRODUCT_CATEGORIES, { message: 'Categoria: escolha uma opção.' }),
@@ -76,6 +78,12 @@ export const productSchema = z.object({
     .int('Quantidade mínima: use um número inteiro.')
     .min(1, 'Quantidade mínima: pelo menos 1.')
     .max(999, 'Quantidade mínima: no máximo 999.'),
+  priceCents: z
+    .number({ message: 'Preço: informe um valor como 12,90 ou deixe em branco.' })
+    .int('Preço: informe um valor como 12,90.')
+    .min(1, 'Preço: precisa ser maior que zero.')
+    .max(9_999_999, 'Preço: no máximo R$ 99.999,99.')
+    .nullable(),
   personalizavel: z.boolean(),
   nosRestaurantes: z.boolean(),
   imageId: mediaRef,

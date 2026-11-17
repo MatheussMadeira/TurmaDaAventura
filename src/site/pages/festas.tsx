@@ -3,6 +3,7 @@ import { Panel } from '@/components/atoms/Panel';
 import { CTABanner } from '@/components/organisms/CTABanner';
 import { Hero } from '@/components/organisms/Hero';
 import { QuoteForm } from '@/components/organisms/QuoteForm';
+import { ThemeCatalog } from '@/components/organisms/ThemeCatalog';
 import { Trail } from '@/components/organisms/Trail';
 import { CheckList } from '@/components/molecules/CheckList';
 import { FeatureList } from '@/components/molecules/FeatureList';
@@ -69,20 +70,7 @@ export const festasRenderers: Record<string, Renderer<FestasData>> = {
         />
       </Reveal>
       {ctx.data.themes.length ? (
-        <Grid cols={3}>
-          {ctx.data.themes.map((t) => (
-            <ServiceCard
-              key={t.slug}
-              icon={t.icon}
-              title={t.title}
-              description={t.description}
-              tags={t.tags}
-              image={t.image?.src ?? null}
-              imageAlt={t.image?.alt ?? t.imageAlt}
-              placeholderId={`tema-${t.slug}`}
-            />
-          ))}
-        </Grid>
+        <ThemeCatalog themes={ctx.data.themes} />
       ) : (
         <p className="body" style={{ margin: 0, color: 'var(--ink-muted)' }}>
           Em breve, novos temas por aqui.

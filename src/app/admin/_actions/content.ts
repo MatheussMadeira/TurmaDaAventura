@@ -192,7 +192,7 @@ export async function moveThemeAction(id: string, dir: 'up' | 'down'): Promise<A
   });
 }
 
-/* ---------------- Produtos (sem preço) ---------------- */
+/* ---------------- Produtos ---------------- */
 export async function saveProductAction(
   id: string | null,
   input: unknown,

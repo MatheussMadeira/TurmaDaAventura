@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { SiteSettings } from '@/content/types';
+import { priceToDecimal } from './money';
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(
   /\/$/,
@@ -76,8 +77,8 @@ export function localBusinessJsonLd(contact: SiteSettings) {
 }
 
 /**
- * JSON-LD da lista de produtos (ItemList → Product). SEM `offers`/preço: o pedido é combinado
- * pelo WhatsApp e o site não vende nada.
+ * JSON-LD da lista de produtos (ItemList → Product). `offers` só aparece quando o produto tem
+ * preço cadastrado; o site não vende nada (o pedido é fechado no WhatsApp), então só informa o valor.
  */
 export function productsJsonLd(
   products: {
@@ -85,6 +86,8 @@ export function productsJsonLd(
     description: string;
     categoryLabel: string;
     image: { src: string } | null;
+    priceCents?: number | null;
+    soldOut?: boolean;
   }[],
 ) {
   const abs = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE_URL}${src}`);
@@ -103,6 +106,19 @@ export function productsJsonLd(
         url: `${SITE_URL}/produtos`,
         ...(p.image ? { image: abs(p.image.src) } : {}),
         brand: { '@type': 'Brand', name: SITE_NAME },
+        ...(p.priceCents
+          ? {
+              offers: {
+                '@type': 'Offer',
+                price: priceToDecimal(p.priceCents),
+                priceCurrency: 'BRL',
+                availability: p.soldOut
+                  ? 'https://schema.org/OutOfStock'
+                  : 'https://schema.org/InStock',
+                url: `${SITE_URL}/produtos`,
+              },
+            }
+          : {}),
       },
     })),
   };

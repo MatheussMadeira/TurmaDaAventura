@@ -3,7 +3,7 @@ import type { SectionContent, SectionType } from '../sections/schemas';
 /**
  * Textos iniciais de cada seção (copy dos canvases). São a fonte do seed e o fallback do site
  * enquanto uma seção não tem versão publicada. Validados contra os schemas por um teste.
- * Nenhum preço, pacote ou "a partir de R$".
+ * Nenhum preço, pacote ou "a partir de R$" nas páginas de serviço (preço só em produtos, pelo admin).
  */
 type Defaults = {
   [slug: string]: { [key: string]: { type: SectionType; content: unknown } };

@@ -19,25 +19,23 @@ const add = (page: Page, name: string) =>
 const card = (page: Page, name: string) => page.getByRole('article', { name });
 
 test.describe('página Produtos', () => {
-  test('um H1, 9 produtos, filtro por categoria e nenhum preço', async ({ page, request }) => {
+  test('um H1, 9 produtos, filtro por categoria e JSON-LD', async ({ page, request }) => {
     await page.goto('/produtos');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Lembrancinhas e kits da Turma',
     );
     await expect(page.locator('[data-section="Produtos/Catalogo"] article')).toHaveCount(9);
     await expect(page.getByText('Nenhum pagamento é feito no site').first()).toBeVisible();
-    await expect(page.locator('body')).not.toContainText(/R\$|reais/);
 
     await page.getByRole('button', { name: /Kits de atividade/ }).click();
     await expect(page.getByText(/^Mostrando \d+ produtos?$/)).toHaveText('Mostrando 3 produtos');
 
-    // JSON-LD: ItemList/Product e nenhum offers/price
+    // JSON-LD: ItemList/Product (offers só em produto com preço: ver o teste do admin)
     const html = await (await request.get('/produtos')).text();
     const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
       .map((m) => m[1]!)
       .find((t) => t.includes('"ItemList"'));
     expect(ld).toBeTruthy();
-    expect(ld).not.toMatch(/offers|price/i);
 
     // menu e sitemap
     expect(await (await request.get('/sitemap.xml')).text()).toContain('/produtos');
@@ -210,18 +208,31 @@ test.describe('Produtos no admin', () => {
     // o input fica sob a trilha do switch: clica no rótulo
     await page.getByText(/^Esgotado \(aparece/).click();
     await expect(page.getByRole('switch', { name: /Esgotado/ })).toBeChecked();
-    // não existe campo de preço
-    await expect(page.getByLabel(/pre[çc]o|valor/i)).toHaveCount(0);
+    // preço é opcional; valor inválido é recusado sem perder o que foi digitado
+    const price = page.getByLabel(/^Preço unitário/);
+    await price.fill('doze reais');
+    await page.getByRole('button', { name: 'Salvar e publicar' }).click();
+    await expect(page.getByText(/Preço: informe um valor/).first()).toBeVisible();
+    await expect(page.getByLabel(/^Nome/)).toHaveValue('E2E Kit do Luar');
+    await price.fill('12,90');
     await page.getByRole('button', { name: 'Salvar e publicar' }).click();
     await expect(page).toHaveURL(/\/admin\/produtos\/(?!novo)/);
 
     const html = await (await request.get('/produtos')).text();
     expect(html).toContain('E2E Kit do Luar');
     expect(html).toContain('Esgotado');
+    // JSON-LD: este produto tem offers em BRL, esgotado
+    const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map((m) => m[1]!)
+      .find((t) => t.includes('"ItemList"'))!;
+    expect(ld).toContain('"price":"12.90"');
+    expect(ld).toContain('"priceCurrency":"BRL"');
+    expect(ld).toContain('OutOfStock');
 
     await page.goto('/produtos');
     const c = page.getByRole('article', { name: 'E2E Kit do Luar' });
     await expect(c.getByText('Esgotado')).toBeVisible();
+    await expect(c.getByText(/R\$\s12,90/)).toBeVisible();
     await expect(c.getByRole('button', { name: /Adicionar/ })).toHaveCount(0);
 
     await page.goto('/admin/produtos?aba=esgotados');
@@ -248,5 +259,59 @@ test.describe('Produtos no admin', () => {
     await expect(page.getByLabel(/Produtos · início da mensagem da sacola/)).toHaveValue(
       /Quero fazer um pedido pelo site/,
     );
+  });
+});
+
+test.describe('produto com preço', () => {
+  test('o admin cadastra o preço; a sacola mostra o total estimado e a mensagem leva os valores', async ({
+    page,
+    context,
+  }) => {
+    await stubWhatsapp(context);
+    const u = await makeUser('prod-preco', { role: 'EQUIPE' });
+    await page.goto('/admin/login');
+    await page.getByLabel('E-mail').fill(u.email);
+    await page.getByLabel('Senha').fill(GOOD);
+    await page.getByRole('button', { name: 'Entrar' }).click();
+    await expect(page).toHaveURL(/\/admin$/);
+
+    await page.goto('/admin/produtos/novo');
+    await page.getByLabel(/^Nome/).fill('E2E Caneca da Turma');
+    await page.getByLabel(/^Descrição curta/).fill('Caneca esmaltada para o café da expedição.');
+    await page.getByLabel(/^Descrição da foto/).fill('Caneca verde sobre uma mesa');
+    await page.getByLabel(/^Quantidade mínima/).fill('2');
+    await page.getByLabel(/^Preço unitário/).fill('1.290,50'); // aceita milhar com ponto e vírgula
+    await page.getByRole('button', { name: 'Salvar e publicar' }).click();
+    await expect(page).toHaveURL(/\/admin\/produtos\/(?!novo)/);
+
+    await page.goto('/produtos');
+    await add(page, 'E2E Caneca da Turma'); // mínimo 2 → 2 × 1.290,50 = 2.581,00
+    await page.getByRole('button', { name: /Ver sacola/ }).click();
+    const drawer = page.getByRole('dialog', { name: 'Sua sacola' });
+    await expect(drawer).toContainText(/R\$\s1\.290,50\s×\s2\s=\sR\$\s2\.581,00/);
+    await expect(drawer.getByText('Total estimado').locator('..')).toContainText(/R\$\s2\.581,00/);
+
+    const [popup] = await Promise.all([
+      context.waitForEvent('page'),
+      drawer.getByRole('button', { name: 'Enviar pedido no WhatsApp' }).click(),
+    ]);
+    await popup.waitForURL(/wa\.me\//, { timeout: 10_000 });
+    const text = new URL(popup.url()).searchParams.get('text')!.replace(/ /g, ' ');
+    expect(text).toContain('• 2 × E2E Caneca da Turma — R$ 2.581,00');
+    expect(text).toContain('Total estimado: R$ 2.581,00');
+
+    // sem preço no admin, o valor some do site (volta a ser combinado no WhatsApp)
+    await page.goto('/admin/produtos');
+    await page
+      .getByRole('link', { name: /E2E Caneca da Turma/ })
+      .first()
+      .click();
+    await page.getByLabel(/^Preço unitário/).fill('');
+    await page.getByRole('button', { name: 'Salvar e publicar' }).click();
+    await expect(page.getByText(/Produto salvo e publicado/).first()).toBeVisible();
+    await page.goto('/produtos');
+    await expect(
+      page.getByRole('article', { name: 'E2E Caneca da Turma' }).getByText(/R\$/),
+    ).toHaveCount(0);
   });
 });

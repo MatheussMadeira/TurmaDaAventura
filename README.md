@@ -83,9 +83,13 @@ O site público só lê o conteúdo **publicado**; rascunhos vivem em `Section.d
 - O rascunho salva sozinho (~1 s) e **não vai ao ar** até “Publicar alterações”. Ordem e visibilidade das seções também são rascunho.
 - **Uma pessoa por vez em cada página:** a reserva fica no banco (`PageLock`, 90 s, renovada a cada ~25 s e solta ao sair). Quem chega depois não entra; gravar, publicar e descartar exigem a reserva **no servidor**. Se a aba some, a reserva expira sozinha.
 
+## Temas de festa com detalhes (modal)
+
+Cada tema (admin → Temas de festa) tem o campo opcional **Detalhes da festa** (até 1500 caracteres; parágrafos separados por linha em branco). Com detalhes, o card em Festas e aniversários ganha o botão “Ver detalhes”, que abre um modal (`<dialog>` nativo, `organisms/ThemeCatalog`) com foto, etiquetas, o texto e “Pedir orçamento deste tema” (WhatsApp com o nome do tema). Sem detalhes, o card continua sem modal. Produção: `npm run db:deploy` aplica a migration `festas_details_product_price` (coluna `PartyTheme.details` e `Product.priceCents`); o seed não escreve nesses campos.
+
 ## Produtos e sacola (sem checkout)
 
-- `/produtos`: catálogo (Lembrancinhas, Kits, Brinquedos e livros) com filtro. **Nenhum preço, total, frete ou pagamento** — não existe campo de preço no banco nem no JSON-LD (`ItemList`/`Product` sem `offers`).
+- `/produtos`: catálogo (Lembrancinhas, Kits, Brinquedos e livros) com filtro. **Preço é opcional e cadastrado no admin** (`Product.priceCents`, em centavos): aparece no card, na sacola (valor da linha e **total estimado**, só quando todos os itens têm preço), na mensagem do WhatsApp e no JSON-LD (`offers` em BRL só nos produtos com preço). Não há checkout, frete nem pagamento no site.
 - A **sacola** monta a lista e abre o WhatsApp com a mensagem pronta (`lib/bag.ts`). Fica no `localStorage` por 7 dias (`lib/bagStore.ts`), vale em todas as páginas e o botão “Ver sacola” substitui o WhatsApp flutuante enquanto houver itens. Depois do envio ela esvazia, com “Desfazer”.
 - Admin: **Produtos** (permissão de Atividades): abas No site / Rascunhos / Esgotados / Todos, formulário ao lado. Esgotado aparece no site sem o botão de adicionar. O início da mensagem da sacola é editado em **Contato e WhatsApp**.
 - Seed: `npm run db:seed` cria a página e os 9 produtos de `src/content/produtos.json` sem sobrescrever edições. Produção: `npm run db:deploy` (migration `product`) antes do seed.

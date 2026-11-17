@@ -121,6 +121,8 @@ model PartyTheme {
   imageId     String?
   image       Media?        @relation(fields: [imageId], references: [id], onDelete: SetNull)
   imageAlt    String        @default("")
+  /// texto longo do modal "Ver detalhes" (parágrafos separados por linha em branco); vazio = card sem modal
+  details     String        @default("")
   order       Int
   status      PublishStatus @default(RASCUNHO)
   updatedAt   DateTime      @updatedAt
@@ -128,7 +130,7 @@ model PartyTheme {
   @@index([status, order])
 }
 
-/// Produtos vendidos pelo WhatsApp (lembrancinhas, kits, brinquedos e livros). NENHUM campo de preço.
+/// Produtos vendidos pelo WhatsApp (lembrancinhas, kits, brinquedos e livros). Preço opcional (priceCents, em centavos).
 model Product {
   id              String          @id @default(cuid())
   slug            String          @unique
@@ -142,6 +144,8 @@ model Product {
   imageAlt        String
   /// quantidade mínima por pedido (1 = vende por unidade)
   minQty          Int             @default(1)
+  /// preço unitário em centavos; null = valor combinado no WhatsApp
+  priceCents      Int?
   personalizavel  Boolean         @default(false)
   nosRestaurantes Boolean         @default(false)
   order           Int
