@@ -469,8 +469,8 @@ export function ProductForm({ id, initial, status, library }: ProductFormProps) 
         </Switches>
 
         <BoxSub style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-          <Icon name="shield" size={16} />
-          O site não cobra: o pedido é sempre fechado no WhatsApp, com ou sem preço cadastrado.
+          <Icon name="shield" size={16} />O site não cobra: o pedido é sempre fechado no WhatsApp,
+          com ou sem preço cadastrado.
         </BoxSub>
 
         <Buttons>

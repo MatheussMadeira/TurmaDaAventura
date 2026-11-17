@@ -89,7 +89,11 @@ export function ServiceCard({
           </More>
         ) : null}
         {!href && onAction ? (
-          <MoreButton type="button" aria-haspopup="dialog" onClick={(e) => onAction(e.currentTarget)}>
+          <MoreButton
+            type="button"
+            aria-haspopup="dialog"
+            onClick={(e) => onAction(e.currentTarget)}
+          >
             {actionLabel ?? 'Ver detalhes'}
             <VisuallyHidden>: {title}</VisuallyHidden>
             <Icon name="arrow-right" size={18} />

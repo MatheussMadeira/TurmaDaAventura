@@ -201,9 +201,8 @@ export function BagDrawer() {
                 <Note>
                   <Icon name="shield" size={18} />
                   <span>
-                    Sem pagamento no site.{' '}
-                    {total != null ? 'O total é uma estimativa; v' : 'V'}alores, disponibilidade e
-                    entrega são confirmados no WhatsApp.
+                    Sem pagamento no site. {total != null ? 'O total é uma estimativa; v' : 'V'}
+                    alores, disponibilidade e entrega são confirmados no WhatsApp.
                   </span>
                 </Note>
               </Fields>

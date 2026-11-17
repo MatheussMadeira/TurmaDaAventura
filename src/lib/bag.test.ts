@@ -200,7 +200,15 @@ describe('sacola · preço (só quando o admin cadastrou)', () => {
   });
 
   it('sacola guardada antes do preço existir volta como "a combinar"', () => {
-    const antiga = { slug: 'x', name: 'X', icon: 'leaf', meta: 'm', minQty: 1, qty: 2, image: null };
+    const antiga = {
+      slug: 'x',
+      name: 'X',
+      icon: 'leaf',
+      meta: 'm',
+      minQty: 1,
+      qty: 2,
+      image: null,
+    };
     window.localStorage.setItem(
       BAG_STORAGE_KEY,
       JSON.stringify({ savedAt: 1000, items: [antiga] }),
